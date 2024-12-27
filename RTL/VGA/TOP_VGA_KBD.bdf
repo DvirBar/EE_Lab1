@@ -747,7 +747,7 @@ agreement for further details.
 	)
 )
 (symbol
-	(rect 584 128 832 320)
+	(rect 592 128 840 320)
 	(text "Smiley_Block_T" (rect 5 0 100 19)(font "Intel Clear" (font_size 8)))
 	(text "inst1" (rect 8 171 30 188)(font "Intel Clear" ))
 	(port
@@ -843,7 +843,7 @@ agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 232 176))
 	)
-	(annotation_block (parameter)(rect 600 16 794 111))
+	(annotation_block (parameter)(rect 608 16 802 111))
 )
 (symbol
 	(rect -328 1048 -216 1096)
@@ -1373,21 +1373,21 @@ agreement for further details.
 		(pt 296 32)
 		(output)
 		(text "collision" (rect 0 0 38 12)(font "Arial" ))
-		(text "collision" (rect 243 27 275 39)(font "Arial" ))
+		(text "collision" (rect 243 27 281 39)(font "Arial" ))
 		(line (pt 296 32)(pt 280 32))
 	)
 	(port
 		(pt 296 48)
 		(output)
 		(text "SingleHitPulse" (rect 0 0 70 12)(font "Arial" ))
-		(text "SingleHitPulse" (rect 216 43 275 55)(font "Arial" ))
+		(text "SingleHitPulse" (rect 216 43 286 55)(font "Arial" ))
 		(line (pt 296 48)(pt 280 48))
 	)
 	(port
 		(pt 296 64)
 		(output)
 		(text "collision_Smiley_Hart" (rect 0 0 106 12)(font "Arial" ))
-		(text "collision_Smiley_Hart" (rect 186 59 275 71)(font "Arial" ))
+		(text "collision_Smiley_Hart" (rect 186 59 292 71)(font "Arial" ))
 		(line (pt 296 64)(pt 280 64))
 	)
 	(drawing
@@ -1547,44 +1547,6 @@ agreement for further details.
 	(pt -432 808)
 )
 (connector
-	(text "pixelX[10..0]" (rect 514 144 574 156)(font "Arial" ))
-	(pt 480 160)
-	(pt 584 160)
-	(bus)
-)
-(connector
-	(text "pixelY[10..0]" (rect 514 160 576 172)(font "Arial" ))
-	(pt 480 176)
-	(pt 584 176)
-	(bus)
-)
-(connector
-	(text "clk" (rect 490 176 504 193)(font "Intel Clear" ))
-	(pt 480 192)
-	(pt 584 192)
-)
-(connector
-	(text "resetN" (rect 490 192 520 209)(font "Intel Clear" ))
-	(pt 480 208)
-	(pt 584 208)
-)
-(connector
-	(text "startOfFrame" (rect 490 208 553 225)(font "Intel Clear" ))
-	(pt 480 224)
-	(pt 584 224)
-)
-(connector
-	(text "smileyRGB[7..0]" (rect 818 160 894 177)(font "Intel Clear" ))
-	(pt 832 176)
-	(pt 952 176)
-	(bus)
-)
-(connector
-	(text "smileyDR" (rect 826 144 872 161)(font "Intel Clear" ))
-	(pt 832 160)
-	(pt 904 160)
-)
-(connector
 	(text "keypadValid" (rect 138 320 198 337)(font "Intel Clear" ))
 	(pt 120 336)
 	(pt 224 336)
@@ -1720,20 +1682,6 @@ agreement for further details.
 (connector
 	(pt -24 96)
 	(pt -40 96)
-)
-(connector
-	(text "keyIsPressed[8]" (rect 492 224 567 241)(font "Intel Clear" ))
-	(pt 584 240)
-	(pt 480 240)
-)
-(connector
-	(pt 120 256)
-	(pt 584 256)
-)
-(connector
-	(text "collision" (rect 490 256 528 273)(font "Intel Clear" ))
-	(pt 480 272)
-	(pt 584 272)
 )
 (connector
 	(text "HartDrawingRequest" (rect 74 696 171 713)(font "Intel Clear" ))
@@ -2019,6 +1967,58 @@ agreement for further details.
 	(pt 832 656)
 	(pt 952 656)
 )
+(connector
+	(text "smileyRGB[7..0]" (rect 826 160 902 177)(font "Intel Clear" ))
+	(pt 840 176)
+	(pt 960 176)
+	(bus)
+)
+(connector
+	(text "smileyDR" (rect 834 144 880 161)(font "Intel Clear" ))
+	(pt 840 160)
+	(pt 912 160)
+)
+(connector
+	(text "pixelX[10..0]" (rect 522 144 582 156)(font "Arial" ))
+	(pt 488 160)
+	(pt 592 160)
+	(bus)
+)
+(connector
+	(text "pixelY[10..0]" (rect 522 160 584 172)(font "Arial" ))
+	(pt 488 176)
+	(pt 592 176)
+	(bus)
+)
+(connector
+	(text "clk" (rect 498 176 512 193)(font "Intel Clear" ))
+	(pt 488 192)
+	(pt 592 192)
+)
+(connector
+	(text "resetN" (rect 498 192 528 209)(font "Intel Clear" ))
+	(pt 488 208)
+	(pt 592 208)
+)
+(connector
+	(text "startOfFrame" (rect 498 208 561 225)(font "Intel Clear" ))
+	(pt 488 224)
+	(pt 592 224)
+)
+(connector
+	(text "keyIsPressed[8]" (rect 500 224 575 241)(font "Intel Clear" ))
+	(pt 488 240)
+	(pt 592 240)
+)
+(connector
+	(pt 120 256)
+	(pt 592 256)
+)
+(connector
+	(text "collision" (rect 498 256 536 273)(font "Intel Clear" ))
+	(pt 488 272)
+	(pt 592 272)
+)
 (junction (pt -272 784))
 (junction (pt 1296 1232))
 (junction (pt 1296 1248))
@@ -2039,8 +2039,10 @@ agreement for further details.
 (text "31.5 MHz Clock genrtaor" (rect 88 -40 233 -21)(font "Intel Clear" (font_size 8)))
 (text "The keyboard interface" (rect -328 144 -187 163)(font "Intel Clear" (font_size 8)(bold)))
 (text "to be changed by students -->" (rect -504 848 -326 867)(font "Intel Clear" (font_size 8)))
+(text "Airplane moving and drawing" (rect 464 -408 644 -389)(font "Intel Clear" (font_size 8)(bold)))
 (rectangle (rect 328 768 1256 984)(color 0 0 0)(line_width 3))
 (rectangle (rect 448 -16 984 336)(color 0 0 0)(line_width 3))
 (rectangle (rect -368 136 288 376)(color 0 0 0)(line_width 3))
 (rectangle (rect -568 408 288 880)(color 0 0 0)(line_width 3))
 (rectangle (rect -688 992 848 1432)(color 0 0 0)(line_width 3))
+(rectangle (rect 448 -424 984 -72)(color 0 0 0)(line_width 3))
