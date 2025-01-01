@@ -13,7 +13,7 @@ module	FortressMatrixBitMap	(
 					input	logic	InsideRectangle, //input that the pixel is within a bracket 
 					input logic random_fort,
 					
-//------------------------input collision bird-pig-wall -student to complete functionality					
+//------------------------input collision bird-pig-wall				
 					input bird_pig_collision,
 					input bird_wall_collision,
 			
@@ -43,13 +43,13 @@ logic [0:15] [0:15] [3:0]  MazeDefaultBitMapMask= // defult table to load on res
  {64'h0000000000000000},
  {64'h0000000000000000},
  {64'h0000000000000000},
- {64'h0000100000000000},
- {64'h0001010000000000},
- {64'h0011111000000000},
- {64'h0010001000000000},
- {64'h0010001000000000},
- {64'h0010201000000000},
- {64'h0011111000000000},
+ {64'h0000000100000000},
+ {64'h0000001010000000},
+ {64'h0000011111000000},
+ {64'h0000010001000000},
+ {64'h0000010001000000},
+ {64'h0000010201000000},
+ {64'h0000011111000000},
  {64'h0000000000000000},
  {64'h0000000000000000},
  {64'h0000000000000000}};
