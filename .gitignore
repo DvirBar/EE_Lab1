@@ -17,10 +17,6 @@ Number_position.bsf
 Number_position.qip
 Number_position.v
 Number_position_bb.v
-RTL/VGA/Airplne_Block_T.bdf
-RTL/VGA/airplaneBitMap.sv
-RTL/VGA/airplane_move.sv
-RTL/VGA/airplane_move.sv.bak
 RTL/VGA_BG.mif
 assignment_defaults.qdf
 c5_pin_model_dump.txt

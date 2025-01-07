@@ -12,20 +12,20 @@ module	objects_mux	(
 					input		logic	clk,
 					input		logic	resetN,
 		   // smiley 
-					input		logic	smileyDrawingRequest, // two set of inputs per unit
-					input		logic	[7:0] smileyRGB, 
+					input		logic	airplaneDrawingRequest, // two set of inputs per unit
+					input		logic	[7:0] airplaneRGB, 
 					     
 		  // add the box here 
-					input		logic boxDrawingRequest,
-					input		logic [7:0] boxRGB,
+					input		logic birdDrawingRequest,
+					input		logic [7:0] birdRGB,
 		  
 		  
-		  
+		  // add the box here 
+					input		logic fortressDrawingRequest,
+					input		logic [7:0] fortressRGB,
 		  
 		  ////////////////////////
-		  // background 
-					input    logic HartDrawingRequest, // box of numbers
-					input		logic	[7:0] hartRGB,   
+		  // background   
 					input		logic	[7:0] backGroundRGB, 
 					input		logic	BGDrawingRequest, 
 					input		logic	[7:0] RGB_MIF, 
@@ -40,26 +40,21 @@ begin
 	end
 	
 	else begin
-		if (smileyDrawingRequest == 1'b1 )   
-			RGBOut <= smileyRGB;  //first priority 
-		 
-		else if (boxDrawingRequest == 1'b1 )   
-			RGBOut <= boxRGB;  //second priority 
-		 
+		if (birdDrawingRequest == 1'b1 )   
+			RGBOut <= birdRGB;  
+			
+		else if (airplaneDrawingRequest == 1'b1 )   
+			RGBOut <= airplaneRGB; 
+			
+		else if (fortressDrawingRequest == 1'b1 )   
+			RGBOut <= fortressRGB;  
 //--------------------------------------------------------------------------------------------		
 
 
-
-
-
-
- 
-
- 		else if (HartDrawingRequest == 1'b1)
-				RGBOut <= hartRGB;
 		else if (BGDrawingRequest == 1'b1)
 				RGBOut <= backGroundRGB ;
-		else RGBOut <= RGB_MIF ;// last priority 
+		//else RGBOut <= RGB_MIF ;// last priority 
+		else RGBOut <= 8'hFE;
 		end ; 
 	end
 
