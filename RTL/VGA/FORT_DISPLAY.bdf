@@ -150,9 +150,9 @@ agreement for further details.
 )
 (pin
 	(output)
-	(rect 1648 336 1824 352)
+	(rect 1648 320 1824 336)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
-	(text "hartRGB[7..0]" (rect 90 0 153 17)(font "Intel Clear" ))
+	(text "FortressDR" (rect 90 0 147 12)(font "Arial" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
@@ -166,9 +166,9 @@ agreement for further details.
 )
 (pin
 	(output)
-	(rect 1648 320 1845 336)
+	(rect 1648 336 1824 352)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
-	(text "HartDrawingRequest" (rect 90 0 191 12)(font "Arial" ))
+	(text "fortRGB[7..0]" (rect 90 0 151 17)(font "Intel Clear" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))

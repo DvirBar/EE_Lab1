@@ -18,6 +18,10 @@ module	objects_mux	(
 		  // add the box here 
 					input		logic birdDrawingRequest,
 					input		logic [7:0] birdRGB,
+					
+			// add the box here 
+					input		logic pigDrawingRequest,
+					input		logic [7:0] pigRGB,
 		  
 		  
 		  // add the box here 
@@ -45,6 +49,9 @@ begin
 			
 		else if (airplaneDrawingRequest == 1'b1 )   
 			RGBOut <= airplaneRGB; 
+			
+		else if (pigDrawingRequest == 1'b1 )   
+			RGBOut <= pigRGB; 
 			
 		else if (fortressDrawingRequest == 1'b1 )   
 			RGBOut <= fortressRGB;  

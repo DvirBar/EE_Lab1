@@ -11,25 +11,14 @@ module	game_controller	(
 			input	logic	drawing_request_airplane,
 			input	logic	drawing_request_boarders,
 			input logic drawing_request_fortress,
-
-//---------------------#1-add input drawing request of box/number
+			input logic drawing_request_pig,
 			input logic drawing_request_bird,
-		
-		
-
-//---------------------#1-end input drawing request of box/number
-
-
-
-
-//---------------------#2-add  drawing request of hart
-
-//---------------------#2-end drawing request of hart		
 
 			
-			output logic airplaneCollision, // active in case of collision between two objects
+			output logic airplaneCollision,
 			output logic collisionBird,
 			output logic collisionBirdFortress,
+			output logic collisionBirdPig,
 			
 			output logic SingleHitPulse // critical code, generating A single pulse in a frame 
 			
@@ -68,11 +57,12 @@ module	game_controller	(
 assign airplaneCollision = drawing_request_airplane && drawing_request_boarders;
 					
 assign collisionBird = (drawing_request_bird && drawing_request_boarders) ||
-								(drawing_request_bird && drawing_request_fortress) 
-								/*pig collision*/
+								(drawing_request_bird && drawing_request_fortress)|| 
+								(drawing_request_bird && drawing_request_pig)
 								;
 
 assign collisionBirdFortress = drawing_request_bird && drawing_request_fortress;
+assign collisionBirdPig = drawing_request_bird && drawing_request_pig;
 
 
 //---------------------#5-end update  collision  conditions	- add collision between smiley and hart	-----------------------------
@@ -116,7 +106,7 @@ begin
 				
 //	---#7 - change the condition below to collision between Smiley and number ---------
 
-//if ( collision_aiplane_number  && (flag == 1'b0)) begin 
+//if ( collision_aiplane_number  && (flag == 1'b0)) begin ///// DOESNT WORK! COMMENTED OUT!!!
 //			flag	<= 1'b1; // to enter only once 
 //			SingleHitPulse <= 1'b1 ; 
 //		end ; 
