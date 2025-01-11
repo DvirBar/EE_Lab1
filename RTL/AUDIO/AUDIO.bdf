@@ -353,7 +353,7 @@ agreement for further details.
 		(pt 216 32)
 		(output)
 		(text "preScaleValue[9..0]" (rect 0 0 95 12)(font "Arial" ))
-		(text "preScaleValue[9..0]" (rect 115 27 195 39)(font "Arial" ))
+		(text "preScaleValue[9..0]" (rect 115 27 210 39)(font "Arial" ))
 		(line (pt 216 32)(pt 200 32)(line_width 3))
 	)
 	(drawing
@@ -389,18 +389,121 @@ agreement for further details.
 		(pt 240 32)
 		(output)
 		(text "slowEnPulse" (rect 0 0 61 12)(font "Arial" ))
-		(text "slowEnPulse" (rect 168 27 219 39)(font "Arial" ))
+		(text "slowEnPulse" (rect 168 27 229 39)(font "Arial" ))
 		(line (pt 240 32)(pt 224 32))
 	)
 	(port
 		(pt 240 48)
 		(output)
 		(text "slowEnPulse_d" (rect 0 0 73 12)(font "Arial" ))
-		(text "slowEnPulse_d" (rect 158 43 219 55)(font "Arial" ))
+		(text "slowEnPulse_d" (rect 158 43 231 55)(font "Arial" ))
 		(line (pt 240 48)(pt 224 48))
 	)
 	(drawing
 		(rectangle (rect 16 16 224 96))
+	)
+)
+(symbol
+	(rect 304 432 336 464)
+	(text "GND" (rect 8 16 29 26)(font "Arial" (font_size 6)))
+	(text "inst8" (rect 3 21 25 38)(font "Intel Clear" )(invisible))
+	(port
+		(pt 16 0)
+		(output)
+		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
+		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
+		(line (pt 16 8)(pt 16 0))
+	)
+	(drawing
+		(line (pt 8 8)(pt 16 16))
+		(line (pt 16 16)(pt 24 8))
+		(line (pt 8 8)(pt 24 8))
+	)
+)
+(symbol
+	(rect -80 664 80 776)
+	(text "one_sec_counter" (rect 5 0 88 12)(font "Arial" ))
+	(text "inst11" (rect 8 96 37 108)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "resetN" (rect 0 0 33 12)(font "Arial" ))
+		(text "resetN" (rect 21 43 54 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "turbo" (rect 0 0 24 12)(font "Arial" ))
+		(text "turbo" (rect 21 59 45 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 160 32)
+		(output)
+		(text "one_sec" (rect 0 0 41 12)(font "Arial" ))
+		(text "one_sec" (rect 105 27 139 39)(font "Arial" ))
+		(line (pt 160 32)(pt 144 32))
+	)
+	(drawing
+		(rectangle (rect 16 16 144 96))
+	)
+)
+(symbol
+	(rect 224 632 424 744)
+	(text "musController" (rect 5 0 73 12)(font "Arial" ))
+	(text "inst2" (rect 8 96 31 108)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "resetN" (rect 0 0 33 12)(font "Arial" ))
+		(text "resetN" (rect 21 43 54 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "switchNote" (rect 0 0 54 12)(font "Arial" ))
+		(text "switchNote" (rect 21 59 75 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "intensity[3..0]" (rect 0 0 68 12)(font "Arial" ))
+		(text "intensity[3..0]" (rect 21 75 89 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 200 32)
+		(output)
+		(text "note[3..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "note[3..0]" (rect 140 27 179 39)(font "Arial" ))
+		(line (pt 200 32)(pt 184 32)(line_width 3))
+	)
+	(port
+		(pt 200 48)
+		(output)
+		(text "noteEnable" (rect 0 0 54 12)(font "Arial" ))
+		(text "noteEnable" (rect 134 43 179 55)(font "Arial" ))
+		(line (pt 200 48)(pt 184 48))
+	)
+	(drawing
+		(rectangle (rect 16 16 184 96))
 	)
 )
 (connector
@@ -410,10 +513,6 @@ agreement for further details.
 (connector
 	(pt 952 392)
 	(pt 952 496)
-)
-(connector
-	(pt 944 408)
-	(pt 944 512)
 )
 (connector
 	(pt 944 512)
@@ -474,11 +573,6 @@ agreement for further details.
 	(text "resetN" (rect 314 376 344 393)(font "Intel Clear" ))
 	(pt 304 392)
 	(pt 952 392)
-)
-(connector
-	(text "enSound" (rect 314 392 355 409)(font "Intel Clear" ))
-	(pt 304 408)
-	(pt 944 408)
 )
 (connector
 	(text "<<__$DEF_ALIAS6962>>" (rect 871 464 989 481)(font "Intel Clear" )(invisible))
@@ -588,8 +682,86 @@ agreement for further details.
 	(bus)
 )
 (connector
+	(pt 160 560)
 	(pt 144 560)
+	(bus)
+)
+(connector
+	(pt 264 616)
+	(pt 264 560)
+	(bus)
+)
+(connector
+	(pt 264 560)
 	(pt 280 560)
 	(bus)
+)
+(connector
+	(pt 944 512)
+	(pt 944 472)
+)
+(connector
+	(pt 320 408)
+	(pt 304 408)
+	(bus)
+)
+(connector
+	(pt 320 408)
+	(pt 320 432)
+	(bus)
+)
+(connector
+	(text "musEnable" (rect 886 456 939 473)(font "Intel Clear" ))
+	(pt 944 472)
+	(pt 896 472)
+)
+(connector
+	(text "clk" (rect 179 648 193 665)(font "Intel Clear" ))
+	(pt 152 664)
+	(pt 224 664)
+)
+(connector
+	(text "resetN" (rect 162 664 192 681)(font "Intel Clear" ))
+	(pt 152 680)
+	(pt 224 680)
+)
+(connector
+	(pt 424 616)
+	(pt 424 664)
+	(bus)
+)
+(connector
+	(pt 264 616)
+	(pt 424 616)
+	(bus)
+)
+(connector
+	(pt 160 560)
+	(pt 160 712)
+	(bus)
+)
+(connector
+	(pt 160 712)
+	(pt 224 712)
+	(bus)
+)
+(connector
+	(text "musEnable" (rect 417 664 470 681)(font "Intel Clear" ))
+	(pt 424 680)
+	(pt 440 680)
+)
+(connector
+	(text "clk" (rect -101 680 -87 697)(font "Intel Clear" ))
+	(pt -128 696)
+	(pt -80 696)
+)
+(connector
+	(text "resetN" (rect -118 696 -88 713)(font "Intel Clear" ))
+	(pt -128 712)
+	(pt -80 712)
+)
+(connector
+	(pt 80 696)
+	(pt 224 696)
 )
 (text "// (c) Technion IIT, Department of Electrical Engineering 2021            \n// Written By Alex Grinshpun & David Bar-On  June 2018 \r            //Updated by Eyal Lev January 2021\n" (rect 352 -8 958 49)(font "Intel Clear" (font_size 8)))
