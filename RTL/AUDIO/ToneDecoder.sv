@@ -44,7 +44,7 @@ logic [0:15] [9:0]	preScaleValueTable = {
 10'h68,   // decimal =104.75      Hz =1174.66  re
 10'h62,   // decimal =98.87       Hz =1244.51  reD
 10'h5D,   // decimal =93.32       Hz =1318.51  mi
-10'h48,   // decimal =72.51       Hz =1696.91  fa
+10'h58,   // decimal =72.51       Hz =1396.91  fa
 10'h53,   // decimal =83.14       Hz =1479.98 faD
 10'h4E,   // decimal =78.47       Hz =1567.98 sol
 10'h4A,   // decimal =74.07       Hz =1661.22 solD
