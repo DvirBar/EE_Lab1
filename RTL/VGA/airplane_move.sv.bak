@@ -15,32 +15,24 @@ module	airplane_move	(
 					// input	 logic enable_sof,    // if want to stop the smiley move
 					input	 logic accel_right_key,   //move Y Up   
 					input	 logic accel_left_key,      //toggle X   
-					input  logic move_down_key,
-					input  logic move_up_key,
 					input  logic collision,         //collision if smiley hits an object
 					input  logic [3:0] HitEdgeCode, //one bit per edge
 
 					output logic signed 	[10:0] topLeftX, // output the top left corner 
 					output logic signed	[10:0] topLeftY,  // can be negative , if the object is partliy outside 
-					output logic signed [10:0] vertSpeed
+					output logic vertSpeed
 					
 );
 
 
 // a module used to generate the  ball trajectory.  
 
-
-// movement limits 
-const int   OBJECT_WIDTH_X = 64;
-const int   OBJECT_HIGHT_Y = 64;
-const int	SafetyMargin   =	2;
-
-parameter int INITIAL_X = 200;
-parameter int INITIAL_Y = 300;
-parameter int MIN_X_SPEED = 70;
-parameter int MAX_X_SPEED = 120;
+parameter int INITIAL_X = 50;
+parameter int INITIAL_Y = 100;
+parameter int MIN_X_SPEED = 40;
+parameter int MAX_X_SPEED = 100;
+//parameter int INITIAL_Y_SPEED = 20;
 parameter int X_ACCEL = 10;
-parameter int LAT_SPEED = 10;
 
 const int MAX_Y_SPEED = 500;
 const int	FIXED_POINT_MULTIPLIER = 64; // note it must be 2^n 
@@ -49,15 +41,15 @@ const int	FIXED_POINT_MULTIPLIER = 64; // note it must be 2^n
 // we devide at the end by FIXED_POINT_MULTIPLIER which must be 2^n, to return to the initial proportions
 
 
+// movement limits 
+const int   OBJECT_WIDTH_X = 64;
+const int   OBJECT_HIGHT_Y = 64;
+const int	SafetyMargin   =	2;
+
 const int	x_FRAME_LEFT	=	(SafetyMargin)* FIXED_POINT_MULTIPLIER; 
 const int	x_FRAME_RIGHT	=	(639 - SafetyMargin - OBJECT_WIDTH_X)* FIXED_POINT_MULTIPLIER; 
 const int	y_FRAME_TOP		=	(SafetyMargin) * FIXED_POINT_MULTIPLIER;
 const int	y_FRAME_BOTTOM	=	(479 -SafetyMargin - OBJECT_HIGHT_Y ) * FIXED_POINT_MULTIPLIER; //- OBJECT_HIGHT_Y
-const int	BRACKET_OFFSET =	32;
-const int 	LEFT_BRACKET_POS_X = BRACKET_OFFSET+BRACKET_OFFSET/4;
-const int	GROUND_Y =	479-(BRACKET_OFFSET+BRACKET_OFFSET/4);
-const int 	MIN_Y_POSITION = y_FRAME_TOP+BRACKET_OFFSET*2*FIXED_POINT_MULTIPLIER;
-const int 	MAX_Y_POSITION = MIN_Y_POSITION+100*FIXED_POINT_MULTIPLIER;
 
 
 enum  logic [2:0] {IDLE_ST,         	// initial state
@@ -74,9 +66,7 @@ int Yposition ;
 
 logic accel_right_key_D ;
 logic accel_left_key_D ;
-logic move_down_key_D ;
-logic move_up_key_D ;
-  
+ 
 
 logic [15:0] hit_reg = 16'b00000;  // register to collect all the collisions in the frame. |corner|left|top|right|bottom|
 
@@ -92,8 +82,6 @@ begin : fsm_sync_proc
 		Yposition <= 0 ; 
 		accel_right_key_D <= 0 ;
 		accel_left_key_D <= 0 ;
-		move_down_key_D <= 0;
-		move_up_key_D <= 0;
 		hit_reg <= 16'b0 ;	
 	
 	end 	
@@ -102,19 +90,18 @@ begin : fsm_sync_proc
 	
 		accel_right_key_D <= accel_right_key ;  //shift register to detect edge 
 		accel_left_key_D <= accel_left_key ;  //shift register to detect edge 
-		move_down_key_D <= move_down_key ;
-		move_up_key_D <= move_up_key ;
-		
+	
 		case(SM_Motion)
 		
 		//------------
 			IDLE_ST: begin
 		//------------
-				
+		
 				Xspeed  <= MIN_X_SPEED ; 
 //				Yspeed  <= INITIAL_Y_SPEED  ; 
-				Xposition <= x_FRAME_LEFT+OBJECT_WIDTH_X*FIXED_POINT_MULTIPLIER; 
-				Yposition <= MIN_Y_POSITION; 
+				Xposition <= INITIAL_X*FIXED_POINT_MULTIPLIER; 
+				Yposition <= INITIAL_Y*FIXED_POINT_MULTIPLIER; 
+
 				// if (startOfFrame && enable_sof)   if want to stop the smiley move
 				if (startOfFrame) 
 					SM_Motion <= MOVE_ST ;
@@ -124,28 +111,23 @@ begin : fsm_sync_proc
 		//------------
 			MOVE_ST:  begin     // moving no colision 
 		//------------
-			  
-			
-				if ((accel_right_key & !accel_right_key_D) && Xspeed <= MAX_X_SPEED) 
-						Xspeed <= Xspeed+X_ACCEL; 
-				if ((accel_left_key & !accel_left_key_D) && Xspeed >= MIN_X_SPEED)
-						Xspeed <= Xspeed-X_ACCEL; 
-						
-				if((move_down_key & !move_down_key_D) && Yposition <= MAX_Y_POSITION)
-						Yposition <= Yposition + LAT_SPEED*FIXED_POINT_MULTIPLIER;
-						
-				if((move_up_key & !move_up_key_D) && Yposition-OBJECT_HIGHT_Y >= MIN_Y_POSITION)
-						Yposition <= Yposition - LAT_SPEED*FIXED_POINT_MULTIPLIER;
-			
-//				if((move_down_key & !move_down_key_D) && 
-//			
+		// keys direction change 
+//				if (Y_direction_key && (Yspeed > 0 ) )//  while moving down
+//					Yspeed <= -Yspeed;//+1 ; 
+//			if((Xspeed <= MAX_X_SPEED && Xspeed >= MIN_X_SPEED) ||
+//				(Xspeed >= -MAX_X_SPEED && Xspeed <= -MIN_X_SPEED)) begin 
+				if (accel_right_key & !accel_right_key_D) //rizing edge 
+						Xspeed <= Xspeed-X_ACCEL; // toggle direction 
+				if (accel_left_key & !accel_left_key_D) //rizing edge 
+						Xspeed <= Xspeed+X_ACCEL; // toggle direction
+//			end
        // collcting collisions 	
 				if (collision) begin
 					hit_reg[HitEdgeCode]<=1'b1;
 
 				end
 				
-			
+
 				if (startOfFrame )
 					SM_Motion <= START_OF_FRAME_ST ; 
 					
@@ -166,17 +148,57 @@ begin : fsm_sync_proc
 //			32'h88911322,    
 //			32'h89111132,    
 //			32'h91111113};
-
-			if(hit_reg == 16'h0004 || hit_reg == 16'h0044 || hit_reg == 16'h000C || hit_reg == 16'h0048 || hit_reg == 16'h004C)
-				Xposition <=  x_FRAME_LEFT + LEFT_BRACKET_POS_X*FIXED_POINT_MULTIPLIER;
 			
-			
-//			if(Xposition+OBJECT_WIDTH_X*FIXED_POINT_MULTIPLIER == x_FRAME_RIGHT)
-//				Xposition <= x_FRAME_LEFT;
+			case (hit_reg)
 				
-			hit_reg <= 16'h0000;  //clear for next time 
-							
-			SM_Motion <= POSITION_CHANGE_ST ; 
+				16'h0000:  // no collision in the frame 
+					begin
+//							Yspeed <= Yspeed ;
+							Xspeed <= Xspeed ;
+					end
+				//   CH       6H		3H         9H
+				16'h1000,16'h0040,16'h0008,16'h0200:	// one of the four corners 	
+
+				  begin
+//							Yspeed <= -Yspeed ;
+							Xspeed <= -Xspeed ;
+					end
+			//   8H   ; (CH & 8H) ; (8H & 9H) ; (cH & 9H) ;(cH & 9H & 8H)   
+				16'h0100,16'h1100,16'h0300,16'h1200,16'h1300:  // left side 
+				  begin
+							if (Xspeed < 0)
+							  Xspeed <= -Xspeed ;
+				  end
+//				//  4H     (CH & 4H)  (4H & 6H) (CH & 6H)  (CH & 4H & 6H)
+//				16'h0010,16'h1010,16'h0050, 16'h1040 , 16'h1050 : //  top side 
+//				  begin 
+//							if (Yspeed < 0)
+//							  Yspeed <= -Yspeed-1 ;
+//				  end
+				//   2H  (2H & 6H) (2H & 3H) (6H & 3H )  (6H & 2H &3H )
+				16'h0004,16'h0044,16'h000C, 16'h0048 , 16'h004C: // right side 
+				 begin
+								if (Xspeed > 0)
+									Xspeed <= -Xspeed ;
+			  end
+//				//   1H  (1H & 9H) (1H & 3H) (3H & 9H ) (3H & 1H & 9H )
+//				16'h0002,16'h0202,16'h000A, ,16'h0028 ,16'h002A: // bottom side 
+//				  begin
+//							if (Yspeed > 0)
+//							  Yspeed <= -Yspeed+1 ;
+//				  end
+				 default:  //complex corner 
+				  begin
+//							Yspeed <= -Yspeed ;
+							Xspeed <= -Xspeed ;
+					end
+				 
+
+				 endcase
+					
+				hit_reg <= 16'h0000;  //clear for next time 
+								
+				SM_Motion <= POSITION_CHANGE_ST ; 
 			end 
 
 		//------------------------

@@ -138,7 +138,7 @@ agreement for further details.
 )
 (pin
 	(input)
-	(rect 240 544 408 560)
+	(rect 240 576 408 592)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
 	(text "collision " (rect 5 0 46 17)(font "Intel Clear" ))
 	(pt 168 8)
@@ -183,6 +183,38 @@ agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 232 544 416 560)
+	(text "INPUT" (rect 141 0 169 10)(font "Arial" (font_size 6)))
+	(text "move_down_key" (rect 5 0 88 12)(font "Arial" ))
+	(pt 184 8)
+	(drawing
+		(line (pt 100 12)(pt 125 12))
+		(line (pt 100 4)(pt 125 4))
+		(line (pt 129 8)(pt 184 8))
+		(line (pt 100 12)(pt 100 4))
+		(line (pt 125 4)(pt 129 8))
+		(line (pt 125 12)(pt 129 8))
+	)
+	(text "VCC" (rect 144 7 164 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 232 560 408 576)
+	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
+	(text "move_up_key" (rect 5 0 73 17)(font "Intel Clear" ))
+	(pt 176 8)
+	(drawing
+		(line (pt 92 12)(pt 117 12))
+		(line (pt 92 4)(pt 117 4))
+		(line (pt 121 8)(pt 176 8))
+		(line (pt 92 12)(pt 92 4))
+		(line (pt 117 4)(pt 121 8))
+		(line (pt 117 12)(pt 121 8))
+	)
+	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
 )
 (pin
 	(output)
@@ -237,6 +269,22 @@ agreement for further details.
 	(rect 1672 448 1868 464)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "planeTopLeftY[10..0]" (rect 90 0 190 17)(font "Intel Clear" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 1672 464 1876 480)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "planeVertSpeed[10..0]" (rect 90 0 198 12)(font "Arial" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
@@ -407,9 +455,9 @@ agreement for further details.
 	)
 )
 (symbol
-	(rect 536 440 768 616)
+	(rect 528 440 768 648)
 	(text "airplane_move" (rect 5 0 76 12)(font "Arial" ))
-	(text "inst4" (rect 8 160 31 172)(font "Arial" ))
+	(text "inst4" (rect 8 192 31 204)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -448,30 +496,51 @@ agreement for further details.
 	(port
 		(pt 0 112)
 		(input)
-		(text "collision" (rect 0 0 38 12)(font "Arial" ))
-		(text "collision" (rect 21 107 59 119)(font "Arial" ))
+		(text "move_down_key" (rect 0 0 83 12)(font "Arial" ))
+		(text "move_down_key" (rect 21 107 104 119)(font "Arial" ))
 		(line (pt 0 112)(pt 16 112))
 	)
 	(port
 		(pt 0 128)
 		(input)
-		(text "HitEdgeCode[3..0]" (rect 0 0 90 12)(font "Arial" ))
-		(text "HitEdgeCode[3..0]" (rect 21 123 111 135)(font "Arial" ))
-		(line (pt 0 128)(pt 16 128)(line_width 3))
+		(text "move_up_key" (rect 0 0 70 12)(font "Arial" ))
+		(text "move_up_key" (rect 21 123 91 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128))
 	)
 	(port
-		(pt 232 32)
+		(pt 0 144)
+		(input)
+		(text "collision" (rect 0 0 38 12)(font "Arial" ))
+		(text "collision" (rect 21 139 59 151)(font "Arial" ))
+		(line (pt 0 144)(pt 16 144))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "HitEdgeCode[3..0]" (rect 0 0 90 12)(font "Arial" ))
+		(text "HitEdgeCode[3..0]" (rect 21 155 111 167)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160)(line_width 3))
+	)
+	(port
+		(pt 240 32)
 		(output)
 		(text "topLeftX[10..0]" (rect 0 0 73 12)(font "Arial" ))
-		(text "topLeftX[10..0]" (rect 150 27 223 39)(font "Arial" ))
-		(line (pt 232 32)(pt 216 32)(line_width 3))
+		(text "topLeftX[10..0]" (rect 158 27 231 39)(font "Arial" ))
+		(line (pt 240 32)(pt 224 32)(line_width 3))
 	)
 	(port
-		(pt 232 48)
+		(pt 240 48)
 		(output)
 		(text "topLeftY[10..0]" (rect 0 0 75 12)(font "Arial" ))
-		(text "topLeftY[10..0]" (rect 148 43 223 55)(font "Arial" ))
-		(line (pt 232 48)(pt 216 48)(line_width 3))
+		(text "topLeftY[10..0]" (rect 156 43 231 55)(font "Arial" ))
+		(line (pt 240 48)(pt 224 48)(line_width 3))
+	)
+	(port
+		(pt 240 64)
+		(output)
+		(text "vertSpeed[10..0]" (rect 0 0 82 12)(font "Arial" ))
+		(text "vertSpeed[10..0]" (rect 150 59 232 71)(font "Arial" ))
+		(line (pt 240 64)(pt 224 64)(line_width 3))
 	)
 	(parameter
 		"INITIAL_X"
@@ -484,29 +553,34 @@ agreement for further details.
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter
-		"INITIAL_X_SPEED"
-		"40"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"X_ACCEL"
-		"-10"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
 		"MIN_X_SPEED"
-		"40"
+		"100"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter
 		"MAX_X_SPEED"
-		"100"
+		"200"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"X_ACCEL"
+		"10"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"LAT_SPEED"
+		"15"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"INITIAL_X_SPEED"
+		"40"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 216 160))
+		(rectangle (rect 16 16 224 192))
 	)
-	(annotation_block (parameter)(rect 632 288 840 384))
+	(annotation_block (parameter)(rect 608 272 816 424))
 )
 (connector
 	(text "clk" (rect 880 392 894 409)(font "Intel Clear" ))
@@ -596,52 +670,6 @@ agreement for further details.
 	(pt 1280 440)
 )
 (connector
-	(pt 504 568)
-	(pt 536 568)
-	(bus)
-)
-(connector
-	(pt 504 736)
-	(pt 504 568)
-	(bus)
-)
-(connector
-	(pt 408 472)
-	(pt 536 472)
-)
-(connector
-	(pt 408 488)
-	(pt 536 488)
-)
-(connector
-	(pt 408 504)
-	(pt 536 504)
-)
-(connector
-	(pt 416 520)
-	(pt 536 520)
-)
-(connector
-	(pt 408 536)
-	(pt 536 536)
-)
-(connector
-	(pt 408 552)
-	(pt 536 552)
-)
-(connector
-	(text "topLeftX[10..0]" (rect 771 456 841 473)(font "Intel Clear" ))
-	(pt 768 472)
-	(pt 832 472)
-	(bus)
-)
-(connector
-	(text "topLeftY[10..0]" (rect 774 472 844 489)(font "Intel Clear" ))
-	(pt 768 488)
-	(pt 824 488)
-	(bus)
-)
-(connector
 	(text "topLeftX[10..0]" (rect 877 456 947 473)(font "Intel Clear" ))
 	(pt 872 472)
 	(pt 936 472)
@@ -664,6 +692,72 @@ agreement for further details.
 	(pt 1600 456)
 	(pt 1672 456)
 	(bus)
+)
+(connector
+	(text "vertSpeed[10..0]" (rect 1605 456 1682 473)(font "Intel Clear" ))
+	(pt 1672 472)
+	(pt 1592 472)
+	(bus)
+)
+(connector
+	(pt 408 472)
+	(pt 528 472)
+)
+(connector
+	(pt 408 488)
+	(pt 528 488)
+)
+(connector
+	(pt 408 504)
+	(pt 528 504)
+)
+(connector
+	(pt 416 520)
+	(pt 528 520)
+)
+(connector
+	(pt 408 536)
+	(pt 528 536)
+)
+(connector
+	(text "topLeftX[10..0]" (rect 779 456 849 473)(font "Intel Clear" ))
+	(pt 768 472)
+	(pt 840 472)
+	(bus)
+)
+(connector
+	(text "topLeftY[10..0]" (rect 782 472 852 489)(font "Intel Clear" ))
+	(pt 768 488)
+	(pt 832 488)
+	(bus)
+)
+(connector
+	(text "vertSpeed[10..0]" (rect 772 488 849 505)(font "Intel Clear" ))
+	(pt 768 504)
+	(pt 840 504)
+	(bus)
+)
+(connector
+	(pt 504 736)
+	(pt 504 600)
+	(bus)
+)
+(connector
+	(pt 528 600)
+	(pt 504 600)
+	(bus)
+)
+(connector
+	(pt 408 584)
+	(pt 528 584)
+)
+(connector
+	(pt 416 552)
+	(pt 528 552)
+)
+(connector
+	(pt 408 568)
+	(pt 528 568)
 )
 (text "// (c) Technion IIT, Department of Electrical Engineering 2023" (rect 168 16 527 35)(font "Intel Clear" (font_size 8)))
 (text "  " (rect 24 624 31 643)(font "Intel Clear" (font_size 8)))

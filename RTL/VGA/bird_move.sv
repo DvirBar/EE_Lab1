@@ -18,6 +18,7 @@ module	bird_move	(
 					
 					input	 logic [10:0] planeTopLeftX,
 					input	 logic [10:0] planeTopLeftY,
+					input  logic [10:0] planeVertSpeed,
 					input  logic [3:0] HitEdgeCode, //one bit per ,
 
 					output logic signed 	[10:0] topLeftX, // output the top left corner 
@@ -26,7 +27,9 @@ module	bird_move	(
 					
 );
 
-
+// TODO: make y speed loss more natural
+// TODO: check why the bird doens't disappear
+// TODO: check vertical speed 
 // a module used to generate the  ball trajectory.  
 
 parameter int INITIAL_X = 280;
@@ -36,6 +39,8 @@ parameter int INITIAL_Y_SPEED = 20;
 parameter int Y_ACCEL = -10;
 
 const int MAX_Y_SPEED = 500;
+const int	BRACKET_OFFSET =	32;
+const int	GROUND_Y =	479-(BRACKET_OFFSET+BRACKET_OFFSET/4);
 const int	FIXED_POINT_MULTIPLIER = 64; // note it must be 2^n 
 // FIXED_POINT_MULTIPLIER is used to enable working with integers in high resolution so that 
 // we do all calculations with topLeftX_FixedPoint to get a resolution of 1/64 pixel in calcuatuions,
@@ -46,11 +51,16 @@ const int	FIXED_POINT_MULTIPLIER = 64; // note it must be 2^n
 const int   OBJECT_WIDTH_X = 64;
 const int   OBJECT_HIGHT_Y = 64;
 const int	SafetyMargin   =	2;
+const int 	HIT_Y_SPEED_LOSS = 90;
+const int 	HIT_X_SPEED_LOSS = 30;
+const int 	DISAPPEAR_DELAY = 10;
 
-const int	x_FRAME_LEFT	=	(SafetyMargin)* FIXED_POINT_MULTIPLIER; 
-const int	x_FRAME_RIGHT	=	(639 - SafetyMargin - OBJECT_WIDTH_X)* FIXED_POINT_MULTIPLIER; 
-const int	y_FRAME_TOP		=	(SafetyMargin) * FIXED_POINT_MULTIPLIER;
-const int	y_FRAME_BOTTOM	=	(479 -SafetyMargin - OBJECT_HIGHT_Y ) * FIXED_POINT_MULTIPLIER; //- OBJECT_HIGHT_Y
+const int	X_FRAME_LEFT	=	(SafetyMargin)* FIXED_POINT_MULTIPLIER; 
+const int	X_FRAME_RIGHT	=	(639 - SafetyMargin - OBJECT_WIDTH_X)* FIXED_POINT_MULTIPLIER; 
+const int	Y_FRAME_TOP		=	(SafetyMargin) * FIXED_POINT_MULTIPLIER;
+const int	Y_FRAME_BOTTOM	=	(479 -SafetyMargin - OBJECT_HIGHT_Y ) * FIXED_POINT_MULTIPLIER; //- OBJECT_HIGHT_Y
+
+const int 	X_LEFT_HALF = (X_FRAME_RIGHT-X_FRAME_LEFT)/2;
 
 
 enum  logic [2:0] {IDLE_ST,         	// initial state
@@ -64,6 +74,8 @@ int Xspeed  ; // speed
 int Yspeed  ; 
 int Xposition ; //position   
 int Yposition ;  
+int onGround ;
+int disappearCountdown;
 
 logic [15:0] hit_reg = 16'b00000;  // register to collect all the collisions in the frame. |corner|left|top|right|bottom|
 
@@ -80,7 +92,8 @@ begin : fsm_sync_proc
 		Yposition <= 0   ; 
 		hit_reg <= 16'b0 ;	
 		displayBird <= 0 ;
-	
+		onGround <= 0 ;
+		disappearCountdown <= 0;
 	end 	
 	
 	else begin
@@ -93,15 +106,18 @@ begin : fsm_sync_proc
 			IDLE_ST: begin
 		//------------
 		
-				Xspeed  <= INITIAL_X_SPEED ; 
-				Yspeed  <= INITIAL_Y_SPEED  ; 
+				Xspeed <= planeVertSpeed; 
+				Yspeed  <= 0 ; 
 				Xposition <= planeTopLeftX*FIXED_POINT_MULTIPLIER; 
 				Yposition <= planeTopLeftY*FIXED_POINT_MULTIPLIER; 
-
+				
+				
+				
 				// if (startOfFrame && enable_sof)   if want to stop the smiley move
-				if (startOfFrame && showBird) begin
+				if (startOfFrame && showBird && Xposition <= X_LEFT_HALF) begin
 					SM_Motion <= MOVE_ST;
 					displayBird <= 1'b1;
+					disappearCountdown <= DISAPPEAR_DELAY;
 				end
  	
 			end
@@ -109,24 +125,17 @@ begin : fsm_sync_proc
 		//------------
 			MOVE_ST:  begin     // moving no colision 
 		//------------
-//		// keys direction change 
-//				if (Y_direction_key && (Yspeed > 0 ) )//  while moving down
-//					Yspeed <= -Yspeed;//+1 ; 
-//				if (toggle_x_key & !toggle_x_key_D) //rizing edge 
-//					Xspeed <= -Xspeed ; // toggle direction 
 	
        // collcting collisions 	
 				if (collision) begin
 					hit_reg[HitEdgeCode]<=1'b1;
-
 				end
 				
-
-				if (startOfFrame )
-					SM_Motion <= START_OF_FRAME_ST ; 
-					
-					
 				
+
+				if (startOfFrame ) begin
+						SM_Motion <= START_OF_FRAME_ST ; 
+				end
 		end 
 		
 		//------------
@@ -142,14 +151,44 @@ begin : fsm_sync_proc
 //			32'h88911322,    
 //			32'h89111132,    
 //			32'h91111113};
+
 			
-			case (hit_reg)
+			// Reduce speed size on collision
+			if(hit_reg != 16'h0000) begin // if some collision
+				if (Xspeed < 0) begin
+				  if(Xspeed+HIT_X_SPEED_LOSS > 0)
+						Xspeed = 0;
+				  else
+						Xspeed = Xspeed+HIT_X_SPEED_LOSS;
+				end
+				
+				else if(Xspeed > 0) begin
+					if(Xspeed-HIT_X_SPEED_LOSS < 0)
+						Xspeed = 0;
+					else 
+						Xspeed = Xspeed-HIT_X_SPEED_LOSS;
+				end
+			end
+			
+	
+
+			// Change speed direction in some collisions
+			case (hit_reg) 
 				
 				16'h0000:  // no collision in the frame 
 					begin
 							Yspeed <= Yspeed ;
 							Xspeed <= Xspeed ;
 					end
+				//   1H  (1H & 9H) (1H & 3H) (3H & 9H ) (3H & 1H & 9H )
+				16'h0002,16'h0202,16'h000A, ,16'h0028 ,16'h002A: // bottom side 
+				  begin
+							if (Yspeed > 0) begin
+							  Yspeed <= -Yspeed+HIT_Y_SPEED_LOSS;
+							end
+							
+							onGround <= 1'b1;
+				  end
 				//   CH       6H		3H         9H
 				16'h1000,16'h0040,16'h0008,16'h0200:	// one of the four corners 	
 
@@ -160,7 +199,7 @@ begin : fsm_sync_proc
 			//   8H   ; (CH & 8H) ; (8H & 9H) ; (cH & 9H) ;(cH & 9H & 8H)   
 				16'h0100,16'h1100,16'h0300,16'h1200,16'h1300:  // left side 
 				  begin
-							if (Xspeed < 0)
+							if (Xspeed < 0) 
 							  Xspeed <= -Xspeed ;
 				  end
 				//  4H     (CH & 4H)  (4H & 6H) (CH & 6H)  (CH & 4H & 6H)
@@ -172,15 +211,10 @@ begin : fsm_sync_proc
 				//   2H  (2H & 6H) (2H & 3H) (6H & 3H )  (6H & 2H &3H )
 				16'h0004,16'h0044,16'h000C, 16'h0048 , 16'h004C: // right side 
 				 begin
-								if (Xspeed > 0)
-									Xspeed <= -Xspeed ;
-			  end
-				//   1H  (1H & 9H) (1H & 3H) (3H & 9H ) (3H & 1H & 9H )
-				16'h0002,16'h0202,16'h000A, ,16'h0028 ,16'h002A: // bottom side 
-				  begin
-							if (Yspeed > 0)
-							  Yspeed <= -Yspeed+1 ;
-				  end
+							if (Xspeed > 0)
+								Xspeed <= -Xspeed ;
+				 end
+				
 				 default:  //complex corner 
 				  begin
 							Yspeed <= -Yspeed ;
@@ -191,7 +225,10 @@ begin : fsm_sync_proc
 				 endcase
 					
 				hit_reg <= 16'h0000;  //clear for next time 
-								
+				
+			
+
+				
 				SM_Motion <= POSITION_CHANGE_ST ; 
 			end 
 
@@ -219,17 +256,24 @@ begin : fsm_sync_proc
 		//------------------------
 			POSITION_LIMITS_ST : begin  //check if still inside the frame 
 		//------------------------
-		if (Xposition < x_FRAME_LEFT) 
-						Xposition <= x_FRAME_LEFT ; 
-		if (Xposition > x_FRAME_RIGHT)
-						Xposition <= x_FRAME_RIGHT ; 
-		if (Yposition < y_FRAME_TOP) 
-						Yposition <= y_FRAME_TOP ; 
-		if (Yposition > y_FRAME_BOTTOM) 
-						Yposition <= y_FRAME_BOTTOM ; 
+				if (Xposition < X_FRAME_LEFT) 
+								Xposition <= X_FRAME_LEFT ; 
+				if (Xposition > X_FRAME_RIGHT)
+								Xposition <= X_FRAME_RIGHT ; 
+				if (Yposition < Y_FRAME_TOP) 
+								Yposition <= Y_FRAME_TOP ; 
+				if (Yposition > Y_FRAME_BOTTOM) 
+								Yposition <= Y_FRAME_BOTTOM ; 
+								
+				
+				if((Xspeed == 0) && (Yspeed == 0) && onGround == 1'b1) begin
+					SM_Motion <= IDLE_ST;
+					displayBird <= 1'b0;
+				end
+				else
+					SM_Motion <= MOVE_ST ; 
 
-				SM_Motion <= MOVE_ST ; 
-			
+				onGround <= 1'b0;
 			end
 		
 		endcase  // case 
