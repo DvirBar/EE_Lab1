@@ -461,7 +461,7 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(text "level" (rect 1242 392 1266 409)(font "Intel Clear" ))
+	(text "level[3..0]" (rect 1242 392 1290 409)(font "Intel Clear" ))
 	(pt 1304 408)
 	(pt 1232 408)
 	(bus)
