@@ -11,7 +11,7 @@ module	FortressMatrixBitMap	(
 					input logic	[10:0] offsetX,// offset from top left  position 
 					input logic	[10:0] offsetY,
 					input	logic	InsideRectangle, //input that the pixel is within a bracket 
-					input logic random_fort,
+					input logic [3:0] level,
 					input logic [10:0] speedSum,
 					
 //------------------------input collision bird-wall
