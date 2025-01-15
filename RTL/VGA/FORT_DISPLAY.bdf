@@ -152,7 +152,7 @@ agreement for further details.
 	(input)
 	(rect 448 528 616 544)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "level[3..0]" (rect 5 0 54 17)(font "Intel Clear" ))
+	(text "level[4..0]" (rect 5 0 54 17)(font "Intel Clear" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -332,8 +332,8 @@ agreement for further details.
 	(port
 		(pt 0 112)
 		(input)
-		(text "level[3..0]" (rect 0 0 49 12)(font "Arial" ))
-		(text "level[3..0]" (rect 21 107 70 119)(font "Arial" ))
+		(text "level[4..0]" (rect 0 0 49 12)(font "Arial" ))
+		(text "level[4..0]" (rect 21 107 70 119)(font "Arial" ))
 		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
@@ -455,15 +455,15 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(text "level[3..0]" (rect 643 520 691 537)(font "Intel Clear" ))
-	(pt 616 536)
-	(pt 736 536)
+	(text "level[4..0]" (rect 1242 392 1290 409)(font "Intel Clear" ))
+	(pt 1304 408)
+	(pt 1232 408)
 	(bus)
 )
 (connector
-	(text "level[3..0]" (rect 1242 392 1290 409)(font "Intel Clear" ))
-	(pt 1304 408)
-	(pt 1232 408)
+	(text "level[4..0]" (rect 643 520 691 537)(font "Intel Clear" ))
+	(pt 616 536)
+	(pt 736 536)
 	(bus)
 )
 (text "// (c) Technion IIT, Department of Electrical Engineering 2023" (rect 632 24 991 43)(font "Intel Clear" (font_size 8)))

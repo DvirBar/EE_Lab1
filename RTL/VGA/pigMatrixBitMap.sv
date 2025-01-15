@@ -14,10 +14,11 @@ module	pigMatrixBitMap	(
 					input logic [0:1] randnum,
 					input logic randgen,
 					input logic bird_pig_collision,
+					input logic [4:0] level,
 
 					output	logic	drawingRequest, //output that the pixel should be dispalyed 
 					output	logic	[7:0] RGBout  //rgb value from the bitmap 
- ) ;
+ );
  
 
 // Size represented as Number of X and Y bits 
@@ -30,11 +31,11 @@ localparam logic [7:0] TRANSPARENT_ENCODING = 8'hFF ;// RGB value in the bitmap 
 // there are  16 options of differents kinds of 32*32 squares 
 // all numbers here are hard coded to simplify the  understanding 
 
-logic spawnFlag;
+logic [4:0] renderedLevel;
 
 logic [0:15] [0:15] [3:0]  pigBitMapMask;  
 
-logic [0:15] [0:15] [3:0]  pigDefaultBitMapMask= // defult table to load on reset 
+logic [0:15] [0:15] [3:0]  pigDefaultBitMapMask= // default table to load on reset 
 {{64'h0000000000000000},
  {64'h0000000000000000},
  {64'h0000000000000000},
@@ -54,7 +55,15 @@ logic [0:15] [0:15] [3:0]  pigDefaultBitMapMask= // defult table to load on rese
  
  
  
-logic [0:3] [0:1] [0:15] validPigLocations = {{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC}};
+logic [0:4] [0:3] [0:1] [0:15] validPigLocations =  // Possible pig spawn locations for every level
+{
+{{16'hC,16'hA},{16'hC,16'hB},{16'hC,16'hC},{16'hC,16'hD}},
+{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'hC,16'hE}},
+{{16'hA,16'hA},{16'hA,16'hB},{16'hA,16'hC},{16'hB,16'hC}},  // TODO - ADD 4th LOCATION TO EVERY MAP
+{{16'hC,16'hA},{16'hA,16'hA},{16'hB,16'hC},{16'hB,16'hC}},
+{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'hB,16'hC}}
+};
+
 logic [0:1] [0:15] randomizedLocation;
 
  
@@ -140,15 +149,15 @@ begin
 	if(!resetN) begin
 		RGBout <=	8'h00;
 		pigBitMapMask  <=  pigDefaultBitMapMask ;  //  copy default table
-		spawnFlag =	1'b1;
+		renderedLevel = level+1;
 	end
 	else begin
 		RGBout <= TRANSPARENT_ENCODING ; // default 
 		
-		if (randgen == 1'b1 && spawnFlag == 1'b1) begin
-			randomizedLocation = validPigLocations[randnum];  //  spawn pigs
+		if (randgen == 1'b1 && renderedLevel != level) begin
+			renderedLevel = level;
+			randomizedLocation = validPigLocations[renderedLevel][randnum];  //  spawn pigs
 			pigBitMapMask[randomizedLocation[0]][randomizedLocation[1]] <= 1'h1;
-			spawnFlag =	1'b0;
 		end
 		
 		if (bird_pig_collision == 1'b1)
