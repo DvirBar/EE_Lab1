@@ -23,6 +23,7 @@ module	bird_move	(
 
 					output logic signed 	[10:0] topLeftX, // output the top left corner 
 					output logic signed	[10:0] topLeftY,  // can be negative , if the object is partliy outside 
+					output logic signed 	[10:0] speedSum,
 					output logic displayBird
 					
 );
@@ -51,9 +52,10 @@ const int	FIXED_POINT_MULTIPLIER = 64; // note it must be 2^n
 const int   OBJECT_WIDTH_X = 64;
 const int   OBJECT_HIGHT_Y = 64;
 const int	SafetyMargin   =	2;
-const int 	HIT_Y_SPEED_LOSS = 90;
-const int 	HIT_X_SPEED_LOSS = 30;
+const int 	HIT_Y_SPEED_LOSS = 2;
+const int 	HIT_X_SPEED_LOSS = 2;
 const int 	DISAPPEAR_DELAY = 10;
+const int 	SPEED_THRESH = 1;
 
 const int	X_FRAME_LEFT	=	(SafetyMargin)* FIXED_POINT_MULTIPLIER; 
 const int	X_FRAME_RIGHT	=	(639 - SafetyMargin - OBJECT_WIDTH_X)* FIXED_POINT_MULTIPLIER; 
@@ -71,7 +73,7 @@ enum  logic [2:0] {IDLE_ST,         	// initial state
 						}  SM_Motion ;
 
 int Xspeed  ; // speed    
-int Yspeed  ; 
+int Yspeed  ;  
 int Xposition ; //position   
 int Yposition ;  
 int onGround ;
@@ -130,11 +132,9 @@ begin : fsm_sync_proc
 				if (collision) begin
 					hit_reg[HitEdgeCode]<=1'b1;
 				end
-				
-				
 
 				if (startOfFrame ) begin
-						SM_Motion <= START_OF_FRAME_ST ; 
+					SM_Motion <= START_OF_FRAME_ST ; 
 				end
 		end 
 		
@@ -155,19 +155,9 @@ begin : fsm_sync_proc
 			
 			// Reduce speed size on collision
 			if(hit_reg != 16'h0000) begin // if some collision
-				if (Xspeed < 0) begin
-				  if(Xspeed+HIT_X_SPEED_LOSS > 0)
-						Xspeed = 0;
-				  else
-						Xspeed = Xspeed+HIT_X_SPEED_LOSS;
-				end
-				
-				else if(Xspeed > 0) begin
-					if(Xspeed-HIT_X_SPEED_LOSS < 0)
-						Xspeed = 0;
-					else 
-						Xspeed = Xspeed-HIT_X_SPEED_LOSS;
-				end
+				Xspeed = Xspeed/HIT_X_SPEED_LOSS;
+				Yspeed = Yspeed/HIT_Y_SPEED_LOSS;
+				onGround <= 1'b1;
 			end
 			
 	
@@ -177,17 +167,22 @@ begin : fsm_sync_proc
 				
 				16'h0000:  // no collision in the frame 
 					begin
-							Yspeed <= Yspeed ;
-							Xspeed <= Xspeed ;
+							if(Yspeed<SPEED_THRESH && Xspeed<SPEED_THRESH) begin
+								Yspeed <= 0 ;
+								Xspeed <= 0 ;
+							end
+							
+							else begin
+								Yspeed <= Yspeed ;
+								Xspeed <= Xspeed ;
+							end
 					end
 				//   1H  (1H & 9H) (1H & 3H) (3H & 9H ) (3H & 1H & 9H )
 				16'h0002,16'h0202,16'h000A, ,16'h0028 ,16'h002A: // bottom side 
 				  begin
 							if (Yspeed > 0) begin
-							  Yspeed <= -Yspeed+HIT_Y_SPEED_LOSS;
+							  Yspeed <= -Yspeed;
 							end
-							
-							onGround <= 1'b1;
 				  end
 				//   CH       6H		3H         9H
 				16'h1000,16'h0040,16'h0008,16'h0200:	// one of the four corners 	
@@ -265,6 +260,7 @@ begin : fsm_sync_proc
 				if (Yposition > Y_FRAME_BOTTOM) 
 								Yposition <= Y_FRAME_BOTTOM ; 
 								
+				speedSum <= (Xspeed < 0 ? -Xspeed : Xspeed) + (Yspeed < 0 ? -Yspeed : Yspeed);
 				
 				if((Xspeed == 0) && (Yspeed == 0) && onGround == 1'b1) begin
 					SM_Motion <= IDLE_ST;
@@ -287,8 +283,7 @@ end // end fsm_sync
 //return from FIXED point  trunc back to prame size parameters 
   
 assign 	topLeftX = Xposition / FIXED_POINT_MULTIPLIER ;   // note it must be 2^n 
-assign 	topLeftY = Yposition / FIXED_POINT_MULTIPLIER ;    
-	
+assign 	topLeftY = Yposition / FIXED_POINT_MULTIPLIER ; 
 
 endmodule	
 //---------------

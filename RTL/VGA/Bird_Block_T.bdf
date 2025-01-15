@@ -204,7 +204,7 @@ agreement for further details.
 	(input)
 	(rect 136 584 344 600)
 	(text "INPUT" (rect 165 0 193 10)(font "Arial" (font_size 6)))
-	(text "planeVertSpeed[10..0]" (rect 5 0 114 12)(font "Arial" ))
+	(text "planeVertSpeed[10..0]" (rect 5 0 113 12)(font "Arial" ))
 	(pt 208 8)
 	(drawing
 		(line (pt 124 12)(pt 149 12))
@@ -237,6 +237,22 @@ agreement for further details.
 	(rect 1600 384 1776 400)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "birdRGB[7..0]" (rect 90 0 152 17)(font "Intel Clear" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 1640 416 1819 432)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "speedSum[10..0]" (rect 90 0 173 12)(font "Arial" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
@@ -414,7 +430,7 @@ agreement for further details.
 	(annotation_block (parameter)(rect 936 528 1184 604))
 )
 (symbol
-	(rect 576 440 824 648)
+	(rect 512 440 768 648)
 	(text "bird_move" (rect 5 0 56 12)(font "Arial" ))
 	(text "inst" (rect 8 192 25 204)(font "Arial" ))
 	(port
@@ -481,25 +497,32 @@ agreement for further details.
 		(line (pt 0 160)(pt 16 160)(line_width 3))
 	)
 	(port
-		(pt 248 32)
+		(pt 256 32)
 		(output)
 		(text "topLeftX[10..0]" (rect 0 0 73 12)(font "Arial" ))
-		(text "topLeftX[10..0]" (rect 166 27 227 39)(font "Arial" ))
-		(line (pt 248 32)(pt 232 32)(line_width 3))
+		(text "topLeftX[10..0]" (rect 174 27 235 39)(font "Arial" ))
+		(line (pt 256 32)(pt 240 32)(line_width 3))
 	)
 	(port
-		(pt 248 48)
+		(pt 256 48)
 		(output)
 		(text "topLeftY[10..0]" (rect 0 0 75 12)(font "Arial" ))
-		(text "topLeftY[10..0]" (rect 164 43 227 55)(font "Arial" ))
-		(line (pt 248 48)(pt 232 48)(line_width 3))
+		(text "topLeftY[10..0]" (rect 172 43 235 55)(font "Arial" ))
+		(line (pt 256 48)(pt 240 48)(line_width 3))
 	)
 	(port
-		(pt 248 64)
+		(pt 256 64)
+		(output)
+		(text "speedSum[10..0]" (rect 0 0 83 12)(font "Arial" ))
+		(text "speedSum[10..0]" (rect 165 59 235 71)(font "Arial" ))
+		(line (pt 256 64)(pt 240 64)(line_width 3))
+	)
+	(port
+		(pt 256 80)
 		(output)
 		(text "displayBird" (rect 0 0 54 12)(font "Arial" ))
-		(text "displayBird" (rect 182 59 227 71)(font "Arial" ))
-		(line (pt 248 64)(pt 232 64))
+		(text "displayBird" (rect 190 75 235 87)(font "Arial" ))
+		(line (pt 256 80)(pt 240 80))
 	)
 	(parameter
 		"INITIAL_X"
@@ -527,9 +550,9 @@ agreement for further details.
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 232 192))
+		(rectangle (rect 16 16 240 192))
 	)
-	(annotation_block (parameter)(rect 632 264 840 384))
+	(annotation_block (parameter)(rect 568 264 776 384))
 )
 (connector
 	(text "clk" (rect 880 392 894 409)(font "Intel Clear" ))
@@ -619,24 +642,8 @@ agreement for further details.
 	(pt 1216 456)
 )
 (connector
-	(pt 368 560)
-	(pt 368 552)
-	(bus)
-)
-(connector
 	(pt 360 560)
 	(pt 368 560)
-	(bus)
-)
-(connector
-	(text "<<__$DEF_ALIAS19365>>" (rect 490 536 613 553)(font "Intel Clear" )(invisible))
-	(pt 368 552)
-	(pt 576 552)
-	(bus)
-)
-(connector
-	(pt 376 576)
-	(pt 376 568)
 	(bus)
 )
 (connector
@@ -645,8 +652,8 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(pt 376 568)
-	(pt 576 568)
+	(pt 344 592)
+	(pt 352 592)
 	(bus)
 )
 (connector
@@ -656,7 +663,28 @@ agreement for further details.
 )
 (connector
 	(pt 504 600)
-	(pt 576 600)
+	(pt 512 600)
+	(bus)
+)
+(connector
+	(pt 368 560)
+	(pt 368 552)
+	(bus)
+)
+(connector
+	(text "<<__$DEF_ALIAS19365>>" (rect 426 536 549 553)(font "Intel Clear" )(invisible))
+	(pt 368 552)
+	(pt 512 552)
+	(bus)
+)
+(connector
+	(pt 376 576)
+	(pt 376 568)
+	(bus)
+)
+(connector
+	(pt 376 568)
+	(pt 512 568)
 	(bus)
 )
 (connector
@@ -665,49 +693,56 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(pt 344 592)
-	(pt 352 592)
-	(bus)
-)
-(connector
 	(pt 352 584)
-	(pt 576 584)
+	(pt 512 584)
 	(bus)
 )
 (connector
 	(pt 408 472)
-	(pt 576 472)
+	(pt 512 472)
 )
 (connector
 	(pt 408 488)
-	(pt 576 488)
+	(pt 512 488)
 )
 (connector
 	(pt 408 504)
-	(pt 576 504)
-)
-(connector
-	(pt 408 536)
-	(pt 576 536)
+	(pt 512 504)
 )
 (connector
 	(pt 408 520)
-	(pt 576 520)
+	(pt 512 520)
 )
 (connector
-	(pt 824 472)
+	(pt 408 536)
+	(pt 512 536)
+)
+(connector
+	(pt 768 472)
 	(pt 936 472)
 	(bus)
 )
 (connector
-	(pt 824 488)
+	(pt 768 488)
 	(pt 936 488)
 	(bus)
 )
 (connector
-	(text "displayBird" (rect 831 488 884 505)(font "Intel Clear" ))
-	(pt 824 504)
-	(pt 888 504)
+	(text "displayBird" (rect 791 504 844 521)(font "Intel Clear" ))
+	(pt 768 520)
+	(pt 848 520)
+)
+(connector
+	(text "speedSum[10..0]" (rect 785 488 864 505)(font "Intel Clear" ))
+	(pt 768 504)
+	(pt 848 504)
+	(bus)
+)
+(connector
+	(text "speedSum[10..0]" (rect 1562 408 1641 425)(font "Intel Clear" ))
+	(pt 1552 424)
+	(pt 1640 424)
+	(bus)
 )
 (text "// (c) Technion IIT, Department of Electrical Engineering 2023" (rect 168 16 527 35)(font "Intel Clear" (font_size 8)))
 (text "  " (rect 24 624 31 643)(font "Intel Clear" (font_size 8)))

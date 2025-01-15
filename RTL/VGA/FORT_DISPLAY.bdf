@@ -149,6 +149,22 @@ agreement for further details.
 	(text "VCC" (rect 160 7 180 17)(font "Arial" (font_size 6)))
 )
 (pin
+	(input)
+	(rect 432 496 616 512)
+	(text "INPUT" (rect 141 0 169 10)(font "Arial" (font_size 6)))
+	(text "speedSum[10..0]" (rect 5 0 88 12)(font "Arial" ))
+	(pt 184 8)
+	(drawing
+		(line (pt 100 12)(pt 125 12))
+		(line (pt 100 4)(pt 125 4))
+		(line (pt 129 8)(pt 184 8))
+		(line (pt 100 12)(pt 100 4))
+		(line (pt 125 4)(pt 129 8))
+		(line (pt 125 12)(pt 129 8))
+	)
+	(text "VCC" (rect 144 7 164 17)(font "Arial" (font_size 6)))
+)
+(pin
 	(output)
 	(rect 1648 320 1824 336)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
@@ -181,7 +197,7 @@ agreement for further details.
 	)
 )
 (symbol
-	(rect 776 328 1000 472)
+	(rect 760 328 984 472)
 	(text "square_object" (rect 5 0 73 12)(font "Arial" ))
 	(text "inst11" (rect 8 128 36 145)(font "Intel Clear" ))
 	(port
@@ -272,7 +288,7 @@ agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 208 128))
 	)
-	(annotation_block (parameter)(rect 744 216 999 292))
+	(annotation_block (parameter)(rect 728 216 983 292))
 )
 (symbol
 	(rect 1304 296 1536 472)
@@ -323,9 +339,9 @@ agreement for further details.
 	(port
 		(pt 0 128)
 		(input)
-		(text "bird_pig_collision" (rect 0 0 82 12)(font "Arial" ))
-		(text "bird_pig_collision" (rect 21 123 103 135)(font "Arial" ))
-		(line (pt 0 128)(pt 16 128))
+		(text "speedSum[10..0]" (rect 0 0 83 12)(font "Arial" ))
+		(text "speedSum[10..0]" (rect 21 123 104 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128)(line_width 3))
 	)
 	(port
 		(pt 0 144)
@@ -362,58 +378,9 @@ agreement for further details.
 	(pt 1304 408)
 )
 (connector
-	(text "BoxHartTopLeftX[10..0]" (rect 1016 344 1126 361)(font "Intel Clear" ))
-	(pt 1000 360)
-	(pt 1304 360)
-	(bus)
-)
-(connector
-	(text "BoxHartTopLeftY[10..0]" (rect 1016 360 1126 377)(font "Intel Clear" ))
-	(pt 1000 376)
-	(pt 1304 376)
-	(bus)
-)
-(connector
-	(text "boxHartDrawingRequest" (rect 1016 376 1130 393)(font "Intel Clear" ))
-	(pt 1000 392)
-	(pt 1304 392)
-)
-(connector
-	(text "resetN" (rect 634 360 664 377)(font "Intel Clear" ))
-	(pt 624 376)
-	(pt 776 376)
-)
-(connector
-	(text "pixelX[10..0]" (rect 634 376 693 393)(font "Intel Clear" ))
-	(pt 624 392)
-	(pt 776 392)
-	(bus)
-)
-(connector
-	(text "pixelY[10..0]" (rect 634 392 693 409)(font "Intel Clear" ))
-	(pt 624 408)
-	(pt 776 408)
-	(bus)
-)
-(connector
 	(text "HART_SELECT" (rect 1224 392 1293 409)(font "Intel Clear" ))
 	(pt 1208 464)
 	(pt 1192 464)
-)
-(connector
-	(text "clk" (rect 634 344 648 361)(font "Intel Clear" ))
-	(pt 776 360)
-	(pt 624 360)
-)
-(connector
-	(pt 624 424)
-	(pt 776 424)
-	(bus)
-)
-(connector
-	(pt 776 440)
-	(pt 624 440)
-	(bus)
 )
 (connector
 	(text "clk" (rect 1242 312 1256 329)(font "Intel Clear" ))
@@ -446,6 +413,67 @@ agreement for further details.
 (connector
 	(pt 1232 440)
 	(pt 1304 440)
+)
+(connector
+	(text "speedSum[10..0]" (rect 1229 408 1308 425)(font "Intel Clear" ))
+	(pt 1304 424)
+	(pt 1232 424)
+	(bus)
+)
+(connector
+	(text "speedSum[10..0]" (rect 635 488 714 505)(font "Intel Clear" ))
+	(pt 616 504)
+	(pt 736 504)
+	(bus)
+)
+(connector
+	(text "clk" (rect 618 344 632 361)(font "Intel Clear" ))
+	(pt 624 360)
+	(pt 760 360)
+)
+(connector
+	(text "resetN" (rect 618 360 648 377)(font "Intel Clear" ))
+	(pt 624 376)
+	(pt 760 376)
+)
+(connector
+	(text "pixelX[10..0]" (rect 618 376 677 393)(font "Intel Clear" ))
+	(pt 624 392)
+	(pt 760 392)
+	(bus)
+)
+(connector
+	(text "pixelY[10..0]" (rect 618 392 677 409)(font "Intel Clear" ))
+	(pt 624 408)
+	(pt 760 408)
+	(bus)
+)
+(connector
+	(pt 624 424)
+	(pt 760 424)
+	(bus)
+)
+(connector
+	(pt 624 440)
+	(pt 760 440)
+	(bus)
+)
+(connector
+	(text "BoxHartTopLeftX[10..0]" (rect 1000 344 1110 361)(font "Intel Clear" ))
+	(pt 984 360)
+	(pt 1304 360)
+	(bus)
+)
+(connector
+	(text "BoxHartTopLeftY[10..0]" (rect 1000 360 1110 377)(font "Intel Clear" ))
+	(pt 984 376)
+	(pt 1304 376)
+	(bus)
+)
+(connector
+	(text "boxHartDrawingRequest" (rect 1000 376 1114 393)(font "Intel Clear" ))
+	(pt 984 392)
+	(pt 1304 392)
 )
 (text "// (c) Technion IIT, Department of Electrical Engineering 2023" (rect 632 24 991 43)(font "Intel Clear" (font_size 8)))
 (rectangle (rect 336 176 1864 600)(color 0 0 0)(line_width 3))
