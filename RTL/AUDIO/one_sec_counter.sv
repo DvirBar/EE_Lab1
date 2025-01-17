@@ -23,7 +23,8 @@
 //       ----------------------------------------------	
 	
 	//assign  sec = turbo ? oneSecVal/10 : oneSecVal;  // it is legal to devide by 10, as it is done by the complier not by logic (actual transistors) 
-	assign  sec = oneSecVal/8;
+	parameter speed = 7; // for DE10 board un-comment this line 
+	assign  sec = oneSecVal/speed;
 
 	
    always_ff @( posedge clk or negedge resetN )
