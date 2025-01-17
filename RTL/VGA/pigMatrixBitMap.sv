@@ -165,8 +165,8 @@ begin
 			maxPigs = 3;
 		end
 		
-		if (maxPigs>0) begin
-				if (pigBitMapMask[randomizedLocation[0]][randomizedLocation[1]]==0) begin  // spawns 3 pigs at free locations
+		if (maxPigs>0) begin  // spawns 3 pigs at free locations
+				if (pigBitMapMask[randomizedLocation[0]][randomizedLocation[1]]==0) begin
 					pigBitMapMask[randomizedLocation[0]][randomizedLocation[1]] = 1'h1;
 					maxPigs = maxPigs-1;
 					r = r+1;
