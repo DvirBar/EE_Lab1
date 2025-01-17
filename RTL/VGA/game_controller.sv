@@ -13,46 +13,21 @@ module	game_controller	(
 			input logic drawing_request_fortress,
 			input logic drawing_request_pig,
 			input logic drawing_request_bird,
+			input logic bird_disappear,
+			input logic game_start_key,
 
 			
 			output logic airplaneCollision,
 			output logic collisionBird,
 			output logic collisionBirdFortress,
 			output logic collisionBirdPig,
-			
+			output logic score;
+			output logic level;
+			output logic currScreen[1:0];
 			output logic SingleHitPulse // critical code, generating A single pulse in a frame 
 			
-			
-
-//---------------------#3-add collision  smiley and hart   -------------------------------------
-
-
-//			output logic collision_Smiley_Hart // active in case of collision between Smiley and hart
-
-
-//---------------------#3-end collision  smiley and hart	--------------------------------------
-			
-
-
 );
 
-// drawing_request_smiley   -->  smiley
-// drawing_request_boarders -->  brackets
-// drawing_request_number   -->  number/box 
-
-//assign collision = (drawing_request_smiley && drawing_request_boarders);// any collision --> comment after updating with #4 or #5 
-
-//---------------------#4-update  collision  conditions - add collision between smiley and number   ----------------------------
-
-
-
-
-//---------------------#4-end update  collision  conditions	 - add collision between smiley and number	-------------------------
-	
-					
-						
-
-//---------------------#5-update  collision  sconditions - add collision between smiley and hart  ---------------------------------
 
 assign airplaneCollision = drawing_request_airplane && drawing_request_boarders;
 					
@@ -65,44 +40,76 @@ assign collisionBirdFortress = drawing_request_bird && drawing_request_fortress;
 assign collisionBirdPig = drawing_request_bird && drawing_request_pig;
 
 
-//---------------------#5-end update  collision  conditions	- add collision between smiley and hart	-----------------------------
-	
-
-
-
-//-------------------------- #6-add colision between Smiley and hart-----------------
-//
-//assign collision_Smiley_Hart = ( drawing_request_smiley && drawing_request_hart ) ;
-
-
-//---------------------------#6-end colision betweenand Smiley and hart-----------------
-
+const parameter int NUM_PIGS = 3;
+const parameter int NUM_BIRDS = 5;
+const parameter int MAX_LEVEL = 5;
+const parameter int SCORE_PER_HIT = 5;
+const parameter int BONUS_SCORE_PER_BIRD = 10;
 
 
 logic flag ; // a semaphore to set the output only once per frame regardless of number of collisions 
-//logic collision_smiley_number; // collision between Smiley and number - is not output
 
-
+enum  logic [1:0] {START_ST,         	
+						GAME_PLAY_ST, 	
+						GAME_OVER_ST,			
+						GAME_WIN_ST
+					}  SM_GAME;
+						
+int pigs_left;
+int birds_left;
 always_ff@(posedge clk or negedge resetN)
 begin
-	if(!resetN)
-	begin 
+	if(!resetN) begin 
+		SM_GAME <= START_ST;
+		level <= 0;
+		score <= 0;
 		flag	<= 1'b0;
-		SingleHitPulse <= 1'b0 ; 
+		SingleHitPulse <= 1'b0;
+		birds_left <= 0;
+		pigs_left <= 0;
 		
 	end 
 	else begin 
-	
-//-------------------------- #7-add colision between Smiley and number-----------------
+		case(SM_GAME)
+			START_ST, GAME_OVER_ST, GAME_PLAY_ST: begin
+				if(game_start_key) begin
+					score <= 0;
+					level <= 1;
+					pigs_left <= NUM_PIGS;
+					birds_left <= NUM_BIRDS;
+					SM_GAME <= GAME_PLAY_ST;
+				end
+			end
+			
+			GAME_PLAY_ST: begin
+				if(collisionBirdPig) begin
+					score <= score + SCORE_PER_HIT;
+				
+					if(pigs_left == 1) begin // Level has ended
+						if(level == MAX_LEVEL) // Either we finish the game or move to the next game
+							SM_GAME <= GAME_WIN_ST;
+						else
+							level <= level+1;
+						
+						score <= score + (birds_left-1)*BONUS_SCORE_PER_BIRD;
+						pigs_left <= NUM_PIGS;
+						birds_left <= NUM_BIRDS;
+					end
+					else 
+						pigs_left <= pigs_left-1;
+				end
+			
+				else if(bird_disappear) begin
+					if(birds_left == 1) begin // Lost game - no more birds left but still more pigs
+						SM_GAME <= GAME_OVER_ST;
+					end
 
-
-//			collision_smiley_number <= drawing_request_smiley && drawing_request_number;
-//-------------------------- #7-end colision between Smiley and number-----------------	
-		
-		
-			SingleHitPulse <= 1'b0 ; // default 
-			if(startOfFrame) 
-				flag <= 1'b0 ; // reset for next time 
+					birds_left <= birds_left - 1;
+				end
+			end
+//			SingleHitPulse <= 1'b0 ; // default 
+//			if(startOfFrame) 
+//				flag <= 1'b0 ; // reset for next time 
 				
 //	---#7 - change the condition below to collision between Smiley and number ---------
 
@@ -113,5 +120,7 @@ begin
  
 	end 
 end
+
+assign currScreen = SM_GAME;
 
 endmodule

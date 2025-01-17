@@ -24,7 +24,8 @@ module	bird_move	(
 					output logic signed 	[10:0] topLeftX, // output the top left corner 
 					output logic signed	[10:0] topLeftY,  // can be negative , if the object is partliy outside 
 					output logic signed 	[10:0] speedSum,
-					output logic displayBird
+					output logic displayBird,
+					output logic hideBirdPulse
 					
 );
 
@@ -54,7 +55,6 @@ const int   OBJECT_HIGHT_Y = 64;
 const int	SafetyMargin   =	2;
 const int 	HIT_Y_SPEED_LOSS = 2;
 const int 	HIT_X_SPEED_LOSS = 2;
-const int 	DISAPPEAR_DELAY = 10;
 const int 	SPEED_THRESH = 1;
 
 const int	X_FRAME_LEFT	=	(SafetyMargin)* FIXED_POINT_MULTIPLIER; 
@@ -66,10 +66,11 @@ const int 	X_LEFT_HALF = (X_FRAME_RIGHT-X_FRAME_LEFT)/2;
 
 
 enum  logic [2:0] {IDLE_ST,         	// initial state
-						 MOVE_ST, 				// moving no colision 
-						 START_OF_FRAME_ST, 	          // startOfFrame activity-after all data collected 
-						 POSITION_CHANGE_ST, // position interpolate 
-						 POSITION_LIMITS_ST  // check if inside the frame  
+					MOVE_ST, 				// moving no colision 
+					START_OF_FRAME_ST, 	          // startOfFrame activity-after all data collected 
+					POSITION_CHANGE_ST, // position interpolate 
+					POSITION_LIMITS_ST, // check if inside the frame  
+					HIDE_BIRD_ST
 						}  SM_Motion ;
 
 int Xspeed  ; // speed    
@@ -77,7 +78,6 @@ int Yspeed  ;
 int Xposition ; //position   
 int Yposition ;  
 int onGround ;
-int disappearCountdown;
 
 logic [15:0] hit_reg = 16'b00000;  // register to collect all the collisions in the frame. |corner|left|top|right|bottom|
 
@@ -95,7 +95,7 @@ begin : fsm_sync_proc
 		hit_reg <= 16'b0 ;	
 		displayBird <= 0 ;
 		onGround <= 0 ;
-		disappearCountdown <= 0;
+		hideBirdPulse <= 0;
 	end 	
 	
 	else begin
@@ -112,7 +112,7 @@ begin : fsm_sync_proc
 				Yspeed  <= 0 ; 
 				Xposition <= planeTopLeftX*FIXED_POINT_MULTIPLIER; 
 				Yposition <= planeTopLeftY*FIXED_POINT_MULTIPLIER; 
-				
+				hideBirdPulse <= 1'b0;
 				
 				
 				// if (startOfFrame && enable_sof)   if want to stop the smiley move
@@ -263,15 +263,22 @@ begin : fsm_sync_proc
 				speedSum <= (Xspeed < 0 ? -Xspeed : Xspeed) + (Yspeed < 0 ? -Yspeed : Yspeed);
 				
 				if((Xspeed == 0) && (Yspeed == 0) && onGround == 1'b1) begin
-					SM_Motion <= IDLE_ST;
-					displayBird <= 1'b0;
+					SM_Motion <= HIDE_BIRD_ST;
+					
 				end
 				else
 					SM_Motion <= MOVE_ST ; 
 
 				onGround <= 1'b0;
 			end
-		
+
+		//------------------------
+			HIDE_BIRD_ST : begin  // hides the bird when it becomes stationary and sends a hide pulse to the game manager
+		//------------------------
+			 	displayBird <= 1'b0;
+				hideBirdPulse <= 1'b1;
+				SM_Motion <= IDLE_ST;
+			end
 		endcase  // case 
 
 		

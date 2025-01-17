@@ -169,7 +169,7 @@ begin
 					 4'h0 : RGBout <= TRANSPARENT_ENCODING ;
 					 4'h1 : RGBout <= object_colors[2'h0][offsetY[4:0]][offsetX[4:0]]; 
 					 4'h2 : RGBout <= object_colors[2'h1][offsetY[4:0]][offsetX[4:0]] ; 
-					 default:  RGBout <= TRANSPARENT_ENCODING ; 
+					 default:  RGBout <= TRANSPARENT_ENCODING; 
 				endcase
 			end 
 	end 
