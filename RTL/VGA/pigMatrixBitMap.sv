@@ -11,7 +11,7 @@ module	pigMatrixBitMap	(
 					input logic	[10:0] offsetX,// offset from top left  position 
 					input logic	[10:0] offsetY,
 					input	logic	InsideRectangle, //input that the pixel is within a bracket
-					input logic [0:1] randnum,
+					input logic [0:2] randnum,
 					input logic randgen,
 					input logic bird_pig_collision,
 					input logic [4:0] level,
@@ -32,6 +32,8 @@ localparam logic [7:0] TRANSPARENT_ENCODING = 8'hFF ;// RGB value in the bitmap 
 // all numbers here are hard coded to simplify the  understanding 
 
 logic [4:0] renderedLevel;
+logic [2:0] r;
+byte unsigned maxPigs;
 
 logic [0:15] [0:15] [3:0]  pigBitMapMask;  
 
@@ -55,13 +57,13 @@ logic [0:15] [0:15] [3:0]  pigDefaultBitMapMask= // default table to load on res
  
  
  
-logic [0:4] [0:3] [0:1] [0:15] validPigLocations =  // Possible pig spawn locations for every level
-{
-{{16'hC,16'hA},{16'hC,16'hB},{16'hC,16'hC},{16'hC,16'hD}},
-{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'hC,16'hE}},
-{{16'hA,16'hA},{16'hA,16'hB},{16'hA,16'hC},{16'hB,16'hC}},  // TODO - ADD 4th LOCATION TO EVERY MAP
-{{16'hC,16'hA},{16'hA,16'hA},{16'hB,16'hC},{16'hB,16'hC}},
-{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'hB,16'hC}}
+logic [0:4] [0:5] [0:1] [0:15] validPigLocations =  // Possible pig spawn locations for every level
+{// 1<Y<C 1<X<F
+{{16'hC,16'hB},{16'hC,16'hD},{16'hC,16'hA},{16'h9,16'h9},{16'hC,16'hC},{16'h9,16'hA}},
+{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'hC,16'hE},{16'h1,16'h1},{16'h1,16'h2}},  // TODO: ADD 2 MORE LOCATIONS&shuffle
+{{16'hA,16'hA},{16'hA,16'hB},{16'hA,16'hC},{16'hB,16'hC},{16'h1,16'h1},{16'h1,16'h2}},  // TODO: ADD 2 MORE LOCATIONS&shuffle
+{{16'hC,16'hA},{16'hA,16'hA},{16'hB,16'hC},{16'hB,16'hC},{16'h1,16'h1},{16'h1,16'h2}},  // TODO: ADD 2 MORE LOCATIONS&shuffle
+{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'hB,16'hC},{16'h1,16'h1},{16'h1,16'h2}}   // TODO: ADD 2 MORE LOCATIONS&shuffle
 };
 
 logic [0:1] [0:15] randomizedLocation;
@@ -148,20 +150,36 @@ always_ff@(posedge clk or negedge resetN)
 begin
 	if(!resetN) begin
 		RGBout <=	8'h00;
-		pigBitMapMask  <=  pigDefaultBitMapMask ;  //  copy default table
+		maxPigs = 0;
+		pigBitMapMask  =  pigDefaultBitMapMask ;  //  copy default table
 		renderedLevel = level+1;
 	end
+	
 	else begin
 		RGBout <= TRANSPARENT_ENCODING ; // default 
 		
 		if (randgen == 1'b1 && renderedLevel != level) begin
 			renderedLevel = level;
-			randomizedLocation = validPigLocations[renderedLevel][randnum];  //  spawn pigs
-			pigBitMapMask[randomizedLocation[0]][randomizedLocation[1]] <= 1'h1;
+			r = randnum;
+			randomizedLocation = validPigLocations[renderedLevel][r%6];  // pick location
+			maxPigs = 3;
+		end
+		
+		if (maxPigs>0) begin
+				if (pigBitMapMask[randomizedLocation[0]][randomizedLocation[1]]==0) begin  // spawns 3 pigs at free locations
+					pigBitMapMask[randomizedLocation[0]][randomizedLocation[1]] = 1'h1;
+					maxPigs = maxPigs-1;
+					r = r+1;
+					randomizedLocation = validPigLocations[renderedLevel][r%6];
+				end
+				else begin  //location is taken
+					r = r+1;
+					randomizedLocation = validPigLocations[renderedLevel][r%6];  // try next location
+				end
 		end
 		
 		if (bird_pig_collision == 1'b1)
-			pigBitMapMask[offsetY[8:5]][offsetX[8:5]] <= 4'h0;
+			pigBitMapMask[offsetY[8:5]][offsetX[8:5]] = 4'h0;
 		
 		if (InsideRectangle == 1'b1 )	
 			begin 
