@@ -21,10 +21,11 @@ module	game_controller	(
 			output logic collisionBird,
 			output logic collisionBirdFortress,
 			output logic collisionBirdPig,
-			output logic score;
-			output logic level;
-			output logic currScreen[1:0];
-			output logic SingleHitPulse // critical code, generating A single pulse in a frame 
+			output logic score,
+			output logic level,
+			output logic currScreen[1:0],
+			output logic SingleHitPulse, // critical code, generating A single pulse in a frame 
+			output logic stopGame
 			
 );
 
@@ -67,14 +68,17 @@ begin
 		SingleHitPulse <= 1'b0;
 		birds_left <= 0;
 		pigs_left <= 0;
+		stopGame <= 1'b1;
 		
 	end 
 	else begin 
 		case(SM_GAME)
 			START_ST, GAME_OVER_ST, GAME_PLAY_ST: begin
+				stopGame <= 1'b1;
 				if(game_start_key) begin
 					score <= 0;
 					level <= 1;
+					startGame <= 1'b1;
 					pigs_left <= NUM_PIGS;
 					birds_left <= NUM_BIRDS;
 					SM_GAME <= GAME_PLAY_ST;
@@ -82,6 +86,7 @@ begin
 			end
 			
 			GAME_PLAY_ST: begin
+				
 				if(collisionBirdPig) begin
 					score <= score + SCORE_PER_HIT;
 				

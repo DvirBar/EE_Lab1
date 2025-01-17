@@ -116,7 +116,7 @@ begin : fsm_sync_proc
 				Xposition <= x_FRAME_LEFT+OBJECT_WIDTH_X*FIXED_POINT_MULTIPLIER; 
 				Yposition <= MIN_Y_POSITION; 
 				// if (startOfFrame && enable_sof)   if want to stop the smiley move
-				if (startOfFrame && gameStart) 
+				if (startOfFrame) 
 					SM_Motion <= MOVE_ST ;
  	
 			end
