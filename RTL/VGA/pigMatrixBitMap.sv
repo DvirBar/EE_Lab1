@@ -11,10 +11,10 @@ module	pigMatrixBitMap	(
 					input logic	[10:0] offsetX,// offset from top left  position 
 					input logic	[10:0] offsetY,
 					input	logic	InsideRectangle, //input that the pixel is within a bracket
-					input logic [0:2] randnum,
+					input logic [2:0] randnum,
 					input logic randgen,
 					input logic bird_pig_collision,
-					input logic [4:0] level,
+					input logic [2:0] level,
 
 					output	logic	drawingRequest, //output that the pixel should be dispalyed 
 					output	logic	[7:0] RGBout  //rgb value from the bitmap 

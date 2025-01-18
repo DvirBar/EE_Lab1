@@ -264,6 +264,22 @@ agreement for further details.
 		(line (pt 78 12)(pt 82 8))
 	)
 )
+(pin
+	(output)
+	(rect 1640 472 1816 488)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "hideBirdPulse" (rect 90 0 156 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
 (symbol
 	(rect 1288 344 1528 488)
 	(text "birdBitMap" (rect 5 0 55 12)(font "Arial" ))
@@ -524,6 +540,13 @@ agreement for further details.
 		(text "displayBird" (rect 190 75 235 87)(font "Arial" ))
 		(line (pt 256 80)(pt 240 80))
 	)
+	(port
+		(pt 256 96)
+		(output)
+		(text "hideBirdPulse" (rect 0 0 66 12)(font "Arial" ))
+		(text "hideBirdPulse" (rect 180 91 235 103)(font "Arial" ))
+		(line (pt 256 96)(pt 240 96))
+	)
 	(parameter
 		"INITIAL_X"
 		"280"
@@ -743,6 +766,16 @@ agreement for further details.
 	(pt 1552 424)
 	(pt 1640 424)
 	(bus)
+)
+(connector
+	(text "hideBirdPulse" (rect 785 520 851 537)(font "Intel Clear" ))
+	(pt 768 536)
+	(pt 848 536)
+)
+(connector
+	(text "hideBirdPulse" (rect 1566 464 1632 481)(font "Intel Clear" ))
+	(pt 1640 480)
+	(pt 1552 480)
 )
 (text "// (c) Technion IIT, Department of Electrical Engineering 2023" (rect 168 16 527 35)(font "Intel Clear" (font_size 8)))
 (text "  " (rect 24 624 31 643)(font "Intel Clear" (font_size 8)))

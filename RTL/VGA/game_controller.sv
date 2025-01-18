@@ -22,10 +22,10 @@ module	game_controller	(
 			output logic collisionBirdFortress,
 			output logic collisionBirdPig,
 			output logic score,
-			output logic level,
-			output logic currScreen[1:0],
+			output logic [2:0] level,
+			output logic [1:0] currScreen,
 			output logic SingleHitPulse, // critical code, generating A single pulse in a frame 
-			output logic stopGame
+			output logic startGame
 			
 );
 
@@ -41,16 +41,16 @@ assign collisionBirdFortress = drawing_request_bird && drawing_request_fortress;
 assign collisionBirdPig = drawing_request_bird && drawing_request_pig;
 
 
-const parameter int NUM_PIGS = 3;
-const parameter int NUM_BIRDS = 5;
-const parameter int MAX_LEVEL = 5;
-const parameter int SCORE_PER_HIT = 5;
-const parameter int BONUS_SCORE_PER_BIRD = 10;
+parameter int NUM_PIGS = 3;
+parameter int NUM_BIRDS = 5; 
+parameter int MAX_LEVEL = 4;
+parameter int SCORE_PER_HIT = 1;
+parameter int BONUS_SCORE_PER_BIRD = 2;
 
 
 logic flag ; // a semaphore to set the output only once per frame regardless of number of collisions 
 
-enum  logic [1:0] {START_ST,         	
+enum  logic [2:0] {START_ST,         	
 						GAME_PLAY_ST, 	
 						GAME_OVER_ST,			
 						GAME_WIN_ST
@@ -58,6 +58,7 @@ enum  logic [1:0] {START_ST,
 						
 int pigs_left;
 int birds_left;
+
 always_ff@(posedge clk or negedge resetN)
 begin
 	if(!resetN) begin 
@@ -68,13 +69,13 @@ begin
 		SingleHitPulse <= 1'b0;
 		birds_left <= 0;
 		pigs_left <= 0;
-		stopGame <= 1'b1;
+		startGame <= 1'b0;
 		
 	end 
 	else begin 
 		case(SM_GAME)
-			START_ST, GAME_OVER_ST, GAME_PLAY_ST: begin
-				stopGame <= 1'b1;
+			START_ST, GAME_OVER_ST, GAME_WIN_ST: begin
+				startGame <= 1'b0;
 				if(game_start_key) begin
 					score <= 0;
 					level <= 1;
@@ -86,7 +87,8 @@ begin
 			end
 			
 			GAME_PLAY_ST: begin
-				
+				startGame <= 1'b1;
+				SM_GAME <= GAME_PLAY_ST;
 				if(collisionBirdPig) begin
 					score <= score + SCORE_PER_HIT;
 				
@@ -100,8 +102,10 @@ begin
 						pigs_left <= NUM_PIGS;
 						birds_left <= NUM_BIRDS;
 					end
-					else 
+					else begin
 						pigs_left <= pigs_left-1;
+						birds_left <= birds_left - 1;
+					end
 				end
 			
 				else if(bird_disappear) begin
@@ -112,6 +116,7 @@ begin
 					birds_left <= birds_left - 1;
 				end
 			end
+		endcase
 //			SingleHitPulse <= 1'b0 ; // default 
 //			if(startOfFrame) 
 //				flag <= 1'b0 ; // reset for next time 
@@ -125,6 +130,7 @@ begin
  
 	end 
 end
+
 
 assign currScreen = SM_GAME;
 

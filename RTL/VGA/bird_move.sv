@@ -119,7 +119,6 @@ begin : fsm_sync_proc
 				if (startOfFrame && showBird && Xposition <= X_LEFT_HALF) begin
 					SM_Motion <= MOVE_ST;
 					displayBird <= 1'b1;
-					disappearCountdown <= DISAPPEAR_DELAY;
 				end
  	
 			end

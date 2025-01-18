@@ -58,7 +58,7 @@ agreement for further details.
 )
 (pin
 	(input)
-	(rect 240 464 408 480)
+	(rect 232 424 400 440)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
 	(text "clk" (rect 5 0 19 12)(font "Arial" ))
 	(pt 168 8)
@@ -74,7 +74,7 @@ agreement for further details.
 )
 (pin
 	(input)
-	(rect 240 480 408 496)
+	(rect 232 448 400 464)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
 	(text "resetN" (rect 5 0 35 17)(font "Intel Clear" ))
 	(pt 168 8)
@@ -215,6 +215,22 @@ agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 240 640 408 656)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "startGame" (rect 5 0 57 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
 )
 (pin
 	(output)
@@ -700,18 +716,6 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(pt 408 472)
-	(pt 528 472)
-)
-(connector
-	(pt 408 488)
-	(pt 528 488)
-)
-(connector
-	(pt 408 504)
-	(pt 528 504)
-)
-(connector
 	(pt 416 520)
 	(pt 528 520)
 )
@@ -758,6 +762,37 @@ agreement for further details.
 (connector
 	(pt 408 568)
 	(pt 528 568)
+)
+(connector
+	(pt 520 472)
+	(pt 520 432)
+)
+(connector
+	(pt 528 472)
+	(pt 520 472)
+)
+(connector
+	(pt 520 432)
+	(pt 400 432)
+)
+(connector
+	(text "resetN" (rect 414 440 444 457)(font "Intel Clear" ))
+	(pt 400 456)
+	(pt 448 456)
+)
+(connector
+	(text "startGame" (rect 418 632 467 649)(font "Intel Clear" ))
+	(pt 408 648)
+	(pt 472 648)
+)
+(connector
+	(pt 408 504)
+	(pt 528 504)
+)
+(connector
+	(text "startGame" (rect 432 472 481 489)(font "Intel Clear" ))
+	(pt 528 488)
+	(pt 424 488)
 )
 (text "// (c) Technion IIT, Department of Electrical Engineering 2023" (rect 168 16 527 35)(font "Intel Clear" (font_size 8)))
 (text "  " (rect 24 624 31 643)(font "Intel Clear" (font_size 8)))

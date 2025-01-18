@@ -11,22 +11,23 @@ module	objects_mux	(
 //		--------	Clock Input	 	
 					input		logic	clk,
 					input		logic	resetN,
-		   // smiley 
+		   // airplane
 					input		logic	airplaneDrawingRequest, // two set of inputs per unit
 					input		logic	[7:0] airplaneRGB, 
 					     
-		  // add the box here 
+		  // bird 
 					input		logic birdDrawingRequest,
 					input		logic [7:0] birdRGB,
 					
-			// add the box here 
+			// pig
 					input		logic pigDrawingRequest,
 					input		logic [7:0] pigRGB,
 		  
 		  
-		  // add the box here 
+		  // fortress
 					input		logic fortressDrawingRequest,
 					input		logic [7:0] fortressRGB,
+					
 		  
 		  ////////////////////////
 		  // background   

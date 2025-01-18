@@ -11,7 +11,7 @@ module	FortressMatrixBitMap	(
 					input logic	[10:0] offsetX,// offset from top left  position 
 					input logic	[10:0] offsetY,
 					input	logic	InsideRectangle, //input that the pixel is within a bracket 
-					input logic [4:0] level,
+					input logic [2:0] level,
 					input logic [10:0] speedSum,
 					input bird_wall_collision,
 			
@@ -24,7 +24,7 @@ module	FortressMatrixBitMap	(
 // Size represented as Number of X and Y bits 
 localparam logic [7:0] TRANSPARENT_ENCODING = 8'hFF ;// RGB value in the bitmap representing a transparent pixel 
 int hitThreshold;
-logic [4:0] renderedLevel;
+logic [2:0] renderedLevel;
 
 
 // the screen is 640*480  or  20 * 15 squares of 32*32  bits ,  we wiil round up to 16*16 and use only the top left 16*15 squares 

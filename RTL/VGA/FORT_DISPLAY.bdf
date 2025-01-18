@@ -136,7 +136,7 @@ agreement for further details.
 	(input)
 	(rect 1048 432 1216 448)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "bird_fort" (rect 5 0 47 12)(font "Arial" ))
+	(text "bird_fort" (rect 5 0 46 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -152,7 +152,7 @@ agreement for further details.
 	(input)
 	(rect 448 528 616 544)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "level[4..0]" (rect 5 0 54 17)(font "Intel Clear" ))
+	(text "level[2..0]" (rect 5 0 54 17)(font "Intel Clear" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -291,7 +291,7 @@ agreement for further details.
 	(annotation_block (parameter)(rect 728 216 983 292))
 )
 (symbol
-	(rect 1304 296 1536 472)
+	(rect 1288 296 1520 472)
 	(text "FortressMatrixBitMap" (rect 5 0 108 12)(font "Arial" ))
 	(text "inst" (rect 8 160 25 172)(font "Arial" ))
 	(port
@@ -332,8 +332,8 @@ agreement for further details.
 	(port
 		(pt 0 112)
 		(input)
-		(text "level[4..0]" (rect 0 0 49 12)(font "Arial" ))
-		(text "level[4..0]" (rect 21 107 70 119)(font "Arial" ))
+		(text "level[2..0]" (rect 0 0 49 12)(font "Arial" ))
+		(text "level[2..0]" (rect 21 107 70 119)(font "Arial" ))
 		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
@@ -367,22 +367,6 @@ agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 216 160))
 	)
-)
-(connector
-	(text "resetN" (rect 1242 328 1272 345)(font "Intel Clear" ))
-	(pt 1216 344)
-	(pt 1304 344)
-)
-(connector
-	(text "clk" (rect 1242 312 1256 329)(font "Intel Clear" ))
-	(pt 1304 328)
-	(pt 1216 328)
-)
-(connector
-	(text "speedSum[10..0]" (rect 1229 408 1308 425)(font "Intel Clear" ))
-	(pt 1304 424)
-	(pt 1232 424)
-	(bus)
 )
 (connector
 	(text "speedSum[10..0]" (rect 635 488 714 505)(font "Intel Clear" ))
@@ -423,45 +407,61 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(text "BoxHartTopLeftX[10..0]" (rect 1000 344 1110 361)(font "Intel Clear" ))
+	(text "resetN" (rect 1226 328 1256 345)(font "Intel Clear" ))
+	(pt 1200 344)
+	(pt 1288 344)
+)
+(connector
+	(text "clk" (rect 1226 312 1240 329)(font "Intel Clear" ))
+	(pt 1288 328)
+	(pt 1200 328)
+)
+(connector
+	(text "speedSum[10..0]" (rect 1213 408 1292 425)(font "Intel Clear" ))
+	(pt 1288 424)
+	(pt 1216 424)
+	(bus)
+)
+(connector
+	(text "BoxHartTopLeftX[10..0]" (rect 984 344 1094 361)(font "Intel Clear" ))
 	(pt 984 360)
-	(pt 1304 360)
+	(pt 1288 360)
 	(bus)
 )
 (connector
-	(text "BoxHartTopLeftY[10..0]" (rect 1000 360 1110 377)(font "Intel Clear" ))
+	(text "BoxHartTopLeftY[10..0]" (rect 984 360 1094 377)(font "Intel Clear" ))
 	(pt 984 376)
-	(pt 1304 376)
+	(pt 1288 376)
 	(bus)
 )
 (connector
-	(text "boxHartDrawingRequest" (rect 1000 376 1114 393)(font "Intel Clear" ))
+	(text "boxHartDrawingRequest" (rect 984 376 1098 393)(font "Intel Clear" ))
 	(pt 984 392)
-	(pt 1304 392)
+	(pt 1288 392)
 )
 (connector
 	(pt 1216 440)
-	(pt 1304 440)
+	(pt 1288 440)
 )
 (connector
-	(text "FortressDrawingReq" (rect 1554 312 1649 329)(font "Intel Clear" ))
-	(pt 1536 328)
+	(text "FortressDrawingReq" (rect 1538 312 1633 329)(font "Intel Clear" ))
+	(pt 1520 328)
 	(pt 1648 328)
 )
 (connector
-	(text "fortRGB[7..0]" (rect 1578 328 1639 345)(font "Intel Clear" ))
-	(pt 1536 344)
+	(text "fortRGB[7..0]" (rect 1562 328 1623 345)(font "Intel Clear" ))
+	(pt 1520 344)
 	(pt 1648 344)
 	(bus)
 )
 (connector
-	(text "level[4..0]" (rect 1242 392 1290 409)(font "Intel Clear" ))
-	(pt 1304 408)
-	(pt 1232 408)
+	(text "level[2..0]" (rect 1226 392 1274 409)(font "Intel Clear" ))
+	(pt 1288 408)
+	(pt 1216 408)
 	(bus)
 )
 (connector
-	(text "level[4..0]" (rect 643 520 691 537)(font "Intel Clear" ))
+	(text "level[2..0]" (rect 643 520 691 537)(font "Intel Clear" ))
 	(pt 616 536)
 	(pt 736 536)
 	(bus)

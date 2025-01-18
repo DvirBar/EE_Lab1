@@ -1,0 +1,54 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/dvirb/Documents/university/EELab/Project/Lab1Demo_restored/simulation/qsim
+vTOP_VGA_KBD
+Z1 !s110 1737162990
+!i10b 1
+!s100 `8I]L7Q]J3CEcDkY;M6CJ1
+Ib`M6GL8fdhicmzDlGnU3I0
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1737162988
+8Lab1Demo.vo
+FLab1Demo.vo
+L0 32
+Z3 OV;L;10.5b;63
+r1
+!s85 0
+31
+!s108 1737162989.000000
+!s107 Lab1Demo.vo|
+!s90 -work|work|Lab1Demo.vo|
+!i113 1
+Z4 o-work work
+Z5 tCvgOpt 0
+n@t@o@p_@v@g@a_@k@b@d
+vTOP_VGA_KBD_vlg_vec_tst
+R1
+!i10b 1
+!s100 dFi_c767gWkh:1R7<VKL70
+IV6MMR>J1jMDhc0V5Wj4LY0
+R2
+R0
+w1737162986
+8Waveform.vwf.vt
+FWaveform.vwf.vt
+L0 30
+R3
+r1
+!s85 0
+31
+!s108 1737162990.000000
+!s107 Waveform.vwf.vt|
+!s90 -work|work|Waveform.vwf.vt|
+!i113 1
+R4
+R5
+n@t@o@p_@v@g@a_@k@b@d_vlg_vec_tst
