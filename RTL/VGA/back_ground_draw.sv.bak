@@ -16,7 +16,6 @@ module	back_ground_draw	(
 const int	xFrameSize	=	635;
 const int	yFrameSize	=	475;
 const int	bracketOffset =	32;
-const int   bracketSize = 2;
 const int   COLOR_MARTIX_SIZE  = 16*8 ; // 128 
 
 logic [2:0] redBits;
@@ -28,7 +27,7 @@ logic [10:0] shift_pixelX;
 localparam logic [2:0] DARK_COLOR = 3'b111 ;// bitmap of a dark color
 localparam logic [2:0] LIGHT_COLOR = 3'b000 ;// bitmap of a light color
 
-
+ 
 localparam  int RED_TOP_Y  = 156 ;
 localparam  int RED_LEFT_X  = 256 ;
 localparam  int GREEN_RIGHT_X  = 32 ;
@@ -65,9 +64,10 @@ begin
 		blueBits <= 2'b11;//LIGHT_COLOR;
 		boardersDrawReq <= 	1'b0 ; 
 		
-		if (((pixelX <= bracketSize) && (pixelX >= 0)) ||
-			((pixelX <= xFrameSize) && (pixelX >= (xFrameSize-bracketSize))) 
-			) 
+		if (        ((pixelX <= bracketOffset) && (pixelX >=(bracketOffset- bracketOffset/4))) ||
+						((pixelY <= bracketOffset) && (pixelY >= (bracketOffset- bracketOffset/4))) ||
+						((pixelX >= (xFrameSize-bracketOffset))&&(pixelX <= (xFrameSize-(bracketOffset- bracketOffset/4)))) || 
+						((pixelY >= (yFrameSize-bracketOffset))&&(pixelY <= (yFrameSize-(bracketOffset- bracketOffset/4))))) 
 			begin 
 					redBits <= LIGHT_COLOR ;	
 					greenBits <= DARK_COLOR  ;	
@@ -75,13 +75,23 @@ begin
 					 boardersDrawReq <= 	1'b1;
 					//boardersDrawReq <= 	1'b1 ; // pulse if drawing the boarders 
 			end
-		if((pixelY <= yFrameSize) && (pixelY >= (yFrameSize-bracketOffset))) 
-			begin
-				redBits <= LIGHT_COLOR;	
-				greenBits <= DARK_COLOR;	
-				blueBits <= DARK_COLOR;
-				boardersDrawReq <= 	1'b1;
-			end
+	
+				
+
+	// 4. draw a matrix of 16*16 rectangles with all the colors, each rectsangle 8*8 pixels  	
+   // ---------------------------------------------------------------------------------------
+		if (( pixelY > 4 ) && (pixelY < 20 ) && (pixelX >30 )&& (pixelX <542 ))
+		 begin
+		        shift_pixelX<= pixelX-29;
+
+             blueBits <= shift_pixelX[8:7] ; 
+				 greenBits <= shift_pixelX[3:1] ; 
+				 redBits <= shift_pixelX[6:4];       
+				 boardersDrawReq <= 	1'b1;
+	
+				
+		 end 
+		
 
 		
 	//BG_RGB <=  {redBits , greenBits , blueBits} ; //collect color nibbles to an 8 bit word 
@@ -91,3 +101,4 @@ begin
 	end; 	
 end 
 endmodule
+

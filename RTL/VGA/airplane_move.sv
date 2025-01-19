@@ -137,8 +137,6 @@ begin : fsm_sync_proc
 				if((move_up_key & !move_up_key_D) && Yposition-OBJECT_HIGHT_Y >= MIN_Y_POSITION)
 						Yposition <= Yposition - LAT_SPEED*FIXED_POINT_MULTIPLIER;
 			
-//				if((move_down_key & !move_down_key_D) && 
-//			
        // collcting collisions 	
 				if (collision) begin
 					hit_reg[HitEdgeCode]<=1'b1;
@@ -156,24 +154,10 @@ begin : fsm_sync_proc
 		//------------
 			START_OF_FRAME_ST:  begin      //check if any colisin was detected 
 		//------------
-				
-	
-//		  {32'hC4444446,     
-//			32'h8C444462,    
-//			32'h88c44622,    
-//			32'h888C6222,    
-//			32'h88893222,    
-//			32'h88911322,    
-//			32'h89111132,    
-//			32'h91111113};
-
+		
 			if(hit_reg == 16'h0004 || hit_reg == 16'h0044 || hit_reg == 16'h000C || hit_reg == 16'h0048 || hit_reg == 16'h004C)
 				Xposition <=  x_FRAME_LEFT + LEFT_BRACKET_POS_X*FIXED_POINT_MULTIPLIER;
 			
-			
-//			if(Xposition+OBJECT_WIDTH_X*FIXED_POINT_MULTIPLIER == x_FRAME_RIGHT)
-//				Xposition <= x_FRAME_LEFT;
-				
 			hit_reg <= 16'h0000;  //clear for next time 
 							
 			SM_Motion <= POSITION_CHANGE_ST ; 
@@ -184,19 +168,6 @@ begin : fsm_sync_proc
 		//------------------------
 	
 				Xposition <= Xposition + Xspeed ; 
-//				Yposition <= Yposition + Yspeed ;
-			 
-				// accelerate 
-			
-//				if (Yspeed < MAX_Y_SPEED ) //  limit the speed while going down 
-//   				Yspeed <= Yspeed - Y_ACCEL ; // deAccelerate : slow the speed down every clock tick 
-	
-//				if ((Yspeed < MAX_Y_speed)&&(Yspeed >0 ))	
-//					Yspeed <= Yspeed - Y_ACCEL ; // deAccelerate : slow the speed down every clock tick 
-//	
-//				else if ((Yspeed > (-MAX_Y_speed))&&(Yspeed < 0 ))
-//					Yspeed <= Yspeed + Y_ACCEL ; // deAccelerate : slow the speed down every clock tick
-					
 				SM_Motion <= POSITION_LIMITS_ST ; 
 			end
 		

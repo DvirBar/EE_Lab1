@@ -14,7 +14,7 @@ module	pigMatrixBitMap	(
 					input logic [2:0] randnum,
 					input logic randgen,
 					input logic bird_pig_collision,
-					input logic [2:0] level,
+					input logic [3:0] level,
 
 					output	logic	drawingRequest, //output that the pixel should be dispalyed 
 					output	logic	[7:0] RGBout  //rgb value from the bitmap 
@@ -195,5 +195,5 @@ end
 
 //==----------------------------------------------------------------------------------------------------------------=
 // decide if to draw the pixel or not 
-assign drawingRequest = (RGBout != TRANSPARENT_ENCODING ) ? 1'b1 : 1'b0 ; // get optional transparent command from the bitmpap   
+assign drawingRequest = (RGBout != TRANSPARENT_ENCODING && resetN ) ? 1'b1 : 1'b0 ; // get optional transparent command from the bitmpap   
 endmodule

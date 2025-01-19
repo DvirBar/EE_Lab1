@@ -213,22 +213,6 @@ agreement for further details.
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
 )
 (pin
-	(input)
-	(rect 232 616 400 632)
-	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "startGame" (rect 5 0 57 12)(font "Arial" ))
-	(pt 168 8)
-	(drawing
-		(line (pt 84 12)(pt 109 12))
-		(line (pt 84 4)(pt 109 4))
-		(line (pt 113 8)(pt 168 8))
-		(line (pt 84 12)(pt 84 4))
-		(line (pt 109 4)(pt 113 8))
-		(line (pt 109 12)(pt 113 8))
-	)
-	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
-)
-(pin
 	(output)
 	(rect 1600 368 1776 384)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
@@ -447,7 +431,7 @@ agreement for further details.
 	(annotation_block (parameter)(rect 976 488 1170 564))
 )
 (symbol
-	(rect 536 432 824 656)
+	(rect 536 424 824 648)
 	(text "Airplne_Block_T" (rect 5 0 101 19)(font "Intel Clear" (font_size 8)))
 	(text "inst2" (rect 8 203 30 220)(font "Intel Clear" ))
 	(port
@@ -580,7 +564,7 @@ agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 272 208))
 	)
-	(annotation_block (parameter)(rect 840 352 1034 428))
+	(annotation_block (parameter)(rect 840 344 1034 420))
 )
 (connector
 	(text "airplaneDR" (rect 1522 360 1575 377)(font "Intel Clear" ))
@@ -627,82 +611,6 @@ agreement for further details.
 (connector
 	(pt 824 784)
 	(pt 832 784)
-)
-(connector
-	(text "pixelX[10..0]" (rect 482 448 541 465)(font "Intel Clear" ))
-	(pt 448 464)
-	(pt 536 464)
-	(bus)
-)
-(connector
-	(text "pixelY[10..0]" (rect 470 464 529 481)(font "Intel Clear" ))
-	(pt 448 480)
-	(pt 536 480)
-	(bus)
-)
-(connector
-	(text "clk" (rect 493 480 507 497)(font "Intel Clear" ))
-	(pt 448 496)
-	(pt 536 496)
-)
-(connector
-	(text "resetN" (rect 485 496 515 513)(font "Intel Clear" ))
-	(pt 448 512)
-	(pt 536 512)
-)
-(connector
-	(text "startOfFrame" (rect 454 512 517 529)(font "Intel Clear" ))
-	(pt 448 528)
-	(pt 536 528)
-)
-(connector
-	(pt 408 544)
-	(pt 536 544)
-)
-(connector
-	(pt 400 560)
-	(pt 536 560)
-)
-(connector
-	(pt 408 576)
-	(pt 536 576)
-)
-(connector
-	(pt 400 592)
-	(pt 536 592)
-)
-(connector
-	(pt 400 608)
-	(pt 536 608)
-)
-(connector
-	(text "airplaneDR" (rect 838 448 891 465)(font "Intel Clear" ))
-	(pt 824 464)
-	(pt 904 464)
-)
-(connector
-	(text "airplaneRGB[7..0]" (rect 838 464 921 481)(font "Intel Clear" ))
-	(pt 824 480)
-	(pt 904 480)
-	(bus)
-)
-(connector
-	(text "planeTopLeftY[10..0]" (rect 828 496 928 513)(font "Intel Clear" ))
-	(pt 824 512)
-	(pt 888 512)
-	(bus)
-)
-(connector
-	(text "planeVertSpeed[10..0]" (rect 827 512 933 529)(font "Intel Clear" ))
-	(pt 824 528)
-	(pt 912 528)
-	(bus)
-)
-(connector
-	(text "planeTopLeftX[10..0]" (rect 838 480 938 497)(font "Intel Clear" ))
-	(pt 824 496)
-	(pt 928 496)
-	(bus)
 )
 (connector
 	(text "resetN" (rect 902 712 932 729)(font "Intel Clear" ))
@@ -791,8 +699,120 @@ agreement for further details.
 	(pt 1344 728)
 )
 (connector
-	(pt 400 624)
-	(pt 536 624)
+	(text "pixelX[10..0]" (rect 482 440 541 457)(font "Intel Clear" ))
+	(pt 448 456)
+	(pt 536 456)
+	(bus)
+)
+(connector
+	(text "pixelY[10..0]" (rect 470 456 529 473)(font "Intel Clear" ))
+	(pt 448 472)
+	(pt 536 472)
+	(bus)
+)
+(connector
+	(text "clk" (rect 493 472 507 489)(font "Intel Clear" ))
+	(pt 448 488)
+	(pt 536 488)
+)
+(connector
+	(text "resetN" (rect 485 488 515 505)(font "Intel Clear" ))
+	(pt 448 504)
+	(pt 536 504)
+)
+(connector
+	(text "startOfFrame" (rect 454 504 517 521)(font "Intel Clear" ))
+	(pt 448 520)
+	(pt 536 520)
+)
+(connector
+	(pt 416 544)
+	(pt 416 536)
+)
+(connector
+	(pt 408 544)
+	(pt 416 544)
+)
+(connector
+	(pt 416 536)
+	(pt 536 536)
+)
+(connector
+	(pt 408 560)
+	(pt 408 552)
+)
+(connector
+	(pt 400 560)
+	(pt 408 560)
+)
+(connector
+	(pt 408 552)
+	(pt 536 552)
+)
+(connector
+	(pt 424 576)
+	(pt 424 568)
+)
+(connector
+	(pt 408 576)
+	(pt 424 576)
+)
+(connector
+	(pt 424 568)
+	(pt 536 568)
+)
+(connector
+	(pt 432 592)
+	(pt 432 584)
+)
+(connector
+	(pt 400 592)
+	(pt 432 592)
+)
+(connector
+	(pt 432 584)
+	(pt 536 584)
+)
+(connector
+	(pt 440 608)
+	(pt 440 600)
+)
+(connector
+	(pt 400 608)
+	(pt 440 608)
+)
+(connector
+	(pt 440 600)
+	(pt 536 600)
+)
+(connector
+	(text "airplaneDR" (rect 838 440 891 457)(font "Intel Clear" ))
+	(pt 824 456)
+	(pt 904 456)
+)
+(connector
+	(text "airplaneRGB[7..0]" (rect 838 456 921 473)(font "Intel Clear" ))
+	(pt 824 472)
+	(pt 904 472)
+	(bus)
+)
+(connector
+	(text "planeTopLeftY[10..0]" (rect 828 488 928 505)(font "Intel Clear" ))
+	(pt 824 504)
+	(pt 888 504)
+	(bus)
+)
+(connector
+	(text "planeVertSpeed[10..0]" (rect 827 504 933 521)(font "Intel Clear" ))
+	(pt 824 520)
+	(pt 912 520)
+	(bus)
+)
+(connector
+	(text "planeTopLeftX[10..0]" (rect 838 472 938 489)(font "Intel Clear" ))
+	(pt 824 488)
+	(pt 928 488)
+	(bus)
 )
 (text "// (c) Technion IIT, Department of Electrical Engineering 2023" (rect 160 16 519 35)(font "Intel Clear" (font_size 8)))
 (text "  " (rect 24 624 31 643)(font "Intel Clear" (font_size 8)))

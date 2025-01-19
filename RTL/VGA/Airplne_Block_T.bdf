@@ -217,22 +217,6 @@ agreement for further details.
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
 )
 (pin
-	(input)
-	(rect 240 640 408 656)
-	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "startGame" (rect 5 0 57 12)(font "Arial" ))
-	(pt 168 8)
-	(drawing
-		(line (pt 84 12)(pt 109 12))
-		(line (pt 84 4)(pt 109 4))
-		(line (pt 113 8)(pt 168 8))
-		(line (pt 84 12)(pt 84 4))
-		(line (pt 109 4)(pt 113 8))
-		(line (pt 109 12)(pt 113 8))
-	)
-	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
-)
-(pin
 	(output)
 	(rect 1600 368 1776 384)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
@@ -638,11 +622,6 @@ agreement for further details.
 	(pt 1216 376)
 )
 (connector
-	(text "resetN" (rect 1232 376 1265 388)(font "Arial" ))
-	(pt 1280 392)
-	(pt 1216 392)
-)
-(connector
 	(pt 1520 408)
 	(pt 1560 408)
 	(bus)
@@ -781,16 +760,16 @@ agreement for further details.
 	(pt 448 456)
 )
 (connector
-	(text "startGame" (rect 418 632 467 649)(font "Intel Clear" ))
-	(pt 408 648)
-	(pt 472 648)
-)
-(connector
 	(pt 408 504)
 	(pt 528 504)
 )
 (connector
-	(text "startGame" (rect 432 472 481 489)(font "Intel Clear" ))
+	(text "resetN" (rect 1232 376 1265 388)(font "Arial" ))
+	(pt 1280 392)
+	(pt 1216 392)
+)
+(connector
+	(text "resetN" (rect 432 472 462 489)(font "Intel Clear" ))
 	(pt 528 488)
 	(pt 424 488)
 )

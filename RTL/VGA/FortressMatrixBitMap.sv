@@ -11,7 +11,7 @@ module	FortressMatrixBitMap	(
 					input logic	[10:0] offsetX,// offset from top left  position 
 					input logic	[10:0] offsetY,
 					input	logic	InsideRectangle, //input that the pixel is within a bracket 
-					input logic [2:0] level,
+					input logic [3:0] level,
 					input logic [10:0] speedSum,
 					input bird_wall_collision,
 			
@@ -322,7 +322,7 @@ end
 
 //==----------------------------------------------------------------------------------------------------------------=
 // decide if to draw the pixel or not 
-assign drawingRequest = (RGBout != TRANSPARENT_ENCODING ) ? 1'b1 : 1'b0 ; // get optional transparent command from the bitmpap   
+assign drawingRequest = (RGBout != TRANSPARENT_ENCODING && resetN ) ? 1'b1 : 1'b0 ; // get optional transparent command from the bitmpap   
 endmodule
 
 

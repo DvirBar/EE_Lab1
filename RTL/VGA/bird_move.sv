@@ -14,7 +14,7 @@ module	bird_move	(
 					input	 logic startOfFrame,      //short pulse every start of frame 30Hz 
 					// input	 logic enable_sof,    // if want to stop the smiley move
 					input	 logic showBird,   // determines if the bird is displayed    
-					input  logic collision,         //collision if smiley hits an object
+					input  logic collision,         // collision if bird hits an object
 					
 					input	 logic [10:0] planeTopLeftX,
 					input	 logic [10:0] planeTopLeftY,
@@ -42,7 +42,6 @@ parameter int Y_ACCEL = -10;
 
 const int MAX_Y_SPEED = 500;
 const int	BRACKET_OFFSET =	32;
-const int	GROUND_Y =	479-(BRACKET_OFFSET+BRACKET_OFFSET/4);
 const int	FIXED_POINT_MULTIPLIER = 64; // note it must be 2^n 
 // FIXED_POINT_MULTIPLIER is used to enable working with integers in high resolution so that 
 // we do all calculations with topLeftX_FixedPoint to get a resolution of 1/64 pixel in calcuatuions,
@@ -53,9 +52,8 @@ const int	FIXED_POINT_MULTIPLIER = 64; // note it must be 2^n
 const int   OBJECT_WIDTH_X = 64;
 const int   OBJECT_HIGHT_Y = 64;
 const int	SafetyMargin   =	2;
-const int 	HIT_Y_SPEED_LOSS = 2;
-const int 	HIT_X_SPEED_LOSS = 2;
-const int 	SPEED_THRESH = 1;
+const int 	HIT_SPEED_LOSS = 2;
+const int 	SPEED_THRESH = 10;
 
 const int	X_FRAME_LEFT	=	(SafetyMargin)* FIXED_POINT_MULTIPLIER; 
 const int	X_FRAME_RIGHT	=	(639 - SafetyMargin - OBJECT_WIDTH_X)* FIXED_POINT_MULTIPLIER; 
@@ -78,6 +76,9 @@ int Yspeed  ;
 int Xposition ; //position   
 int Yposition ;  
 int onGround ;
+
+int XspeedSize;
+int YspeedSize;
 
 logic [15:0] hit_reg = 16'b00000;  // register to collect all the collisions in the frame. |corner|left|top|right|bottom|
 
@@ -151,50 +152,39 @@ begin : fsm_sync_proc
 //			32'h89111132,    
 //			32'h91111113};
 
-			
 			// Reduce speed size on collision
 			if(hit_reg != 16'h0000) begin // if some collision
-				Xspeed = Xspeed/HIT_X_SPEED_LOSS;
-				Yspeed = Yspeed/HIT_Y_SPEED_LOSS;
+				Xspeed = Xspeed/HIT_SPEED_LOSS;
+				Yspeed = Yspeed/HIT_SPEED_LOSS;
 				onGround <= 1'b1;
 			end
-			
-	
 
 			// Change speed direction in some collisions
 			case (hit_reg) 
-				
 				16'h0000:  // no collision in the frame 
 					begin
-							if(Yspeed<SPEED_THRESH && Xspeed<SPEED_THRESH) begin
-								Yspeed <= 0 ;
-								Xspeed <= 0 ;
-							end
-							
-							else begin
-								Yspeed <= Yspeed ;
-								Xspeed <= Xspeed ;
-							end
+						Yspeed <= Yspeed ;
+						Xspeed <= Xspeed ;
 					end
 				//   1H  (1H & 9H) (1H & 3H) (3H & 9H ) (3H & 1H & 9H )
 				16'h0002,16'h0202,16'h000A, ,16'h0028 ,16'h002A: // bottom side 
 				  begin
-							if (Yspeed > 0) begin
-							  Yspeed <= -Yspeed;
-							end
+						if (Yspeed > 0) begin
+							Yspeed <= -Yspeed;
+						end
 				  end
 				//   CH       6H		3H         9H
 				16'h1000,16'h0040,16'h0008,16'h0200:	// one of the four corners 	
 
 				  begin
-							Yspeed <= -Yspeed ;
-							Xspeed <= -Xspeed ;
+						Yspeed <= -Yspeed ;
+						Xspeed <= -Xspeed ;
 					end
 			//   8H   ; (CH & 8H) ; (8H & 9H) ; (cH & 9H) ;(cH & 9H & 8H)   
 				16'h0100,16'h1100,16'h0300,16'h1200,16'h1300:  // left side 
 				  begin
-							if (Xspeed < 0) 
-							  Xspeed <= -Xspeed ;
+						if (Xspeed < 0) 
+							Xspeed <= -Xspeed ;
 				  end
 				//  4H     (CH & 4H)  (4H & 6H) (CH & 6H)  (CH & 4H & 6H)
 				16'h0010,16'h1010,16'h0050, 16'h1040 , 16'h1050 : //  top side 
@@ -211,8 +201,8 @@ begin : fsm_sync_proc
 				
 				 default:  //complex corner 
 				  begin
-							Yspeed <= -Yspeed ;
-							Xspeed <= -Xspeed ;
+							Yspeed <= -Yspeed;
+							Xspeed <= -Xspeed;
 					end
 				 
 
@@ -237,12 +227,6 @@ begin : fsm_sync_proc
 			
 				if (Yspeed < MAX_Y_SPEED ) //  limit the speed while going down 
    				Yspeed <= Yspeed - Y_ACCEL ; // deAccelerate : slow the speed down every clock tick 
-	
-//				if ((Yspeed < MAX_Y_speed)&&(Yspeed >0 ))	
-//					Yspeed <= Yspeed - Y_ACCEL ; // deAccelerate : slow the speed down every clock tick 
-//	
-//				else if ((Yspeed > (-MAX_Y_speed))&&(Yspeed < 0 ))
-//					Yspeed <= Yspeed + Y_ACCEL ; // deAccelerate : slow the speed down every clock tick
 					
 				SM_Motion <= POSITION_LIMITS_ST ; 
 			end
@@ -261,9 +245,8 @@ begin : fsm_sync_proc
 								
 				speedSum <= (Xspeed < 0 ? -Xspeed : Xspeed) + (Yspeed < 0 ? -Yspeed : Yspeed);
 				
-				if((Xspeed == 0) && (Yspeed == 0) && onGround == 1'b1) begin
+				if((Xspeed <= SPEED_THRESH) && (Yspeed <= SPEED_THRESH) && onGround == 1'b1) begin
 					SM_Motion <= HIDE_BIRD_ST;
-					
 				end
 				else
 					SM_Motion <= MOVE_ST ; 

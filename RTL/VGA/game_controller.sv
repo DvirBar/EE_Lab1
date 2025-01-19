@@ -15,14 +15,15 @@ module	game_controller	(
 			input logic drawing_request_bird,
 			input logic bird_disappear,
 			input logic game_start_key,
+			input logic cheat_key,
 
 			
 			output logic airplaneCollision,
 			output logic collisionBird,
 			output logic collisionBirdFortress,
 			output logic collisionBirdPig,
-			output logic score,
-			output logic [2:0] level,
+			output logic [12:0] score,
+			output logic [3:0] level,
 			output logic [1:0] currScreen,
 			output logic SingleHitPulse, // critical code, generating A single pulse in a frame 
 			output logic startGame
@@ -42,10 +43,11 @@ assign collisionBirdPig = drawing_request_bird && drawing_request_pig;
 
 
 parameter int NUM_PIGS = 3;
-parameter int NUM_BIRDS = 5; 
+parameter int NUM_BIRDS = 10; 
 parameter int MAX_LEVEL = 4;
-parameter int SCORE_PER_HIT = 1;
-parameter int BONUS_SCORE_PER_BIRD = 2;
+
+logic [4:0] SCORE_PER_HIT = 5'b10000;
+logic [3:0] BONUS_SCORE_PER_BIRD = 4'd5;
 
 
 logic flag ; // a semaphore to set the output only once per frame regardless of number of collisions 
@@ -58,6 +60,8 @@ enum  logic [2:0] {START_ST,
 						
 int pigs_left;
 int birds_left;
+
+
 
 always_ff@(posedge clk or negedge resetN)
 begin
@@ -78,7 +82,7 @@ begin
 				startGame <= 1'b0;
 				if(game_start_key) begin
 					score <= 0;
-					level <= 1;
+					level <= 0;
 					startGame <= 1'b1;
 					pigs_left <= NUM_PIGS;
 					birds_left <= NUM_BIRDS;
@@ -89,8 +93,18 @@ begin
 			GAME_PLAY_ST: begin
 				startGame <= 1'b1;
 				SM_GAME <= GAME_PLAY_ST;
+				
+				if(bird_disappear) begin
+					if(birds_left == 1) begin // Lost game - no more birds left but still more pigs
+						SM_GAME <= GAME_OVER_ST;
+					end
+
+					birds_left <= birds_left - 1;
+				end
+				
 				if(collisionBirdPig) begin
 					score <= score + SCORE_PER_HIT;
+					pigs_left <= pigs_left-1;
 				
 					if(pigs_left == 1) begin // Level has ended
 						if(level == MAX_LEVEL) // Either we finish the game or move to the next game
@@ -102,18 +116,16 @@ begin
 						pigs_left <= NUM_PIGS;
 						birds_left <= NUM_BIRDS;
 					end
-					else begin
-						pigs_left <= pigs_left-1;
-						birds_left <= birds_left - 1;
-					end
 				end
 			
-				else if(bird_disappear) begin
-					if(birds_left == 1) begin // Lost game - no more birds left but still more pigs
-						SM_GAME <= GAME_OVER_ST;
+				if(cheat_key) begin
+					if(level == MAX_LEVEL)
+						SM_GAME <= GAME_WIN_ST;
+					else begin
+						level <= level + 1;
+						pigs_left <= NUM_PIGS;
+						birds_left <= NUM_BIRDS;
 					end
-
-					birds_left <= birds_left - 1;
 				end
 			end
 		endcase
