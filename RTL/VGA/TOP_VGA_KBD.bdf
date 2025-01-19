@@ -2243,6 +2243,12 @@ agreement for further details.
 	(pt 1176 88)
 	(bus)
 )
+(connector
+	(text "birdsLeft[3..0]" (rect 1311 656 1375 673)(font "Intel Clear" ))
+	(pt 1248 672)
+	(pt 1408 672)
+	(bus)
+)
 (junction (pt 1296 1232))
 (junction (pt 1296 1248))
 (junction (pt 552 968))
