@@ -1,4 +1,4 @@
-
+// BASED ON
 // game controller dudy Febriary 2020
 // (c) Technion IIT, Department of Electrical Engineering 2021 
 //updated --Eyal Lev 2021
@@ -129,16 +129,16 @@ begin
 				end
 			end
 		endcase
-//			SingleHitPulse <= 1'b0 ; // default 
-//			if(startOfFrame) 
-//				flag <= 1'b0 ; // reset for next time 
+			SingleHitPulse <= 1'b0 ; // default 
+			if(startOfFrame) 
+				flag <= 1'b0 ; // reset for next time 
 				
 //	---#7 - change the condition below to collision between Smiley and number ---------
 
-//if ( collision_aiplane_number  && (flag == 1'b0)) begin ///// DOESNT WORK! COMMENTED OUT!!!
-//			flag	<= 1'b1; // to enter only once 
-//			SingleHitPulse <= 1'b1 ; 
-//		end ; 
+if ( collisionBird  && (flag == 1'b0)) begin
+			flag	<= 1'b1; // to enter only once 
+			SingleHitPulse <= 1'b1 ; 
+		end ; 
  
 	end 
 end
