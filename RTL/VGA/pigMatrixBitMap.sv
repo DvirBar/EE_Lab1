@@ -60,10 +60,10 @@ logic [0:15] [0:15] [3:0]  pigDefaultBitMapMask= // default table to load on res
 logic [0:4] [0:5] [0:1] [0:15] validPigLocations =  // Possible pig spawn locations for every level
 {// 1<Y<C 1<X<F
 {{16'hC,16'hB},{16'hC,16'hD},{16'hC,16'hA},{16'h9,16'h9},{16'hC,16'hC},{16'h9,16'hA}},
-{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'hC,16'hE},{16'h1,16'h1},{16'h1,16'h2}},  // TODO: ADD 2 MORE LOCATIONS&shuffle
-{{16'hA,16'hA},{16'hA,16'hB},{16'hA,16'hC},{16'hB,16'hC},{16'h1,16'h1},{16'h1,16'h2}},  // TODO: ADD 2 MORE LOCATIONS&shuffle
-{{16'hC,16'hA},{16'hA,16'hA},{16'hB,16'hC},{16'hB,16'hC},{16'h1,16'h1},{16'h1,16'h2}},  // TODO: ADD 2 MORE LOCATIONS&shuffle
-{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'hB,16'hC},{16'h1,16'h1},{16'h1,16'h2}}   // TODO: ADD 2 MORE LOCATIONS&shuffle
+{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'h7,16'hA},{16'h7,16'hC},{16'h8,16'hB}},
+{{16'hB,16'h9},{16'hB,16'hA},{16'hB,16'hB},{16'h8,16'h9},{16'h8,16'hA},{16'h7,16'hB}},
+{{16'hB,16'h9},{16'h9,16'h8},{16'hB,16'hB},{16'h9,16'h9},{16'h9,16'hB},{16'h9,16'hC}},
+{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'h6,16'hA},{16'h5,16'hB},{16'h6,16'hC}}
 };
 
 logic [0:1] [0:15] randomizedLocation;
@@ -162,7 +162,7 @@ begin
 			renderedLevel = level;
 			r = randnum;
 			randomizedLocation = validPigLocations[renderedLevel][r%6];  // pick location
-			maxPigs = 3;
+			maxPigs = 6;
 		end
 		
 		if (maxPigs>0) begin  // spawns 3 pigs at free locations
@@ -181,12 +181,12 @@ begin
 		if (bird_pig_collision == 1'b1)
 			pigBitMapMask[offsetY[8:5]][offsetX[8:5]] = 4'h0;
 		
-		if (InsideRectangle == 1'b1 )	
+		if (InsideRectangle == 1'b1)	
 			begin 
 		   	case (pigBitMapMask[offsetY[8:5]][offsetX[8:5]])
 					 4'h0 : RGBout <= TRANSPARENT_ENCODING ;
 					 4'h1 : RGBout <= object_colors[2'h0][offsetY[4:0]][offsetX[4:0]]; 
-					 4'h2 : RGBout <= object_colors[2'h1][offsetY[4:0]][offsetX[4:0]] ; 
+					 4'h2 : RGBout <= object_colors[2'h1][offsetY[4:0]][offsetX[4:0]]; 
 					 default:  RGBout <= TRANSPARENT_ENCODING; 
 				endcase
 			end 
