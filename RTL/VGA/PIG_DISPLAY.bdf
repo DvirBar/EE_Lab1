@@ -134,25 +134,9 @@ agreement for further details.
 )
 (pin
 	(input)
-	(rect 1096 416 1264 432)
-	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "userEnter" (rect 5 0 53 12)(font "Arial" ))
-	(pt 168 8)
-	(drawing
-		(line (pt 84 12)(pt 109 12))
-		(line (pt 84 4)(pt 109 4))
-		(line (pt 113 8)(pt 168 8))
-		(line (pt 84 12)(pt 84 4))
-		(line (pt 109 4)(pt 113 8))
-		(line (pt 109 12)(pt 113 8))
-	)
-	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
-)
-(pin
-	(input)
 	(rect 1072 448 1240 464)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "level[3..0]" (rect 5 0 54 17)(font "Intel Clear" ))
+	(text "level[3..0]" (rect 5 0 53 17)(font "Intel Clear" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -449,14 +433,14 @@ agreement for further details.
 		(pt 232 32)
 		(output)
 		(text "drawingRequest" (rect 0 0 77 12)(font "Arial" ))
-		(text "drawingRequest" (rect 146 27 211 39)(font "Arial" ))
+		(text "drawingRequest" (rect 146 27 223 39)(font "Arial" ))
 		(line (pt 232 32)(pt 216 32))
 	)
 	(port
 		(pt 232 48)
 		(output)
 		(text "RGBout[7..0]" (rect 0 0 64 12)(font "Arial" ))
-		(text "RGBout[7..0]" (rect 157 43 211 55)(font "Arial" ))
+		(text "RGBout[7..0]" (rect 157 43 221 55)(font "Arial" ))
 		(line (pt 232 48)(pt 216 48)(line_width 3))
 	)
 	(drawing
@@ -511,10 +495,6 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(pt 672 504)
-	(pt 704 504)
-)
-(connector
 	(text "clk" (rect 491 488 505 505)(font "Intel Clear" ))
 	(pt 464 504)
 	(pt 512 504)
@@ -523,14 +503,6 @@ agreement for further details.
 	(text "resetN" (rect 474 504 504 521)(font "Intel Clear" ))
 	(pt 464 520)
 	(pt 512 520)
-)
-(connector
-	(pt 704 536)
-	(pt 784 536)
-)
-(connector
-	(pt 704 504)
-	(pt 704 536)
 )
 (connector
 	(text "BoxHartTopLeftX[10..0]" (rect 1000 344 1110 361)(font "Intel Clear" ))
@@ -580,10 +552,6 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(pt 1288 424)
-	(pt 1264 424)
-)
-(connector
 	(pt 1288 440)
 	(pt 1264 440)
 )
@@ -591,6 +559,21 @@ agreement for further details.
 	(pt 1240 456)
 	(pt 1288 456)
 	(bus)
+)
+(connector
+	(text "oneSec" (rect 677 488 711 505)(font "Intel Clear" ))
+	(pt 672 504)
+	(pt 704 504)
+)
+(connector
+	(text "oneSec" (rect 750 520 784 537)(font "Intel Clear" ))
+	(pt 784 536)
+	(pt 736 536)
+)
+(connector
+	(text "oneSec" (rect 1244 408 1278 425)(font "Intel Clear" ))
+	(pt 1288 424)
+	(pt 1232 424)
 )
 (text "  " (rect 0 600 7 619)(font "Intel Clear" (font_size 8)))
 (text "   " (rect 120 640 130 659)(font "Intel Clear" (font_size 8)))

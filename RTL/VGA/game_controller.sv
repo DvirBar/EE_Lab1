@@ -26,8 +26,9 @@ module	game_controller	(
 			output logic [3:0] level,
 			output logic [1:0] currScreen,
 			output logic SingleHitPulse, // critical code, generating A single pulse in a frame 
-			output logic startGame
-			
+			output logic startGame,
+			output logic [3:0] birdsLeft,
+			output logic newLevelPulse
 );
 
 
@@ -61,7 +62,7 @@ enum  logic [2:0] {START_ST,
 int pigs_left;
 int birds_left;
 
-
+logic cheat_key_D ;
 
 always_ff@(posedge clk or negedge resetN)
 begin
@@ -74,9 +75,12 @@ begin
 		birds_left <= 0;
 		pigs_left <= 0;
 		startGame <= 1'b0;
+		cheat_key_D <= 1'b0;
+		newLevelPulse <= 1'b0;
 		
 	end 
 	else begin 
+		cheat_key_D <= cheat_key;
 		case(SM_GAME)
 			START_ST, GAME_OVER_ST, GAME_WIN_ST: begin
 				startGame <= 1'b0;
@@ -93,6 +97,7 @@ begin
 			GAME_PLAY_ST: begin
 				startGame <= 1'b1;
 				SM_GAME <= GAME_PLAY_ST;
+				newLevelPulse <= 1'b0;
 				
 				if(bird_disappear) begin
 					if(birds_left == 1) begin // Lost game - no more birds left but still more pigs
@@ -109,16 +114,17 @@ begin
 					if(pigs_left == 1) begin // Level has ended
 						if(level == MAX_LEVEL) // Either we finish the game or move to the next game
 							SM_GAME <= GAME_WIN_ST;
-						else
+						else begin
 							level <= level+1;
-						
+							newLevelPulse <= 1'b1;
+						end
 						score <= score + (birds_left-1)*BONUS_SCORE_PER_BIRD;
 						pigs_left <= NUM_PIGS;
 						birds_left <= NUM_BIRDS;
 					end
 				end
 			
-				if(cheat_key) begin
+				if(cheat_key & !cheat_key_D) begin
 					if(level == MAX_LEVEL)
 						SM_GAME <= GAME_WIN_ST;
 					else begin
@@ -143,7 +149,7 @@ if ( collisionBird  && (flag == 1'b0)) begin
 	end 
 end
 
-
+assign birdsLeft = birds_left;
 assign currScreen = SM_GAME;
 
 endmodule
