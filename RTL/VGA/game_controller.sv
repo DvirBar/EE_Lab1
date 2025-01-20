@@ -106,12 +106,13 @@ begin
 			end
 			
 			GAME_PLAY_ST: begin
+				SM_GAME <= GAME_PLAY_ST;
 				if(birds_left == 0 && !display_bird) begin // Lost game - no more birds left but still more pigs
 						SM_GAME <= GAME_OVER_ST;
 				end
 				
 				startGame <= 1'b1;
-				SM_GAME <= GAME_PLAY_ST;
+				
 				newLevelPulse <= 1'b0;
 				
 				if(shoot_bird_pulse) begin

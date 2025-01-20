@@ -1,0 +1,108 @@
+// Copyright (C) 2017  Intel Corporation. All rights reserved.
+// Your use of Intel Corporation's design tools, logic functions 
+// and other software and tools, and its AMPP partner logic 
+// functions, and any output files from any of the foregoing 
+// (including device programming or simulation files), and any 
+// associated documentation or information are expressly subject 
+// to the terms and conditions of the Intel Program License 
+// Subscription Agreement, the Intel Quartus Prime License Agreement,
+// the Intel MegaCore Function License Agreement, or other 
+// applicable license agreement, including, without limitation, 
+// that your use is for the sole purpose of programming logic 
+// devices manufactured by Intel and sold by Intel or its 
+// authorized distributors.  Please refer to the applicable 
+// agreement for further details.
+
+// *****************************************************************************
+// This file contains a Verilog test bench with test vectors .The test vectors  
+// are exported from a vector file in the Quartus Waveform Editor and apply to  
+// the top level entity of the current Quartus project .The user can use this   
+// testbench to simulate his design using a third-party simulation tool .       
+// *****************************************************************************
+// Generated on "01/20/2025 22:33:29"
+                                                                                
+// Verilog Test Bench (with test vectors) for design :                          game_controller
+// 
+// Simulation tool : 3rd Party
+// 
+
+`timescale 1 ps/ 1 ps
+module game_controller_vlg_vec_tst();
+// constants                                           
+// general purpose registers
+reg cheat_key;
+reg clk;
+reg display_bird;
+reg drawing_request_airplane;
+reg drawing_request_bird;
+reg drawing_request_boarders;
+reg drawing_request_fortress;
+reg drawing_request_pig;
+reg game_start_key;
+reg resetN;
+reg shoot_bird_pulse;
+reg startOfFrame;
+// wires                                               
+wire SingleHitPulse;
+wire airplaneCollision;
+wire [3:0] birdsLeft;
+wire collisionBird;
+wire collisionBirdFortress;
+wire collisionBirdPig;
+wire [1:0] currScreen;
+wire [3:0] level;
+wire newLevelPulse;
+wire [11:0] score;
+wire startGame;
+
+// assign statements (if any)                          
+game_controller i1 (
+// port map - connection between master ports and signals/registers   
+	.SingleHitPulse(SingleHitPulse),
+	.airplaneCollision(airplaneCollision),
+	.birdsLeft(birdsLeft),
+	.cheat_key(cheat_key),
+	.clk(clk),
+	.collisionBird(collisionBird),
+	.collisionBirdFortress(collisionBirdFortress),
+	.collisionBirdPig(collisionBirdPig),
+	.currScreen(currScreen),
+	.display_bird(display_bird),
+	.drawing_request_airplane(drawing_request_airplane),
+	.drawing_request_bird(drawing_request_bird),
+	.drawing_request_boarders(drawing_request_boarders),
+	.drawing_request_fortress(drawing_request_fortress),
+	.drawing_request_pig(drawing_request_pig),
+	.game_start_key(game_start_key),
+	.level(level),
+	.newLevelPulse(newLevelPulse),
+	.resetN(resetN),
+	.score(score),
+	.shoot_bird_pulse(shoot_bird_pulse),
+	.startGame(startGame),
+	.startOfFrame(startOfFrame)
+);
+initial 
+begin 
+#1000000 $finish;
+end 
+
+// display_bird
+initial
+begin
+	display_bird = 1'b0;
+end 
+
+// clk
+initial
+begin
+	clk = 1'b0;
+end 
+
+// game_start_key
+initial
+begin
+	game_start_key = 1'b0;
+end 
+endmodule
+

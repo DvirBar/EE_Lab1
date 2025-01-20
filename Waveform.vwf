@@ -1,16 +1,16 @@
 /*<simulation_settings>
-<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off Lab1Demo -c Lab1Demo --vector_source="C:/Users/dvirb/Documents/university/EELab/Project/Lab1Demo_restored/Waveform.vwf" --testbench_file="C:/Users/dvirb/Documents/university/EELab/Project/Lab1Demo_restored/simulation/qsim/Waveform.vwf.vt"</ftestbench_cmd>
-<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off Lab1Demo -c Lab1Demo --vector_source="C:/Users/dvirb/Documents/university/EELab/Project/Lab1Demo_restored/Waveform.vwf" --testbench_file="C:/Users/dvirb/Documents/university/EELab/Project/Lab1Demo_restored/simulation/qsim/Waveform.vwf.vt"</ttestbench_cmd>
+<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off Lab1Demo -c Lab1Demo --vector_source="C:/Users/dvirb/Documents/university/EELab/Project/Lab1Demo_restored/output_files/Waveform.vwf" --testbench_file="C:/Users/dvirb/Documents/university/EELab/Project/Lab1Demo_restored/simulation/qsim/output_files/Waveform.vwf.vt"</ftestbench_cmd>
+<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off Lab1Demo -c Lab1Demo --vector_source="C:/Users/dvirb/Documents/university/EELab/Project/Lab1Demo_restored/output_files/Waveform.vwf" --testbench_file="C:/Users/dvirb/Documents/university/EELab/Project/Lab1Demo_restored/simulation/qsim/output_files/Waveform.vwf.vt"</ttestbench_cmd>
 <fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory="C:/Users/dvirb/Documents/university/EELab/Project/Lab1Demo_restored/simulation/qsim/" Lab1Demo -c Lab1Demo</fnetlist_cmd>
 <tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=verilog --output_directory="C:/Users/dvirb/Documents/university/EELab/Project/Lab1Demo_restored/simulation/qsim/" Lab1Demo -c Lab1Demo</tnetlist_cmd>
 <modelsim_script>onerror {exit -code 1}
 vlib work
 vlog -work work Lab1Demo.vo
-vlog -work work Waveform.vwf.vt
-vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.TOP_VGA_KBD_vlg_vec_tst
+vlog -work work output_files/Waveform.vwf.vt
+vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.game_controller_vlg_vec_tst
 vcd file -direction Lab1Demo.msim.vcd
-vcd add -internal TOP_VGA_KBD_vlg_vec_tst/*
-vcd add -internal TOP_VGA_KBD_vlg_vec_tst/i1/*
+vcd add -internal game_controller_vlg_vec_tst/*
+vcd add -internal game_controller_vlg_vec_tst/i1/*
 proc simTimestamp {} {
     echo "Simulation time: $::now ps"
     if { [string equal running [runStatus]] } {
@@ -24,11 +24,11 @@ quit -f
 <modelsim_script_timing>onerror {exit -code 1}
 vlib work
 vlog -work work Lab1Demo.vo
-vlog -work work Waveform.vwf.vt
-vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.TOP_VGA_KBD_vlg_vec_tst
+vlog -work work output_files/Waveform.vwf.vt
+vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.game_controller_vlg_vec_tst
 vcd file -direction Lab1Demo.msim.vcd
-vcd add -internal TOP_VGA_KBD_vlg_vec_tst/*
-vcd add -internal TOP_VGA_KBD_vlg_vec_tst/i1/*
+vcd add -internal game_controller_vlg_vec_tst/*
+vcd add -internal game_controller_vlg_vec_tst/i1/*
 proc simTimestamp {} {
     echo "Simulation time: $::now ps"
     if { [string equal running [runStatus]] } {
@@ -86,17 +86,57 @@ SIGNAL("clk")
 	PARENT = "";
 }
 
-SIGNAL("resetN")
+SIGNAL("birdsLeft")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 4;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("birdsLeft[3]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "";
+	DIRECTION = OUTPUT;
+	PARENT = "birdsLeft";
 }
 
-SIGNAL("game_controller:inst25|SM_GAME")
+SIGNAL("birdsLeft[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "birdsLeft";
+}
+
+SIGNAL("birdsLeft[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "birdsLeft";
+}
+
+SIGNAL("birdsLeft[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "birdsLeft";
+}
+
+SIGNAL("SM_GAME")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
@@ -106,27 +146,7 @@ SIGNAL("game_controller:inst25|SM_GAME")
 	PARENT = "";
 }
 
-SIGNAL("enterKey")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "";
-}
-
-SIGNAL("game_controller:inst25|SM_GAME.GAME_OVER_ST")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "";
-}
-
-SIGNAL("game_controller:inst25|SM_GAME.GAME_PLAY_ST")
+SIGNAL("SM_GAME.CHANGE_LEVEL_ST")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
@@ -136,7 +156,17 @@ SIGNAL("game_controller:inst25|SM_GAME.GAME_PLAY_ST")
 	PARENT = "";
 }
 
-SIGNAL("game_controller:inst25|SM_GAME.GAME_WIN_ST")
+SIGNAL("SM_GAME.GAME_PLAY_ST")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("SM_GAME.GAME_OVER_ST")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
@@ -146,13 +176,53 @@ SIGNAL("game_controller:inst25|SM_GAME.GAME_WIN_ST")
 	PARENT = "";
 }
 
-SIGNAL("game_controller:inst25|SM_GAME.START_ST")
+SIGNAL("SM_GAME.GAME_WIN_ST")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("SM_GAME.START_ST")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("SM_GAME.UPDATE_SCORE_ST")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("display_bird")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("game_start_key")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
 	PARENT = "";
 }
 
@@ -161,26 +231,47 @@ TRANSITION_LIST("clk")
 	NODE
 	{
 		REPEAT = 1;
-		NODE
-		{
-			REPEAT = 100;
-			LEVEL 0 FOR 5.0;
-			LEVEL 1 FOR 5.0;
-		}
+		LEVEL 0 FOR 1000.0;
 	}
 }
 
-TRANSITION_LIST("resetN")
+TRANSITION_LIST("birdsLeft[3]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 10.0;
-		LEVEL 1 FOR 990.0;
+		LEVEL X FOR 1000.0;
 	}
 }
 
-TRANSITION_LIST("game_controller:inst25|SM_GAME")
+TRANSITION_LIST("birdsLeft[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("birdsLeft[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("birdsLeft[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("SM_GAME")
 {
 	NODE
 	{
@@ -189,18 +280,25 @@ TRANSITION_LIST("game_controller:inst25|SM_GAME")
 	}
 }
 
-TRANSITION_LIST("enterKey")
+TRANSITION_LIST("SM_GAME.CHANGE_LEVEL_ST")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 40.0;
-		LEVEL 1 FOR 10.0;
-		LEVEL 0 FOR 950.0;
+		LEVEL U FOR 1000.0;
 	}
 }
 
-TRANSITION_LIST("game_controller:inst25|SM_GAME.GAME_OVER_ST")
+TRANSITION_LIST("SM_GAME.GAME_PLAY_ST")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("SM_GAME.GAME_OVER_ST")
 {
 	NODE
 	{
@@ -209,7 +307,7 @@ TRANSITION_LIST("game_controller:inst25|SM_GAME.GAME_OVER_ST")
 	}
 }
 
-TRANSITION_LIST("game_controller:inst25|SM_GAME.GAME_PLAY_ST")
+TRANSITION_LIST("SM_GAME.GAME_WIN_ST")
 {
 	NODE
 	{
@@ -218,7 +316,25 @@ TRANSITION_LIST("game_controller:inst25|SM_GAME.GAME_PLAY_ST")
 	}
 }
 
-TRANSITION_LIST("game_controller:inst25|SM_GAME.GAME_WIN_ST")
+TRANSITION_LIST("SM_GAME.START_ST")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("SM_GAME.UPDATE_SCORE_ST")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("display_bird")
 {
 	NODE
 	{
@@ -227,12 +343,12 @@ TRANSITION_LIST("game_controller:inst25|SM_GAME.GAME_WIN_ST")
 	}
 }
 
-TRANSITION_LIST("game_controller:inst25|SM_GAME.START_ST")
+TRANSITION_LIST("game_start_key")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL U FOR 1000.0;
+		LEVEL 0 FOR 1000.0;
 	}
 }
 
@@ -247,7 +363,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "resetN";
+	CHANNEL = "display_bird";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 1;
@@ -256,7 +372,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "enterKey";
+	CHANNEL = "SM_GAME";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 2;
@@ -265,7 +381,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "game_controller:inst25|SM_GAME";
+	CHANNEL = "SM_GAME.CHANGE_LEVEL_ST";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 3;
@@ -274,7 +390,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "game_controller:inst25|SM_GAME.GAME_OVER_ST";
+	CHANNEL = "SM_GAME.GAME_PLAY_ST";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 4;
@@ -283,7 +399,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "game_controller:inst25|SM_GAME.GAME_PLAY_ST";
+	CHANNEL = "SM_GAME.GAME_OVER_ST";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 5;
@@ -292,7 +408,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "game_controller:inst25|SM_GAME.GAME_WIN_ST";
+	CHANNEL = "SM_GAME.GAME_WIN_ST";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 6;
@@ -301,10 +417,78 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "game_controller:inst25|SM_GAME.START_ST";
+	CHANNEL = "SM_GAME.START_ST";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 7;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "SM_GAME.UPDATE_SCORE_ST";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 8;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "birdsLeft";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 9;
+	TREE_LEVEL = 0;
+	CHILDREN = 10, 11, 12, 13;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "birdsLeft[3]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 10;
+	TREE_LEVEL = 1;
+	PARENT = 9;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "birdsLeft[2]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 11;
+	TREE_LEVEL = 1;
+	PARENT = 9;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "birdsLeft[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 12;
+	TREE_LEVEL = 1;
+	PARENT = 9;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "birdsLeft[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 13;
+	TREE_LEVEL = 1;
+	PARENT = 9;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "game_start_key";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 14;
 	TREE_LEVEL = 0;
 }
 
