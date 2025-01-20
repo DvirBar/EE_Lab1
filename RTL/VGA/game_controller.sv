@@ -105,15 +105,15 @@ begin
 			end
 			
 			GAME_PLAY_ST: begin
+				if(birds_left == 0 && !drawing_request_bird) begin // Lost game - no more birds left but still more pigs
+						SM_GAME <= GAME_OVER_ST;
+				end
+				
 				startGame <= 1'b1;
 				SM_GAME <= GAME_PLAY_ST;
 				newLevelPulse <= 1'b0;
 				
 				if(shoot_bird_pulse) begin
-					if(birds_left == 1) begin // Lost game - no more birds left but still more pigs
-						SM_GAME <= GAME_OVER_ST;
-					end
-
 					birds_left <= birds_left - 1;
 				end
 				
@@ -125,6 +125,8 @@ begin
 					if(pigs_left == 1) begin // Level has ended
 						updatedScore <= score + (birds_left-1)*BONUS_SCORE_PER_BIRD;
 					end
+					
+					
 				end
 			
 				if(cheat_key & !cheat_key_D) begin
