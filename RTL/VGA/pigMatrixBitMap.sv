@@ -59,11 +59,11 @@ logic [0:15] [0:15] [3:0]  pigDefaultBitMapMask= // default table to load on res
  
 logic [0:4] [0:5] [0:1] [0:15] validPigLocations =  // Possible pig spawn locations for every level
 {// 1<Y<C 1<X<F
-{{16'h8,16'h8},{16'hC,16'hD},{16'hC,16'hA},{16'h8,16'h9},{16'hC,16'hC},{16'h8,16'hA}},
-{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'h7,16'hA},{16'h7,16'hC},{16'h6,16'hB}},
-{{16'hB,16'h9},{16'hB,16'hA},{16'hB,16'hB},{16'h8,16'h9},{16'h7,16'hA},{16'h8,16'hB}},
-{{16'hB,16'h9},{16'h9,16'h8},{16'hB,16'hB},{16'h9,16'h9},{16'h9,16'hB},{16'h9,16'hC}},
-{{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'h6,16'hA},{16'h5,16'hB},{16'h6,16'hC}}
+{{16'hC,16'hB},{16'hC,16'hD},{16'hC,16'hA},{16'h8,16'h9},{16'hC,16'hC},{16'h8,16'hA}},
+{{16'h7,16'hA},{16'hB,16'hB},{16'h6,16'hB},{16'hB,16'hA},{16'h7,16'hC},{16'hB,16'hC}},
+{{16'hB,16'h9},{16'h7,16'hA},{16'h8,16'hB},{16'hB,16'hA},{16'hB,16'hB},{16'h8,16'h9}},
+{{16'hB,16'hB},{16'h9,16'hB},{16'hB,16'h9},{16'h9,16'h9},{16'h9,16'h8},{16'h9,16'hC}},
+{{16'hB,16'hC},{16'h5,16'hB},{16'hB,16'hB},{16'h6,16'hC},{16'hB,16'hA},{16'h6,16'hA}}
 };
 
 logic [0:1] [0:15] randomizedLocation;
