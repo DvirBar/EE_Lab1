@@ -3,7 +3,7 @@
 module	hitController	(	
 					input logic clk, 
 					input logic resetN,
-					input switch,
+					input logic switch,
 					input logic hit,
 					
 					output logic [3:0] hitSound,
@@ -17,7 +17,7 @@ logic hitFlag;
 		
 logic [0:1] [3:0]	hitSounds = { 
 
-	4'hC, //hi do
+	4'hF, //hi reD
 	4'h0  //do
 	
 };
@@ -44,26 +44,28 @@ logic [0:1] [3:0]	hitSounds = {
 always @(posedge clk or negedge resetN)
    begin
 	   
-   if ( !resetN ) begin // Asynchronic reset
+   if ( !resetN ) begin
 		hitType <= 1'h0;
-		hitEnable = 1'h0;
-		hitFlag = 1'b0;
+		hitEnable <= 1'h0;
+		hitFlag <= 1'b1;
 	end 
    
 	else begin
-		if (hit == 1'b1)
-			hitFlag = 1'b1;
 		
-		if (switch ==  1'b1) begin
-			if (hitFlag) begin
-				hitType <= 1'h0;
-				hitEnable = 1'h1;
-				hitFlag = 1'b0;
-			end
-			else begin
-				hitEnable = 1'h0;
-			end
+		if(!hit)
+			hitFlag <= 1'h1;
+			
+		if(hit && hitFlag) begin
+			hitType <= 1'h0;
+			hitEnable <= 1'h1;
+			hitFlag <= 1'h0;
 		end
+		
+		if(switch) begin
+			hitEnable <= 1'h0;
+		end
+			
+		
 	end //else
 		
 end // always sync
