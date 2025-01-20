@@ -74,7 +74,7 @@ always_ff@(posedge clk or negedge resetN)
 begin
 	if(!resetN) begin 
 		SM_GAME <= START_ST;
-		level <= 0;
+		level <= 9;
 		score <= 0;
 		flag	<= 1'b0;
 		SingleHitPulse <= 1'b0;

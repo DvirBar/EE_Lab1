@@ -275,42 +275,6 @@ agreement for further details.
 	(annotation_block (parameter)(rect 744 216 999 292))
 )
 (symbol
-	(rect 512 472 672 584)
-	(text "one_sec_counter" (rect 5 0 88 12)(font "Arial" ))
-	(text "inst20" (rect 8 96 37 108)(font "Arial" ))
-	(port
-		(pt 0 32)
-		(input)
-		(text "clk" (rect 0 0 14 12)(font "Arial" ))
-		(text "clk" (rect 21 27 35 39)(font "Arial" ))
-		(line (pt 0 32)(pt 16 32))
-	)
-	(port
-		(pt 0 48)
-		(input)
-		(text "resetN" (rect 0 0 33 12)(font "Arial" ))
-		(text "resetN" (rect 21 43 54 55)(font "Arial" ))
-		(line (pt 0 48)(pt 16 48))
-	)
-	(port
-		(pt 0 64)
-		(input)
-		(text "turbo" (rect 0 0 24 12)(font "Arial" ))
-		(text "turbo" (rect 21 59 45 71)(font "Arial" ))
-		(line (pt 0 64)(pt 16 64))
-	)
-	(port
-		(pt 160 32)
-		(output)
-		(text "one_sec" (rect 0 0 41 12)(font "Arial" ))
-		(text "one_sec" (rect 105 27 146 39)(font "Arial" ))
-		(line (pt 160 32)(pt 144 32))
-	)
-	(drawing
-		(rectangle (rect 16 16 144 96))
-	)
-)
-(symbol
 	(rect 784 472 1000 584)
 	(text "random" (rect 5 0 41 12)(font "Arial" ))
 	(text "inst17" (rect 8 96 36 113)(font "Intel Clear" ))
@@ -447,6 +411,48 @@ agreement for further details.
 		(rectangle (rect 16 16 216 192))
 	)
 )
+(symbol
+	(rect 416 464 576 576)
+	(text "one_sec_counter" (rect 5 0 88 12)(font "Arial" ))
+	(text "inst20" (rect 8 96 37 108)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "resetN" (rect 0 0 33 12)(font "Arial" ))
+		(text "resetN" (rect 21 43 54 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "turbo" (rect 0 0 24 12)(font "Arial" ))
+		(text "turbo" (rect 21 59 45 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 160 32)
+		(output)
+		(text "one_sec" (rect 0 0 41 12)(font "Arial" ))
+		(text "one_sec" (rect 105 27 146 39)(font "Arial" ))
+		(line (pt 160 32)(pt 144 32))
+	)
+	(parameter
+		"speed"
+		"20"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 144 96))
+	)
+	(annotation_block (parameter)(rect 352 608 521 646))
+)
 (connector
 	(text "resetN" (rect 634 360 664 377)(font "Intel Clear" ))
 	(pt 624 376)
@@ -493,16 +499,6 @@ agreement for further details.
 	(pt 1000 504)
 	(pt 1032 504)
 	(bus)
-)
-(connector
-	(text "clk" (rect 491 488 505 505)(font "Intel Clear" ))
-	(pt 464 504)
-	(pt 512 504)
-)
-(connector
-	(text "resetN" (rect 474 504 504 521)(font "Intel Clear" ))
-	(pt 464 520)
-	(pt 512 520)
 )
 (connector
 	(text "BoxHartTopLeftX[10..0]" (rect 1000 344 1110 361)(font "Intel Clear" ))
@@ -561,19 +557,33 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(text "oneSec" (rect 677 488 711 505)(font "Intel Clear" ))
-	(pt 672 504)
-	(pt 704 504)
+	(text "clk" (rect 395 480 409 497)(font "Intel Clear" ))
+	(pt 368 496)
+	(pt 416 496)
 )
 (connector
-	(text "oneSec" (rect 750 520 784 537)(font "Intel Clear" ))
+	(text "resetN" (rect 378 496 408 513)(font "Intel Clear" ))
+	(pt 368 512)
+	(pt 416 512)
+)
+(connector
+	(text "oneSec" (rect 581 480 615 497)(font "Intel Clear" ))
+	(pt 696 496)
+	(pt 576 496)
+)
+(connector
+	(pt 696 496)
+	(pt 696 536)
+)
+(connector
+	(text "<<__$DEF_ALIAS925>>" (rect 772 520 884 537)(font "Intel Clear" )(invisible))
+	(pt 696 536)
 	(pt 784 536)
-	(pt 736 536)
 )
 (connector
-	(text "oneSec" (rect 1244 408 1278 425)(font "Intel Clear" ))
+	(text "oneSec" (rect 1265 408 1299 425)(font "Intel Clear" ))
 	(pt 1288 424)
-	(pt 1232 424)
+	(pt 1216 424)
 )
 (text "  " (rect 0 600 7 619)(font "Intel Clear" (font_size 8)))
 (text "   " (rect 120 640 130 659)(font "Intel Clear" (font_size 8)))

@@ -59,11 +59,11 @@ logic [0:15] [0:15] [3:0]  pigDefaultBitMapMask= // default table to load on res
  
 logic [0:4] [0:5] [0:1] [0:15] validPigLocations =  // Possible pig spawn locations for every level
 {// 1<Y<C 1<X<F
-{{16'hC,16'hB},{16'hC,16'hD},{16'hC,16'hA},{16'h8,16'h9},{16'hC,16'hC},{16'h8,16'hA}},
-{{16'h7,16'hA},{16'hB,16'hB},{16'h6,16'hB},{16'hB,16'hA},{16'h7,16'hC},{16'hB,16'hC}},
-{{16'hB,16'h9},{16'h7,16'hA},{16'h8,16'hB},{16'hB,16'hA},{16'hB,16'hB},{16'h8,16'h9}},
-{{16'hB,16'hB},{16'h9,16'hB},{16'hB,16'h9},{16'h9,16'h9},{16'h9,16'h8},{16'h9,16'hC}},
-{{16'hB,16'hC},{16'h5,16'hB},{16'hB,16'hB},{16'h6,16'hC},{16'hB,16'hA},{16'h6,16'hA}}
+{{16'hB,16'hB},{16'hC,16'hD},{16'hA,16'hA},{16'hB,16'h8},{16'h9,16'h9},{16'hB,16'h7}}, // level 1
+{{16'hC,16'h6},{16'hC,16'hC},{16'hC,16'h8},{16'hC,16'hA},{16'hC,16'h7},{16'hC,16'hB}}, // level 2
+{{16'hB,16'h9},{16'h7,16'hA},{16'h8,16'hB},{16'hB,16'hA},{16'hB,16'hB},{16'h8,16'h9}}, // level 3
+{{16'h7,16'hA},{16'hB,16'hB},{16'h6,16'hB},{16'hB,16'hA},{16'h7,16'hC},{16'hB,16'hC}}, // level 4
+{{16'hB,16'hB},{16'h9,16'hB},{16'hB,16'h9},{16'h9,16'h9},{16'h9,16'h8},{16'h9,16'hC}}  // level 5
 };
 
 logic [0:1] [0:15] randomizedLocation;
@@ -104,39 +104,39 @@ logic [0:1] [0:15] randomizedLocation;
 {8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'h00, 8'h00, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
 {8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'h00, 8'h00, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
 },
-	{{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'h00, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'h00, 8'h00, 8'h00, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'h00, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'h00, 8'h00, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'h00, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'h00, 8'h00, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'h00, 8'h00, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-{8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'h00, 8'h00, 8'hFF, 8'h00, 8'h00, 8'h00, 8'h00, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF, 8'hFF },
-}};
+	{{8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hb6,8'h6c,8'h71,8'h91,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hda,8'h75,8'h9d,8'h99,8'h99,8'h91,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'hff,8'hda,8'h91,8'h91,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hb6,8'h99,8'h74,8'h74,8'h9d,8'h71,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'hb6,8'h74,8'h9d,8'h99,8'h71,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hb6,8'h99,8'h74,8'h74,8'h99,8'h71,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'h91,8'h9d,8'h99,8'h95,8'h99,8'hb6,8'hff,8'hb6,8'h95,8'h91,8'h95,8'h91,8'h9d,8'h99,8'h99,8'h2c,8'hb6,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'h71,8'h9d,8'h74,8'h34,8'h95,8'h95,8'h75,8'h99,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h75,8'h91,8'hb6,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'hb6,8'h71,8'h99,8'h95,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h99,8'h71,8'h91,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'hff,8'h6d,8'h71,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h99,8'h71,8'hd6,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'hda,8'h6d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h70,8'h91,8'hff,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hda,8'h2c,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h74,8'h91,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'h6c,8'h99,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h70,8'hb2,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'h91,8'h71,8'h91,8'h95,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h95,8'h71,8'h95,8'h9d,8'h2c,8'hda,8'hff,8'hff},
+	{8'hff,8'hda,8'h24,8'h95,8'h99,8'h99,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h95,8'h99,8'h9d,8'h2c,8'hff,8'hff},
+	{8'hff,8'h6d,8'h75,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h99,8'h94,8'h94,8'h94,8'h94,8'h94,8'h99,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h70,8'hb6,8'hff},
+	{8'hff,8'h2c,8'h9d,8'h99,8'h99,8'h99,8'h9d,8'h9d,8'h9d,8'h99,8'h94,8'hb8,8'hbc,8'hbc,8'hbc,8'hbc,8'hbc,8'hb8,8'h94,8'h99,8'h9d,8'h9d,8'h9d,8'h9d,8'h99,8'h95,8'h99,8'h9d,8'h9d,8'h9d,8'h2c,8'hff},
+	{8'h92,8'h70,8'h95,8'hda,8'hff,8'hda,8'h95,8'h9d,8'h99,8'h94,8'hbc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hbc,8'hb4,8'h99,8'h9d,8'h9d,8'hb5,8'hff,8'hff,8'hff,8'hb5,8'h99,8'h9d,8'h2c,8'hda},
+	{8'h6d,8'h91,8'hff,8'hff,8'hff,8'hff,8'hff,8'hb5,8'hb4,8'hbc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hbc,8'hb4,8'h99,8'h95,8'hff,8'hff,8'hff,8'hff,8'hff,8'h95,8'h9d,8'h75,8'h6d},
+	{8'h24,8'hba,8'hff,8'hff,8'hff,8'hff,8'hff,8'hd9,8'hb8,8'hdc,8'hbc,8'hb8,8'hbc,8'hdc,8'hdc,8'hdc,8'hbc,8'hbc,8'hdc,8'hdc,8'hb8,8'h95,8'hda,8'hff,8'hff,8'hff,8'hda,8'hff,8'hda,8'h99,8'h99,8'h24},
+	{8'h00,8'hda,8'hff,8'h6d,8'h6d,8'hff,8'hff,8'hb8,8'hbc,8'hdc,8'h90,8'h04,8'h90,8'hdc,8'hdc,8'hb8,8'h2c,8'h70,8'hbc,8'hdc,8'hbc,8'h94,8'hff,8'hff,8'hff,8'hff,8'h00,8'hb6,8'hff,8'h99,8'h9d,8'h24},
+	{8'h00,8'hda,8'hff,8'hda,8'hda,8'hff,8'hff,8'hb4,8'hdc,8'hdc,8'h6c,8'h04,8'h2c,8'hdc,8'hdc,8'h90,8'h04,8'h04,8'hb8,8'hdc,8'hdc,8'h94,8'hda,8'hff,8'hff,8'hff,8'hff,8'hff,8'hda,8'h99,8'h9d,8'h24},
+	{8'h24,8'h95,8'hff,8'hff,8'hff,8'hff,8'hff,8'hb4,8'hdc,8'hdc,8'h6c,8'h04,8'h6c,8'hdc,8'hdc,8'h94,8'h04,8'h24,8'hb8,8'hdc,8'hbc,8'h94,8'h95,8'hff,8'hff,8'hff,8'hff,8'hff,8'hb5,8'h9d,8'h9d,8'h24},
+	{8'h24,8'h71,8'hb6,8'hff,8'hff,8'hff,8'hba,8'h94,8'hdc,8'hdc,8'h98,8'h6c,8'h94,8'hdc,8'hdc,8'hbc,8'h94,8'h94,8'hbc,8'hdc,8'hbc,8'h94,8'h99,8'hb5,8'hfe,8'hff,8'hfa,8'h95,8'h95,8'h9d,8'h99,8'h24},
+	{8'h91,8'h2c,8'h95,8'h95,8'h95,8'h95,8'h95,8'h94,8'hbc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hb8,8'h98,8'h9d,8'h99,8'h95,8'h95,8'h75,8'h99,8'h9d,8'h9d,8'h71,8'h6d},
+	{8'hff,8'h24,8'h99,8'h99,8'h95,8'h99,8'h9d,8'h99,8'h94,8'hbc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hdc,8'hbc,8'h94,8'h9d,8'h9d,8'h9d,8'h9d,8'h99,8'h99,8'h9d,8'h9d,8'h9d,8'h24,8'hda},
+	{8'hff,8'h6d,8'h6c,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h99,8'h94,8'hb8,8'hbc,8'hdc,8'hdc,8'hdc,8'hdc,8'hbc,8'hbc,8'hb8,8'h94,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h71,8'h24,8'hff},
+	{8'hff,8'hff,8'h24,8'h95,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h95,8'h94,8'h94,8'h94,8'h94,8'h94,8'h94,8'h95,8'h95,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h79,8'h24,8'hfb,8'hff},
+	{8'hff,8'hff,8'hda,8'h04,8'h95,8'h99,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h99,8'h99,8'h78,8'h78,8'h79,8'h99,8'h99,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h95,8'h04,8'hb6,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hda,8'h04,8'h71,8'h99,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h99,8'h99,8'h99,8'h99,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h99,8'h75,8'h04,8'hb6,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'hda,8'h24,8'h2c,8'h95,8'h99,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h9d,8'h99,8'h95,8'h2c,8'h24,8'hda,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'h91,8'h24,8'h2c,8'h75,8'h99,8'h99,8'h99,8'h99,8'h99,8'h9d,8'h9d,8'h99,8'h99,8'h99,8'h99,8'h95,8'h75,8'h2c,8'h24,8'h91,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hb2,8'h24,8'h24,8'h24,8'h2c,8'h70,8'h71,8'h71,8'h71,8'h71,8'h70,8'h2c,8'h24,8'h24,8'h24,8'hb6,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff},
+	{8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hb6,8'h91,8'h6d,8'h24,8'h2c,8'h24,8'h24,8'h6d,8'h91,8'hb6,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff,8'hff}}
+};
  
 // assign offsetY_LSB  = offsetY[4:0] ; // get lower 5 bits 
 // assign offsetY_MSB  = offsetY[8:5] ; // get higher 4 bits 
@@ -158,7 +158,7 @@ begin
 	else begin
 		RGBout <= TRANSPARENT_ENCODING ; // default 
 		
-		if (randgen == 1'b1 && renderedLevel != level) begin
+		if (randgen==1'b1 && renderedLevel!=level) begin
 			pigBitMapMask  =  pigDefaultBitMapMask ;
 			renderedLevel = level;
 			r = randnum;
