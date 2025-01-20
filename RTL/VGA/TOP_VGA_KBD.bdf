@@ -1400,7 +1400,7 @@ agreement for further details.
 	(annotation_block (parameter)(rect 1416 472 1670 586))
 )
 (symbol
-	(rect 1384 -56 1656 136)
+	(rect 1376 -56 1648 136)
 	(text "PIG_DISPLAY" (rect 5 0 86 19)(font "Intel Clear" (font_size 8)))
 	(text "inst5" (rect 8 171 30 188)(font "Intel Clear" ))
 	(port
@@ -1815,34 +1815,6 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(text "clk" (rect 1336 -40 1350 -23)(font "Intel Clear" ))
-	(pt 1184 -24)
-	(pt 1384 -24)
-)
-(connector
-	(text "pixelX[10..0]" (rect 1322 -8 1381 9)(font "Intel Clear" ))
-	(pt 1184 8)
-	(pt 1384 8)
-	(bus)
-)
-(connector
-	(text "pixelY[10..0]" (rect 1322 8 1381 25)(font "Intel Clear" ))
-	(pt 1184 24)
-	(pt 1384 24)
-	(bus)
-)
-(connector
-	(text "pigDR" (rect 1690 -40 1718 -23)(font "Intel Clear" ))
-	(pt 1656 -24)
-	(pt 1784 -24)
-)
-(connector
-	(text "pigRGB[7..0]" (rect 1690 -24 1749 -7)(font "Intel Clear" ))
-	(pt 1656 -8)
-	(pt 1784 -8)
-	(bus)
-)
-(connector
 	(pt 144 240)
 	(pt 120 240)
 )
@@ -1850,16 +1822,6 @@ agreement for further details.
 	(text "keyPlus" (rect 120 176 158 193)(font "Intel Clear" ))
 	(pt 144 192)
 	(pt 120 192)
-)
-(connector
-	(pt 1384 40)
-	(pt 1160 40)
-	(bus)
-)
-(connector
-	(pt 1160 40)
-	(pt 1160 48)
-	(bus)
 )
 (connector
 	(text "enterKey" (rect 156 240 199 257)(font "Intel Clear" ))
@@ -1874,11 +1836,6 @@ agreement for further details.
 (connector
 	(pt 80 544)
 	(pt 64 544)
-)
-(connector
-	(text "startGame" (rect 1330 -24 1379 -7)(font "Intel Clear" ))
-	(pt 1184 -8)
-	(pt 1384 -8)
 )
 (connector
 	(text "airplaneDR" (rect 850 24 903 41)(font "Intel Clear" ))
@@ -2278,32 +2235,6 @@ agreement for further details.
 	(pt 1280 688)
 )
 (connector
-	(pt 1160 56)
-	(pt 1384 56)
-	(bus)
-)
-(connector
-	(pt 1160 48)
-	(pt 1160 56)
-	(bus)
-)
-(connector
-	(pt 1160 56)
-	(pt 1160 232)
-	(bus)
-)
-(connector
-	(text "collisionBirdPig" (rect 1282 56 1355 73)(font "Intel Clear" ))
-	(pt 1184 72)
-	(pt 1384 72)
-)
-(connector
-	(text "level[3..0]" (rect 1284 72 1332 89)(font "Intel Clear" ))
-	(pt 1184 88)
-	(pt 1384 88)
-	(bus)
-)
-(connector
 	(pt 1424 872)
 	(pt 1424 968)
 	(bus)
@@ -2520,6 +2451,75 @@ agreement for further details.
 	(text "fortressRGB[7..0]" (rect 1658 176 1738 193)(font "Intel Clear" ))
 	(pt 1608 192)
 	(pt 1752 192)
+	(bus)
+)
+(connector
+	(text "clk" (rect 1328 -40 1342 -23)(font "Intel Clear" ))
+	(pt 1176 -24)
+	(pt 1376 -24)
+)
+(connector
+	(text "pixelX[10..0]" (rect 1314 -8 1373 9)(font "Intel Clear" ))
+	(pt 1176 8)
+	(pt 1376 8)
+	(bus)
+)
+(connector
+	(text "pixelY[10..0]" (rect 1314 8 1373 25)(font "Intel Clear" ))
+	(pt 1176 24)
+	(pt 1376 24)
+	(bus)
+)
+(connector
+	(pt 1160 40)
+	(pt 1376 40)
+	(bus)
+)
+(connector
+	(text "startGame" (rect 1322 -24 1371 -7)(font "Intel Clear" ))
+	(pt 1176 -8)
+	(pt 1376 -8)
+)
+(connector
+	(pt 1160 56)
+	(pt 1376 56)
+	(bus)
+)
+(connector
+	(text "collisionBirdPig" (rect 1274 56 1347 73)(font "Intel Clear" ))
+	(pt 1176 72)
+	(pt 1376 72)
+)
+(connector
+	(text "level[3..0]" (rect 1276 72 1324 89)(font "Intel Clear" ))
+	(pt 1176 88)
+	(pt 1376 88)
+	(bus)
+)
+(connector
+	(pt 1160 40)
+	(pt 1160 48)
+	(bus)
+)
+(connector
+	(pt 1160 48)
+	(pt 1160 56)
+	(bus)
+)
+(connector
+	(pt 1160 56)
+	(pt 1160 232)
+	(bus)
+)
+(connector
+	(text "pigDR" (rect 1682 -40 1710 -23)(font "Intel Clear" ))
+	(pt 1648 -24)
+	(pt 1776 -24)
+)
+(connector
+	(text "pigRGB[7..0]" (rect 1682 -24 1741 -7)(font "Intel Clear" ))
+	(pt 1648 -8)
+	(pt 1776 -8)
 	(bus)
 )
 (junction (pt 1296 1232))
