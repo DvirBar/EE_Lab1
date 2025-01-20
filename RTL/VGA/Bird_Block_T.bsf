@@ -122,6 +122,13 @@ agreement for further details.
 		(text "shootBirdPulse" (rect 179 75 267 94)(font "Intel Clear" (font_size 8)))
 		(line (pt 288 80)(pt 272 80))
 	)
+	(port
+		(pt 288 96)
+		(output)
+		(text "displayBird" (rect 0 0 68 19)(font "Intel Clear" (font_size 8)))
+		(text "displayBird" (rect 199 91 267 110)(font "Intel Clear" (font_size 8)))
+		(line (pt 288 96)(pt 272 96))
+	)
 	(parameter
 		"initial_x"
 		"280"

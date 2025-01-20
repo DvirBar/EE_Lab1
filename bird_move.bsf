@@ -118,8 +118,8 @@ agreement for further details.
 	(port
 		(pt 256 96)
 		(output)
-		(text "hideBirdPulse" (rect 0 0 51 12)(font "Arial" ))
-		(text "hideBirdPulse" (rect 184 91 235 103)(font "Arial" ))
+		(text "shootBirdPulse" (rect 0 0 57 12)(font "Arial" ))
+		(text "shootBirdPulse" (rect 178 91 235 103)(font "Arial" ))
 		(line (pt 256 96)(pt 240 96)(line_width 1))
 	)
 	(parameter

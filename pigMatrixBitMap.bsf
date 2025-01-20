@@ -83,8 +83,8 @@ agreement for further details.
 	(port
 		(pt 0 160)
 		(input)
-		(text "level[2..0]" (rect 0 0 37 12)(font "Arial" ))
-		(text "level[2..0]" (rect 21 155 58 167)(font "Arial" ))
+		(text "level[3..0]" (rect 0 0 37 12)(font "Arial" ))
+		(text "level[3..0]" (rect 21 155 58 167)(font "Arial" ))
 		(line (pt 0 160)(pt 16 160)(line_width 3))
 	)
 	(port

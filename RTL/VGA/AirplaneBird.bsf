@@ -150,6 +150,13 @@ agreement for further details.
 		(text "shootBirdPulse" (rect 147 107 235 126)(font "Intel Clear" (font_size 8)))
 		(line (pt 256 112)(pt 240 112))
 	)
+	(port
+		(pt 256 128)
+		(output)
+		(text "displayBird" (rect 0 0 68 19)(font "Intel Clear" (font_size 8)))
+		(text "displayBird" (rect 167 123 235 142)(font "Intel Clear" (font_size 8)))
+		(line (pt 256 128)(pt 240 128))
+	)
 	(drawing
 		(rectangle (rect 16 16 240 240))
 	)

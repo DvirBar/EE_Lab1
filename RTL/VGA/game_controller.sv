@@ -16,6 +16,7 @@ module	game_controller	(
 			input logic shoot_bird_pulse,
 			input logic game_start_key,
 			input logic cheat_key,
+			input logic display_bird,
 
 			
 			output logic airplaneCollision,
@@ -105,7 +106,7 @@ begin
 			end
 			
 			GAME_PLAY_ST: begin
-				if(birds_left == 0 && !drawing_request_bird) begin // Lost game - no more birds left but still more pigs
+				if(birds_left == 0 && !display_bird) begin // Lost game - no more birds left but still more pigs
 						SM_GAME <= GAME_OVER_ST;
 				end
 				
@@ -155,14 +156,18 @@ begin
 			CHANGE_LEVEL_ST: begin
 				SM_GAME <= GAME_PLAY_ST;
 				if(pigs_left == 0) begin // Level has ended
-					if(level == MAX_LEVEL) // Either we finish the game or move to the next game
-						SM_GAME <= GAME_WIN_ST;
-					else begin
-						level <= level+1;
-						newLevelPulse <= 1'b1;
+					if(!display_bird) begin
+						if(level == MAX_LEVEL) // Either we finish the game or move to the next game
+							SM_GAME <= GAME_WIN_ST;
+						else begin
+							level <= level+1;
+							newLevelPulse <= 1'b1;
+						end
+						pigs_left <= NUM_PIGS;
+						birds_left <= NUM_BIRDS;
 					end
-					pigs_left <= NUM_PIGS;
-					birds_left <= NUM_BIRDS;
+					else
+						SM_GAME <= CHANGE_LEVEL_ST;
 				end
 			end
 		endcase
@@ -172,7 +177,7 @@ begin
 				
 //	---#7 - change the condition below to collision between Smiley and number ---------
 
-if ( collisionBird  && (flag == 1'b0)) begin
+if (collisionBird  && (flag == 1'b0)) begin
 			flag	<= 1'b1; // to enter only once 
 			SingleHitPulse <= 1'b1 ; 
 		end ; 
