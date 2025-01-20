@@ -128,6 +128,7 @@ begin : fsm_sync_proc
 			
 				if ((accel_right_key & !accel_right_key_D) && Xspeed <= MAX_X_SPEED) 
 						Xspeed <= Xspeed+X_ACCEL; 
+						
 				if ((accel_left_key & !accel_left_key_D) && Xspeed >= MIN_X_SPEED)
 						Xspeed <= Xspeed-X_ACCEL; 
 						
@@ -136,19 +137,14 @@ begin : fsm_sync_proc
 						
 				if((move_up_key & !move_up_key_D) && Yposition-OBJECT_HIGHT_Y >= MIN_Y_POSITION)
 						Yposition <= Yposition - LAT_SPEED*FIXED_POINT_MULTIPLIER;
-			
-       // collcting collisions 	
+
 				if (collision) begin
 					hit_reg[HitEdgeCode]<=1'b1;
-
 				end
 				
 			
 				if (startOfFrame )
 					SM_Motion <= START_OF_FRAME_ST ; 
-					
-					
-				
 		end 
 		
 		//------------

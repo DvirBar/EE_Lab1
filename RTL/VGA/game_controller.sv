@@ -47,8 +47,11 @@ parameter int NUM_PIGS = 3;
 parameter int NUM_BIRDS = 10; 
 parameter int MAX_LEVEL = 4;
 
-logic [4:0] SCORE_PER_HIT = 6'b110000;
-logic [3:0] BONUS_SCORE_PER_BIRD = 4'd5;
+const int NUM_BITS = 12;
+logic [5:0] SCORE_PER_HIT = 6'b110000;
+logic [3:0] BONUS_SCORE_PER_BIRD = 4'd1;
+logic [11:0] updatedScore;
+int loopCounter = 0;
 
 
 logic flag ; // a semaphore to set the output only once per frame regardless of number of collisions 
@@ -56,11 +59,14 @@ logic flag ; // a semaphore to set the output only once per frame regardless of 
 enum  logic [2:0] {START_ST,         	
 						GAME_PLAY_ST, 	
 						GAME_OVER_ST,			
-						GAME_WIN_ST
+						GAME_WIN_ST,
+						UPDATE_SCORE_ST,
+						CHANGE_LEVEL_ST
 					}  SM_GAME;
 						
 int pigs_left;
 int birds_left;
+
 
 logic cheat_key_D ;
 
@@ -77,6 +83,8 @@ begin
 		startGame <= 1'b0;
 		cheat_key_D <= 1'b0;
 		newLevelPulse <= 1'b0;
+		updatedScore <= 6'b0;
+		loopCounter <= 0;
 		
 	end 
 	else begin 
@@ -110,19 +118,12 @@ begin
 				end
 				
 				if(collisionBirdPig) begin
-					score <= score + SCORE_PER_HIT;
+					SM_GAME <= UPDATE_SCORE_ST;
+					updatedScore <= score + SCORE_PER_HIT;
 					pigs_left <= pigs_left-1;
 				
 					if(pigs_left == 1) begin // Level has ended
-						if(level == MAX_LEVEL) // Either we finish the game or move to the next game
-							SM_GAME <= GAME_WIN_ST;
-						else begin
-							level <= level+1;
-							newLevelPulse <= 1'b1;
-						end
-						score <= score + (birds_left-1)*BONUS_SCORE_PER_BIRD;
-						pigs_left <= NUM_PIGS;
-						birds_left <= NUM_BIRDS;
+						updatedScore <= score + (birds_left-1)*BONUS_SCORE_PER_BIRD;
 					end
 				end
 			
@@ -134,6 +135,32 @@ begin
 						pigs_left <= NUM_PIGS;
 						birds_left <= NUM_BIRDS;
 					end
+				end
+			end
+		
+			UPDATE_SCORE_ST: begin
+				for(loopCounter=0; loopCounter<NUM_BITS-4; loopCounter = loopCounter+4) begin
+					if(updatedScore[loopCounter+3 -: 4] > 9) begin
+						updatedScore[loopCounter+4] = updatedScore[loopCounter+4]+1;
+						updatedScore[loopCounter+3 -: 4] = updatedScore[loopCounter+3 -: 4] - 10;
+					end
+				end
+
+				score <= updatedScore;
+				SM_GAME <= CHANGE_LEVEL_ST;
+			end
+			
+			CHANGE_LEVEL_ST: begin
+				SM_GAME <= GAME_PLAY_ST;
+				if(pigs_left == 0) begin // Level has ended
+					if(level == MAX_LEVEL) // Either we finish the game or move to the next game
+						SM_GAME <= GAME_WIN_ST;
+					else begin
+						level <= level+1;
+						newLevelPulse <= 1'b1;
+					end
+					pigs_left <= NUM_PIGS;
+					birds_left <= NUM_BIRDS;
 				end
 			end
 		endcase

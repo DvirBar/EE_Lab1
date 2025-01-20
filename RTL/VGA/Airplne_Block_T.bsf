@@ -95,13 +95,6 @@ agreement for further details.
 		(line (pt 0 176)(pt 16 176))
 	)
 	(port
-		(pt 0 192)
-		(input)
-		(text "startGame" (rect 0 0 62 19)(font "Intel Clear" (font_size 8)))
-		(text "startGame" (rect 21 187 83 206)(font "Intel Clear" (font_size 8)))
-		(line (pt 0 192)(pt 16 192))
-	)
-	(port
 		(pt 288 32)
 		(output)
 		(text "airplaneDR" (rect 0 0 66 19)(font "Intel Clear" (font_size 8)))
