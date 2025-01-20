@@ -97,23 +97,16 @@ agreement for further details.
 	(port
 		(pt 0 192)
 		(input)
-		(text "startGame" (rect 0 0 62 19)(font "Intel Clear" (font_size 8)))
-		(text "startGame" (rect 21 187 83 206)(font "Intel Clear" (font_size 8)))
+		(text "show_bird" (rect 0 0 61 19)(font "Intel Clear" (font_size 8)))
+		(text "show_bird" (rect 21 187 82 206)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 192)(pt 16 192))
 	)
 	(port
 		(pt 0 208)
 		(input)
-		(text "show_bird" (rect 0 0 61 19)(font "Intel Clear" (font_size 8)))
-		(text "show_bird" (rect 21 203 82 222)(font "Intel Clear" (font_size 8)))
-		(line (pt 0 208)(pt 16 208))
-	)
-	(port
-		(pt 0 224)
-		(input)
 		(text "birdCollision" (rect 0 0 74 19)(font "Intel Clear" (font_size 8)))
-		(text "birdCollision" (rect 21 219 95 238)(font "Intel Clear" (font_size 8)))
-		(line (pt 0 224)(pt 16 224))
+		(text "birdCollision" (rect 21 203 95 222)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 208)(pt 16 208))
 	)
 	(port
 		(pt 256 32)
@@ -153,8 +146,8 @@ agreement for further details.
 	(port
 		(pt 256 112)
 		(output)
-		(text "hideBirdPulse" (rect 0 0 82 19)(font "Intel Clear" (font_size 8)))
-		(text "hideBirdPulse" (rect 153 107 235 126)(font "Intel Clear" (font_size 8)))
+		(text "shootBirdPulse" (rect 0 0 88 19)(font "Intel Clear" (font_size 8)))
+		(text "shootBirdPulse" (rect 147 107 235 126)(font "Intel Clear" (font_size 8)))
 		(line (pt 256 112)(pt 240 112))
 	)
 	(drawing

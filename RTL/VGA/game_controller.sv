@@ -13,7 +13,7 @@ module	game_controller	(
 			input logic drawing_request_fortress,
 			input logic drawing_request_pig,
 			input logic drawing_request_bird,
-			input logic bird_disappear,
+			input logic shoot_bird_pulse,
 			input logic game_start_key,
 			input logic cheat_key,
 
@@ -22,7 +22,7 @@ module	game_controller	(
 			output logic collisionBird,
 			output logic collisionBirdFortress,
 			output logic collisionBirdPig,
-			output logic [12:0] score,
+			output logic [11:0] score,
 			output logic [3:0] level,
 			output logic [1:0] currScreen,
 			output logic SingleHitPulse, // critical code, generating A single pulse in a frame 
@@ -47,7 +47,7 @@ parameter int NUM_PIGS = 3;
 parameter int NUM_BIRDS = 10; 
 parameter int MAX_LEVEL = 4;
 
-logic [4:0] SCORE_PER_HIT = 5'b10000;
+logic [4:0] SCORE_PER_HIT = 6'b110000;
 logic [3:0] BONUS_SCORE_PER_BIRD = 4'd5;
 
 
@@ -81,9 +81,11 @@ begin
 	end 
 	else begin 
 		cheat_key_D <= cheat_key;
+		
 		case(SM_GAME)
 			START_ST, GAME_OVER_ST, GAME_WIN_ST: begin
 				startGame <= 1'b0;
+				level <= 9;
 				if(game_start_key) begin
 					score <= 0;
 					level <= 0;
@@ -99,7 +101,7 @@ begin
 				SM_GAME <= GAME_PLAY_ST;
 				newLevelPulse <= 1'b0;
 				
-				if(bird_disappear) begin
+				if(shoot_bird_pulse) begin
 					if(birds_left == 1) begin // Lost game - no more birds left but still more pigs
 						SM_GAME <= GAME_OVER_ST;
 					end

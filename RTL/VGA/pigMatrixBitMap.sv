@@ -59,7 +59,7 @@ logic [0:15] [0:15] [3:0]  pigDefaultBitMapMask= // default table to load on res
  
 logic [0:4] [0:5] [0:1] [0:15] validPigLocations =  // Possible pig spawn locations for every level
 {// 1<Y<C 1<X<F
-{{16'hC,16'hB},{16'hC,16'hD},{16'hC,16'hA},{16'h8,16'h9},{16'hC,16'hC},{16'h8,16'hA}},
+{{16'h8,16'h8},{16'hC,16'hD},{16'hC,16'hA},{16'h8,16'h9},{16'hC,16'hC},{16'h8,16'hA}},
 {{16'hB,16'hA},{16'hB,16'hB},{16'hB,16'hC},{16'h7,16'hA},{16'h7,16'hC},{16'h6,16'hB}},
 {{16'hB,16'h9},{16'hB,16'hA},{16'hB,16'hB},{16'h8,16'h9},{16'h7,16'hA},{16'h8,16'hB}},
 {{16'hB,16'h9},{16'h9,16'h8},{16'hB,16'hB},{16'h9,16'h9},{16'h9,16'hB},{16'h9,16'hC}},
@@ -152,7 +152,7 @@ begin
 		RGBout <=	8'h00;
 		maxPigs = 0;
 		pigBitMapMask  =  pigDefaultBitMapMask ;  //  copy default table
-		renderedLevel = level+1;
+		renderedLevel = level;
 	end
 	
 	else begin

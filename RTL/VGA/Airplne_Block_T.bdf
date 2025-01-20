@@ -554,12 +554,12 @@ agreement for further details.
 		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter
 		"MIN_X_SPEED"
-		"100"
+		"200"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter
 		"MAX_X_SPEED"
-		"200"
+		"600"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter

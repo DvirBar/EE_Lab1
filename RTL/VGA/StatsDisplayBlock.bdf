@@ -149,6 +149,22 @@ agreement for further details.
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
 )
 (pin
+	(input)
+	(rect 480 512 648 528)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "score[11..0]" (rect 5 0 65 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
 	(output)
 	(rect 1544 240 1720 256)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
@@ -275,9 +291,9 @@ agreement for further details.
 	(annotation_block (parameter)(rect 968 64 1223 140))
 )
 (symbol
-	(rect 1272 216 1496 360)
+	(rect 1272 216 1496 392)
 	(text "StatsDisplayBitMap" (rect 5 0 101 12)(font "Arial" ))
-	(text "inst" (rect 8 128 25 140)(font "Arial" ))
+	(text "inst" (rect 8 160 25 172)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -321,6 +337,20 @@ agreement for further details.
 		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
+		(pt 0 128)
+		(input)
+		(text "birdsLeft[3..0]" (rect 0 0 69 12)(font "Arial" ))
+		(text "birdsLeft[3..0]" (rect 21 123 90 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "score[11..0]" (rect 0 0 59 12)(font "Arial" ))
+		(text "score[11..0]" (rect 21 139 80 151)(font "Arial" ))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
+	)
+	(port
 		(pt 224 32)
 		(output)
 		(text "drawingRequest" (rect 0 0 77 12)(font "Arial" ))
@@ -340,7 +370,7 @@ agreement for further details.
 		""
 		(type "PARAMETER_UNSIGNED_BIN")	)
 	(drawing
-		(rectangle (rect 16 16 208 128))
+		(rectangle (rect 16 16 208 160))
 	)
 	(annotation_block (parameter)(rect 1304 80 1512 120))
 )
@@ -433,5 +463,23 @@ agreement for further details.
 	(text "birdsLeft[3..0]" (rect 691 472 755 489)(font "Intel Clear" ))
 	(pt 656 488)
 	(pt 800 488)
+	(bus)
+)
+(connector
+	(text "birdsLeft[3..0]" (rect 1194 328 1258 345)(font "Intel Clear" ))
+	(pt 1272 344)
+	(pt 1168 344)
+	(bus)
+)
+(connector
+	(text "score[11..0]" (rect 1195 344 1249 361)(font "Intel Clear" ))
+	(pt 1272 360)
+	(pt 1168 360)
+	(bus)
+)
+(connector
+	(text "score[11..0]" (rect 695 504 749 521)(font "Intel Clear" ))
+	(pt 648 520)
+	(pt 800 520)
 	(bus)
 )

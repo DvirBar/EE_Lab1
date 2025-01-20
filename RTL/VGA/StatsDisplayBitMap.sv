@@ -12,6 +12,7 @@ module	StatsDisplayBitMap	(
 					input logic	InsideRectangle, //input that the pixel is within a bracket 
 					input logic [3:0] level,
 					input logic [3:0] birdsLeft,
+					input logic [11:0] score,
 
 					output	logic	drawingRequest, //output that the pixel should be dispalyed 
 					output	logic	[7:0] RGBout  //rgb value from the bitmap 
@@ -34,11 +35,14 @@ parameter  logic	[7:0] text_color = 8'h00 ; //set the color of the digit
 logic [0:15] [3:0]  MazeBitMapMask ;  
 
 // A - level number (based on input)
-// B - score digit (based on input)
 // C - number of birds left (based on input)
 // 1 - level label
 // 2 - heart label
-logic [0:15] [3:0]  MazeDefaultBitMapMask= 64'h01A000C200000000;
+// 3 - score digit (based on input)
+// 4 - score digit (based on input)
+// 5 - score digit (based on input)
+// 6 - score digit (based on input)
+logic [0:15] [3:0]  MazeDefaultBitMapMask= 64'h01A000C200065430;
  
  
 bit [0:9] [0:31] [0:31] number_bitmap  = {
@@ -86,10 +90,10 @@ bit [0:9] [0:31] [0:31] number_bitmap  = {
 32'b	00000001111111011110000000000000,
 32'b	00000011111100011110000000000000,
 32'b	00000111110000011110000000000000,
-32'b	00000000100000011110000000000000,
-32'b	00000000000000011110000000000000,
-32'b	00000000000000011110000000000000,
-32'b	00000000000000011110000000000000,
+32'b	00001111100000011110000000000000,
+32'b	00011111000000011110000000000000,
+32'b	00111110000000011110000000000000,
+32'b	01111100000000011110000000000000,
 32'b	00000000000000011110000000000000,
 32'b	00000000000000011110000000000000,
 32'b	00000000000000011110000000000000,
@@ -479,6 +483,7 @@ begin
 		
 		if (InsideRectangle == 1'b1 )	
 			begin 
+				// RGBout <= text_color;
 		   	case (MazeBitMapMask[offsetX[8:5]])
 					 4'h0 : RGBout <= TRANSPARENT_ENCODING ;
 					 4'h1 : begin 
@@ -489,10 +494,30 @@ begin
 							drawingRequest <= number_bitmap[level+1][offsetY[4:0]][offsetX[4:0]];
 							RGBout <= text_color;
 					 end
-//					 4'hC : begin 
-//							drawingRequest <= number_bitmap[birdsLeft][offsetY[2:0]][offsetX[2:0]];
-//							RGBout <= text_color;
-//					 end
+					 4'hC : begin 
+							drawingRequest <= number_bitmap[birdsLeft][offsetY[4:0]][offsetX[4:0]];
+							RGBout <= text_color;
+					 end
+					 4'h2 : begin 
+							drawingRequest <= (object_colors[offsetY[4:0]][offsetX[4:0]] != TRANSPARENT_ENCODING) ? 1'b1 : 1'b0;
+							RGBout <= object_colors[offsetY[4:0]][offsetX[4:0]];
+					 end
+					 4'h3 : begin 
+							drawingRequest <= number_bitmap[0][offsetY[4:0]][offsetX[4:0]];
+							RGBout <= text_color;
+					 end
+					 4'h4 : begin 
+							drawingRequest <= number_bitmap[score[3:0]][offsetY[4:0]][offsetX[4:0]];
+							RGBout <= text_color;
+					 end
+					 4'h5 : begin 
+							drawingRequest <= number_bitmap[score[7:4]][offsetY[4:0]][offsetX[4:0]];
+							RGBout <= text_color;
+					 end
+					 4'h5 : begin 
+							drawingRequest <= number_bitmap[score[11:8]][offsetY[4:0]][offsetX[4:0]];
+							RGBout <= text_color;
+					 end
 					//  4'h2 : RGBout <= object_colors[2'h1][offsetY[4:0]][offsetX[4:0]] ; 
 					 default:  RGBout <= TRANSPARENT_ENCODING ; 
 				endcase

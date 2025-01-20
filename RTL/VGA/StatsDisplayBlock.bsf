@@ -21,9 +21,9 @@ agreement for further details.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 296 176)
+	(rect 16 16 296 208)
 	(text "StatsDisplayBlock" (rect 5 0 112 19)(font "Intel Clear" (font_size 8)))
-	(text "inst" (rect 8 139 24 156)(font "Intel Clear" ))
+	(text "inst" (rect 8 171 24 188)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -74,6 +74,20 @@ agreement for further details.
 		(line (pt 0 128)(pt 16 128)(line_width 3))
 	)
 	(port
+		(pt 0 144)
+		(input)
+		(text "birdsLeft[3..0]" (rect 0 0 84 19)(font "Intel Clear" (font_size 8)))
+		(text "birdsLeft[3..0]" (rect 21 139 105 158)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "score[11..0]" (rect 0 0 69 19)(font "Intel Clear" (font_size 8)))
+		(text "score[11..0]" (rect 21 155 90 174)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 160)(pt 16 160)(line_width 3))
+	)
+	(port
 		(pt 280 32)
 		(output)
 		(text "StatsDisplayDR" (rect 0 0 93 19)(font "Intel Clear" (font_size 8)))
@@ -88,6 +102,6 @@ agreement for further details.
 		(line (pt 280 48)(pt 264 48)(line_width 3))
 	)
 	(drawing
-		(rectangle (rect 16 16 264 144))
+		(rectangle (rect 16 16 264 176))
 	)
 )

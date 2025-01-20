@@ -118,8 +118,8 @@ agreement for further details.
 	(port
 		(pt 288 80)
 		(output)
-		(text "hideBirdPulse" (rect 0 0 82 19)(font "Intel Clear" (font_size 8)))
-		(text "hideBirdPulse" (rect 185 75 267 94)(font "Intel Clear" (font_size 8)))
+		(text "shootBirdPulse" (rect 0 0 88 19)(font "Intel Clear" (font_size 8)))
+		(text "shootBirdPulse" (rect 179 75 267 94)(font "Intel Clear" (font_size 8)))
 		(line (pt 288 80)(pt 272 80))
 	)
 	(parameter

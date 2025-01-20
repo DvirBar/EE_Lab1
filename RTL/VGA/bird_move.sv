@@ -25,7 +25,7 @@ module	bird_move	(
 					output logic signed	[10:0] topLeftY,  // can be negative , if the object is partliy outside 
 					output logic signed 	[10:0] speedSum,
 					output logic displayBird,
-					output logic hideBirdPulse
+					output logic shootBirdPulse
 					
 );
 
@@ -96,7 +96,7 @@ begin : fsm_sync_proc
 		hit_reg <= 16'b0 ;	
 		displayBird <= 0 ;
 		onGround <= 0 ;
-		hideBirdPulse <= 0;
+		shootBirdPulse <= 0;
 	end 	
 	
 	else begin
@@ -113,13 +113,14 @@ begin : fsm_sync_proc
 				Yspeed  <= 0 ; 
 				Xposition <= planeTopLeftX*FIXED_POINT_MULTIPLIER; 
 				Yposition <= planeTopLeftY*FIXED_POINT_MULTIPLIER; 
-				hideBirdPulse <= 1'b0;
+				shootBirdPulse <= 1'b0;
 				
 				
 				// if (startOfFrame && enable_sof)   if want to stop the smiley move
 				if (startOfFrame && showBird && Xposition <= X_LEFT_HALF) begin
 					SM_Motion <= MOVE_ST;
 					displayBird <= 1'b1;
+					shootBirdPulse <= 1'b1;
 				end
  	
 			end
@@ -127,7 +128,7 @@ begin : fsm_sync_proc
 		//------------
 			MOVE_ST:  begin     // moving no colision 
 		//------------
-	
+			shootBirdPulse <= 1'b0;
        // collcting collisions 	
 				if (collision) begin
 					hit_reg[HitEdgeCode]<=1'b1;
@@ -154,8 +155,6 @@ begin : fsm_sync_proc
 
 			// Reduce speed size on collision
 			if(hit_reg != 16'h0000) begin // if some collision
-				Xspeed = Xspeed/HIT_SPEED_LOSS;
-				Yspeed = Yspeed/HIT_SPEED_LOSS;
 				onGround <= 1'b1;
 			end
 
@@ -170,33 +169,37 @@ begin : fsm_sync_proc
 				16'h0002,16'h0202,16'h000A, ,16'h0028 ,16'h002A: // bottom side 
 				  begin
 						if (Yspeed > 0) begin
-							Yspeed <= -Yspeed;
+							Yspeed <= -Yspeed/HIT_SPEED_LOSS;
 						end
+						Xspeed <= Xspeed/HIT_SPEED_LOSS;
 				  end
 				//   CH       6H		3H         9H
 				16'h1000,16'h0040,16'h0008,16'h0200:	// one of the four corners 	
 
 				  begin
-						Yspeed <= -Yspeed ;
-						Xspeed <= -Xspeed ;
+						Yspeed <= -Yspeed/HIT_SPEED_LOSS;
+						Xspeed <= -Xspeed/HIT_SPEED_LOSS;
 					end
 			//   8H   ; (CH & 8H) ; (8H & 9H) ; (cH & 9H) ;(cH & 9H & 8H)   
 				16'h0100,16'h1100,16'h0300,16'h1200,16'h1300:  // left side 
 				  begin
 						if (Xspeed < 0) 
-							Xspeed <= -Xspeed ;
+							Xspeed <= -Xspeed/HIT_SPEED_LOSS;
+						Yspeed <= Yspeed/HIT_SPEED_LOSS;
 				  end
 				//  4H     (CH & 4H)  (4H & 6H) (CH & 6H)  (CH & 4H & 6H)
 				16'h0010,16'h1010,16'h0050, 16'h1040 , 16'h1050 : //  top side 
 				  begin 
-							if (Yspeed < 0)
-							  Yspeed <= -Yspeed-1 ;
+						if (Yspeed < 0)
+							Yspeed <= -Yspeed/HIT_SPEED_LOSS;
+						Xspeed <= Xspeed/HIT_SPEED_LOSS;
 				  end
 				//   2H  (2H & 6H) (2H & 3H) (6H & 3H )  (6H & 2H &3H )
 				16'h0004,16'h0044,16'h000C, 16'h0048 , 16'h004C: // right side 
 				 begin
-							if (Xspeed > 0)
-								Xspeed <= -Xspeed ;
+						if (Xspeed > 0)
+							Xspeed <= -Xspeed/HIT_SPEED_LOSS; 
+						Yspeed <= Yspeed/HIT_SPEED_LOSS;
 				 end
 				
 				 default:  //complex corner 
@@ -209,10 +212,7 @@ begin : fsm_sync_proc
 				 endcase
 					
 				hit_reg <= 16'h0000;  //clear for next time 
-				
-			
-
-				
+		
 				SM_Motion <= POSITION_CHANGE_ST ; 
 			end 
 
@@ -258,7 +258,6 @@ begin : fsm_sync_proc
 			HIDE_BIRD_ST : begin  // hides the bird when it becomes stationary and sends a hide pulse to the game manager
 		//------------------------
 			 	displayBird <= 1'b0;
-				hideBirdPulse <= 1'b1;
 				SM_Motion <= IDLE_ST;
 			end
 		endcase  // case 
