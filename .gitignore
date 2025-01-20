@@ -17,7 +17,6 @@ Number_position.bsf
 Number_position.qip
 Number_position.v
 Number_position_bb.v
-RTL/VGA_BG.mif
 assignment_defaults.qdf
 c5_pin_model_dump.txt
 constraints/

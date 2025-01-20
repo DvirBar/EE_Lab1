@@ -53,7 +53,7 @@ const int   OBJECT_WIDTH_X = 64;
 const int   OBJECT_HIGHT_Y = 64;
 const int	SafetyMargin   =	2;
 const int 	HIT_SPEED_LOSS = 2;
-const int 	SPEED_THRESH = 10;
+const int 	SPEED_THRESH = 1;
 
 const int	X_FRAME_LEFT	=	(SafetyMargin)* FIXED_POINT_MULTIPLIER; 
 const int	X_FRAME_RIGHT	=	(639 - SafetyMargin - OBJECT_WIDTH_X)* FIXED_POINT_MULTIPLIER; 

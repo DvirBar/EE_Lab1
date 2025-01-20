@@ -11,32 +11,22 @@ module	objects_mux	(
 //		--------	Clock Input	 	
 					input		logic	clk,
 					input		logic	resetN,
-			// level display
-					input 	logic levelDisplayDR,
-					input		logic	[7:0] levelDisplayRGB,
-					
-			// score display	
-					input 	logic scoreDisplayDR,
-					input		logic	[7:0] scoreDisplayRGB,
-					
-		   // airplane
+		   // smiley 
 					input		logic	airplaneDrawingRequest, // two set of inputs per unit
 					input		logic	[7:0] airplaneRGB, 
 					     
-		  // bird 
+		  // add the box here 
 					input		logic birdDrawingRequest,
 					input		logic [7:0] birdRGB,
 					
-			// pig
+			// add the box here 
 					input		logic pigDrawingRequest,
 					input		logic [7:0] pigRGB,
 		  
 		  
-		  // fortress
+		  // add the box here 
 					input		logic fortressDrawingRequest,
 					input		logic [7:0] fortressRGB,
-		
-		   
 		  
 		  ////////////////////////
 		  // background   
@@ -54,10 +44,7 @@ begin
 	end
 	
 	else begin
-		if (levelDisplayDR == 1'b1)
-			RGBOut <= levelDisplayRGB;
-			
-		else if (birdDrawingRequest == 1'b1 )   
+		if (birdDrawingRequest == 1'b1 )   
 			RGBOut <= birdRGB;  
 			
 		else if (airplaneDrawingRequest == 1'b1 )   
@@ -71,9 +58,10 @@ begin
 //--------------------------------------------------------------------------------------------		
 
 
-		//else if (BGDrawingRequest == 1'b1)
-				//RGBOut <= RGB_MIF ;
-		else RGBOut <= RGB_MIF ;// last priority
+		else if (BGDrawingRequest == 1'b1)
+				RGBOut <= backGroundRGB ;
+		//else RGBOut <= RGB_MIF ;// last priority 
+		else RGBOut <= 8'hFE;
 		end ; 
 	end
 
