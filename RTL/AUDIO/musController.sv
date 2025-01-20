@@ -13,23 +13,23 @@ module	musController	(
 logic[3:0] t = 4'h0;
 
 logic [0:15] [3:0]	melody = { 
-
-	4'h0, //do
-	4'hC, //hi do
-	4'h7, //sol
-	4'h0, //do
-	4'h5, //fa
-	4'h0, //do
-	4'h7, //sol
-	4'h8, //solD
-	4'h3, //reD
-	4'hC, //hi do
-	4'h7, //sol
-	4'h5, //fa
-	4'hE, //hi re
-	4'h7, //sol
-	4'hA, //laD
-	4'hC, //hi do
+         // level 3  level 2  level 1 
+	4'h0, // t = 0    t = 0    t = 0
+	4'hC, // t = 1    XXXXX    XXXXX
+	4'h7, // t = 2    t = 2    XXXXX
+	4'h0, // t = 3    XXXXX    XXXXX
+	4'h5, // t = 4    t = 4    t = 4
+	4'h0, // t = 5    XXXXX    XXXXX
+	4'h7, // t = 6    t = 6    XXXXX
+	4'h8, // t = 7    XXXXX    XXXXX
+	4'h3, // t = 8    t = 8    t = 8
+	4'hC, // t = 9    XXXXX    XXXXX
+	4'h7, // t = 10   t = 10   XXXXX
+	4'h5, // t = 11   XXXXX    XXXXX
+	4'hE, // t = 12   t = 12   t = 12
+	4'h7, // t = 13   XXXXX    XXXXX
+	4'hA, // t = 14   t = 14   XXXXX
+	4'hC, // t = 15   XXXXX    XXXXX
 	
 };
 
