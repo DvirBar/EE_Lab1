@@ -5,17 +5,17 @@
 
 
 module	StatsDisplayBitMap	(	
-					input	logic	clk,
-					input	logic	resetN,
-					input logic	[10:0] offsetX,// offset from top left  position 
-					input logic	[10:0] offsetY,// offset from top left  position 
-					input logic	InsideRectangle, //input that the pixel is within a bracket 
-					input logic [3:0] level,
-					input logic [3:0] birdsLeft,
-					input logic [11:0] score,
+		input	logic	clk,
+		input	logic	resetN,
+		input logic	[10:0] offsetX,// offset from top left  position 
+		input logic	[10:0] offsetY,// offset from top left  position 
+		input logic	InsideRectangle, //input that the pixel is within a bracket 
+		input logic [3:0] level,
+		input logic [3:0] birdsLeft,
+		input logic [11:0] score,
 
-					output	logic	drawingRequest, //output that the pixel should be dispalyed 
-					output	logic	[7:0] RGBout  //rgb value from the bitmap 
+		output	logic	drawingRequest, //output that the pixel should be dispalyed 
+		output	logic	[7:0] RGBout  //rgb value from the bitmap 
  ) ;
  
 
@@ -43,7 +43,7 @@ logic [0:15] [3:0]  MazeBitMapMask ;
 // 4 - score digit (based on input)
 // 5 - score digit (based on input)
 // 6 - score digit (based on input)
-logic [0:15] [3:0]  MazeDefaultBitMapMask= 64'hAB80009C0003456000;
+logic [0:15] [3:0]  MazeDefaultBitMapMask= 64'h0AB809C000065430;
  
  
 bit [0:9] [0:31] [0:31] number_bitmap  = {
@@ -400,7 +400,6 @@ bit [0:9] [0:31] [0:31] number_bitmap  = {
 
 
  
-
 logic [0:1] [0:31] [0:31] levelLabel  = {
 	{
 		32'b	00000000000000000000000000000000,

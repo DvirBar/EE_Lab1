@@ -49,10 +49,11 @@ parameter int NUM_BIRDS = 10;
 parameter int MAX_LEVEL = 4;
 
 const int NUM_BITS = 12;
-logic [5:0] SCORE_PER_HIT = 6'b110000;
-logic [3:0] BONUS_SCORE_PER_BIRD = 4'd1;
-logic [11:0] updatedScore;
-int loopCounter = 0;
+logic [1:0] SCORE_PER_HIT = 3'b11;
+logic [1:0] BONUS_SCORE_PER_BIRD = 2'b10;
+logic [4:0] score_U = 5'b0;
+logic [4:0] score_T = 5'b0;
+logic [4:0] score_H = 5'b0;
 
 
 logic flag ; // a semaphore to set the output only once per frame regardless of number of collisions 
@@ -84,9 +85,9 @@ begin
 		startGame <= 1'b0;
 		cheat_key_D <= 1'b0;
 		newLevelPulse <= 1'b0;
-		updatedScore <= 6'b0;
-		loopCounter <= 0;
-		
+		score_U <= 5'b0;
+		score_T <= 5'b0;
+		score_H <= 5'b0;
 	end 
 	else begin 
 		cheat_key_D <= cheat_key;
@@ -102,6 +103,9 @@ begin
 					pigs_left <= NUM_PIGS;
 					birds_left <= NUM_BIRDS;
 					SM_GAME <= GAME_PLAY_ST;
+					score_U <= 5'b0;
+					score_T <= 5'b0;
+					score_H <= 5'b0;
 				end
 			end
 			
@@ -112,7 +116,6 @@ begin
 				end
 				
 				startGame <= 1'b1;
-				
 				newLevelPulse <= 1'b0;
 				
 				if(shoot_bird_pulse) begin
@@ -121,11 +124,11 @@ begin
 				
 				if(collisionBirdPig) begin
 					SM_GAME <= UPDATE_SCORE_ST;
-					updatedScore <= score + SCORE_PER_HIT;
+					score_T <= score_T + SCORE_PER_HIT;
 					pigs_left <= pigs_left-1;
 				
 					if(pigs_left == 1) begin // Level has ended
-						updatedScore <= score + (birds_left-1)*BONUS_SCORE_PER_BIRD;
+						score_U <= score_U + birds_left*BONUS_SCORE_PER_BIRD;
 					end
 					
 					
@@ -143,17 +146,19 @@ begin
 			end
 		
 			UPDATE_SCORE_ST: begin
-				for(loopCounter=0; loopCounter<NUM_BITS-4; loopCounter = loopCounter+4) begin
-					if(updatedScore[loopCounter+3 -: 4] > 9) begin
-						updatedScore[loopCounter+4] = updatedScore[loopCounter+4]+1;
-						updatedScore[loopCounter+3 -: 4] = updatedScore[loopCounter+3 -: 4] - 10;
-					end
+				if(score_U > 9) begin
+					score_T = score_T+1;
+					score_U = score_U-10;
 				end
-
-				score <= updatedScore;
+				if(score_T > 9) begin
+					score_H = score_H+1;
+					score_T = score_T-10;
+				end
+				
+				score <= (score_H<<8) + (score_T<<4) + score_U;
 				SM_GAME <= CHANGE_LEVEL_ST;
 			end
-			
+
 			CHANGE_LEVEL_ST: begin
 				SM_GAME <= GAME_PLAY_ST;
 				if(pigs_left == 0) begin // Level has ended

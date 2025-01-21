@@ -356,7 +356,7 @@ agreement for further details.
 	)
 	(parameter
 		"OBJECT_WIDTH_X"
-		"640"
+		"520"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter
