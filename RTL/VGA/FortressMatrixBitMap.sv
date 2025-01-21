@@ -301,8 +301,8 @@ begin
 			case (MazeBitMapMask[offsetY[8:5]][offsetX[8:5]])  // determine breaking speed of materials
 					 4'h1 : hitThreshold = 700;  // hard wood
 					 4'h2 : hitThreshold = 450;  // hollow wood
-					 4'h3 : hitThreshold = 300;   // glass
-					 4'h4 : hitThreshold = 1000; // stone
+					 4'h3 : hitThreshold = 275;   // glass
+					 4'h4 : hitThreshold = 1250; // stone
 					 default:  hitThreshold = 2000; //  object will be unbreakable if not identified
 			endcase
 			if (speedSum > hitThreshold)
